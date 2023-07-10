@@ -1,4 +1,4 @@
-import Header from "../_components/Header"
+import Header from "../../_components/Header"
 
 function HomePage() {
     return (

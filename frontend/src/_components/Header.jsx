@@ -23,17 +23,7 @@ function Header() {
                 <DropDown />
             </ul>
         </nav>
-        // <a  to='/'>
-        //         <img src="./assets/logo.png" alt="LifeLine" />
-        // </a>
-        // <div>
-        //     <a href="/">Home</a>
-        //     <a href="#">Departments</a>
-        //     <a href="#">Doctors</a>
-        //     {/* <a href="#">Join</a> */}
-        //     <a href="#">Appintment</a>
 
-        // </div>
     )
 }
 

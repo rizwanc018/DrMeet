@@ -1,12 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-export const content = [
-  "./src/**/*.{js,jsx,ts,tsx}",
-];
-export const theme = {
-  extend: {
-    colors: {
-      primary: '#1BBC9B',
-    }
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: 'hsl(168, 75%, 42%)',
+        'primary-600': 'hsl(168, 75%, 32%)',
+      }
+    },
   },
-};
-export const plugins = [];
+  plugins: [],
+}
