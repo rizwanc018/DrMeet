@@ -1,4 +1,4 @@
-import { SideBar, Header } from "../../_components/admin"
+import { SideBar, Header } from "../../_components/adminComponents"
 
 function AdminHome() {
   return (
