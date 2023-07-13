@@ -6,6 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from "uuid"
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "../Spinner";
 
 
 function DoctorRegister() {
@@ -14,6 +15,7 @@ function DoctorRegister() {
   const [certificates, setCertificates] = useState([])
   const [departments, setDepartments] = useState([])
   const [submitting, setSubmitting] = useState(false)
+  const [err, setErr] = useState()
 
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -31,14 +33,14 @@ function DoctorRegister() {
 
   const formik = useFormik({
     initialValues: {
-      fname: "fname",
-      lname: "lname",
-      email: "h@h.c",
-      mobile: "9087654321",
-      password: "1",
-      confirmPassword: "1",
-      department: "MBBS",
-      degree: "1",
+      fname: "",
+      lname: "",
+      email: "",
+      mobile: "",
+      password: "",
+      confirmPassword: "",
+      department: "",
+      degree: "",
       image: "",
       proof: []
     },
@@ -52,6 +54,7 @@ function DoctorRegister() {
       department: Yup.string().required("Choose department"),
       degree: Yup.string().required("Required"),
       proof: Yup.array().min(1, 'Please upload your proof'),
+      image: Yup.mixed().required('No image selected')
     }),
     onSubmit: async (values) => {
       setSubmitting(true)
@@ -60,9 +63,8 @@ function DoctorRegister() {
       try {
         const response = await axios.post(`${baseUrl}/doc/reg`, { ...values })
       } catch (error) {
-        console.log(error)
+        setErr(error.response.data.err)
       }
-      console.log("🚀 ~ file: DoctorRegisterForm.jsx:57 ~ onSubmit: ~ values:", values)
       setSubmitting(false)
     }
   })
@@ -105,7 +107,7 @@ function DoctorRegister() {
     <div className="min-h-screen py-10">
       <div className="container mx-auto">
         <div className="w-8/12 rounded-xl mx-auto shadow-md p-10">
-          <h2 className="text-2xl mb-4">Doctor Register Form</h2>
+          <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-2 gap-10 mb-5">
@@ -120,7 +122,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.fname && formik.errors.fname && <p>{formik.errors.fname}</p>}
+                {formik.touched.fname && formik.errors.fname && <p className="error">{formik.errors.fname}</p>}
               </div>
               <div>
                 <label htmlFor="laname">Last Name</label>
@@ -133,7 +135,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.lname && formik.errors.lname && <p>{formik.errors.lname}</p>}
+                {formik.touched.lname && formik.errors.lname && <p className="error">{formik.errors.lname}</p>}
               </div>
 
               {/* Email and mobile */}
@@ -148,7 +150,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.email && formik.errors.email && <p>{formik.errors.email}</p>}
+                {formik.touched.email && formik.errors.email && <p className="error">{formik.errors.email}</p>}
               </div>
               <div>
                 <label htmlFor="mobile">Mobile</label>
@@ -161,7 +163,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.mobile && formik.errors.mobile && <p>{formik.errors.mobile}</p>}
+                {formik.touched.mobile && formik.errors.mobile && <p className="error">{formik.errors.mobile}</p>}
               </div>
               {/* password */}
               <div>
@@ -175,7 +177,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.password && formik.errors.password && <p>{formik.errors.password}</p>}
+                {formik.touched.password && formik.errors.password && <p className="error">{formik.errors.password}</p>}
               </div>
               {/* confirm password */}
               <div>
@@ -189,7 +191,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && <p>{formik.errors.confirmPassword}</p>}
+                {formik.touched.confirmPassword && formik.errors.confirmPassword && <p className="error">{formik.errors.confirmPassword}</p>}
               </div>
               {/* Department selection */}
               <div>
@@ -209,7 +211,7 @@ function DoctorRegister() {
                     ))
                   }
                 </select>
-                {formik.touched.department && formik.errors.department && <p>{formik.errors.department}</p>}
+                {formik.touched.department && formik.errors.department && <p className="error">{formik.errors.department}</p>}
 
               </div>
               {/* Degree */}
@@ -224,7 +226,7 @@ function DoctorRegister() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.degree && formik.errors.degree && <p>{formik.errors.degree}</p>}
+                {formik.touched.degree && formik.errors.degree && <p className="error">{formik.errors.degree}</p>}
               </div>
               {/* Proof */}
               <div className="relative">
@@ -240,11 +242,11 @@ function DoctorRegister() {
                   onBlur={formik.handleBlur}
                   className="ps-8 mt-8"
                 />
-                {formik.touched.proof && formik.errors.proof && <p>{formik.errors.proof}</p>}
+                {formik.touched.proof && formik.errors.proof && <p className="error">{formik.errors.proof}</p>}
               </div>
               {/* Avatar */}
               <div className="">
-                <img alt="Posts" width="100px" height="100px" src={`${avatar ? URL.createObjectURL(avatar) : '/assets/avatar.svg'}`}></img>
+                <img className='border-2 rounded-2xl  border-primary' alt="Posts" width="100px" height="100px" src={`${avatar ? URL.createObjectURL(avatar) : '/assets/avatar.svg'}`}></img>
                 <input
                   type="file"
                   name="image"
@@ -255,12 +257,14 @@ function DoctorRegister() {
                   }}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.image && formik.errors.image && <p>{formik.errors.image}</p>}
+                {formik.touched.image && formik.errors.image && <p className="error">{formik.errors.image}</p>}
               </div>
             </div>
-            {!submitting &&
-              <button type="submit" className="border">Register</button>
+            {!submitting ?
+              <button className='border-2 rounded px-5 py-2  border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit" >Register</button>
+              : <Spinner className='ps-72'/>
             }
+            {err && <p className="mx-auto w-full text-center error mt-4 text-xl">{err}</p>}
           </form>
         </div>
       </div>

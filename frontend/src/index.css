@@ -24,11 +24,13 @@
   select[multiple] ,
   select ,
   textarea {
-    @apply w-full
+    @apply w-full border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600
   }
-  /* input[type='checkbox'] ,
-  input[type='radio']  {
-        @apply rounded
-  } */
 }
 
+@layer utilities {
+  .error {   
+    @apply text-red-700 text-sm
+  }
+  /* ... */
+}
