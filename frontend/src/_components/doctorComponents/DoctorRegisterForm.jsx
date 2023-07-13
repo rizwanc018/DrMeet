@@ -12,12 +12,22 @@ function DoctorRegister() {
 
   const [avatar, setAvatar] = useState(null)
   const [certificates, setCertificates] = useState([])
-
+  const [departments, setDepartments] = useState([])
+  const [submitting, setSubmitting] = useState(false)
 
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const baseUrl = import.meta.env.VITE_BACKEND_URL
-  console.log("🚀 ~ file: DoctorRegisterForm.jsx:20 ~ DoctorRegister ~ baseUrl:", baseUrl)
+
+
+  const getAllDepartments = async () => {
+    const response = await axios.get(`${baseUrl}/admin/department`)
+    setDepartments(response.data.departments)
+  }
+
+  useEffect(() => {
+    getAllDepartments()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -41,36 +51,44 @@ function DoctorRegister() {
       confirmPassword: Yup.string().required('Passwords must match').oneOf([Yup.ref('password')], 'Passwords must match'),
       department: Yup.string().required("Choose department"),
       degree: Yup.string().required("Required"),
-      image: Yup.string().required("Required"),
       proof: Yup.array().min(1, 'Please upload your proof'),
-
     }),
     onSubmit: async (values) => {
-      // setTmp(await axios.post(`${baseUrl}/api/doc/reg`, {body : values}))
-      console.log('>>>>>>>>>>>')
-      const response = await axios.post(`${baseUrl}/doc/reg`, {...values})
-      console.log("🚀 ~ file: DoctorRegisterForm.jsx:48 ~ onSubmit: ~ response:", response)
+      setSubmitting(true)
+      await uploadAvatar()
+      await uploadProof()
+      try {
+        const response = await axios.post(`${baseUrl}/doc/reg`, { ...values })
+      } catch (error) {
+        console.log(error)
+      }
+      console.log("🚀 ~ file: DoctorRegisterForm.jsx:57 ~ onSubmit: ~ values:", values)
+      setSubmitting(false)
     }
   })
 
 
+  // upload avatar to firebase
   const uploadAvatar = async () => {
     if (!avatar) return
     const avatarRef = ref(storage, `doctorImages/${avatar.name + v4()}`)
     const response = await uploadBytes(avatarRef, avatar)
     const imgUrl = await getDownloadURL(avatarRef);
-    formik.setFieldValue('image', imgUrl)
+    formik.values.image = imgUrl
   }
 
+  // set state for proof
   const handleProofOnChange = e => {
     const uploaded = [...certificates]
     for (const file of e.target.files) {
       uploaded.push(file)
+      formik.values.proof.push(file)
     }
     setCertificates(uploaded)
-    uploadProof()
+
   }
 
+  // upload proof to firebase
   const uploadProof = async () => {
     const pdfUrl = []
     if (!certificates) return
@@ -79,19 +97,8 @@ function DoctorRegister() {
       const response = await uploadBytes(certRef, cert)
       pdfUrl.push(await getDownloadURL(certRef))
     }
-    formik.setFieldValue('proof', pdfUrl)
+    formik.values.proof = [...pdfUrl]
   }
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-    uploadAvatar()
-    formik.handleSubmit()
-  }
-
-  useEffect(() => {
-    uploadProof()
-  }, [certificates])
-
 
 
   return (
@@ -100,7 +107,7 @@ function DoctorRegister() {
         <div className="w-8/12 rounded-xl mx-auto shadow-md p-10">
           <h2 className="text-2xl mb-4">Doctor Register Form</h2>
           {/* fname and lname */}
-          <form onSubmit={(e) => handleFormSubmit(e)}>
+          <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-2 gap-10 mb-5">
               <div>
                 <label htmlFor="fname">First Name</label>
@@ -196,8 +203,11 @@ function DoctorRegister() {
                   onBlur={formik.handleBlur}
                 >
                   <option value="">Choose Department..</option>
-                  <option value="nephro">nephro</option>
-                  <option value="cardio">cardio</option>
+                  {
+                    departments.map((dep, i) => (
+                      <option key={i} value={dep._id}>{dep.name}</option>
+                    ))
+                  }
                 </select>
                 {formik.touched.department && formik.errors.department && <p>{formik.errors.department}</p>}
 
@@ -239,13 +249,18 @@ function DoctorRegister() {
                   type="file"
                   name="image"
                   id="image"
-                  onChange={(e) => setAvatar(e.target.files[0])}
+                  onChange={(e) => {
+                    setAvatar(e.target.files[0])
+                    formik.setFieldValue('image', e.target.files[0])
+                  }}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.image && formik.errors.image && <p>{formik.errors.image}</p>}
               </div>
             </div>
-            <button type="submit">Register</button>
+            {!submitting &&
+              <button type="submit" className="border">Register</button>
+            }
           </form>
         </div>
       </div>

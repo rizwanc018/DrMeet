@@ -30,8 +30,7 @@ const doctorSchema = new mongoose.Schema({
         default: false
     },
     department: {
-        // type: mongoose.Schema.Types.ObjectId,
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Department"
     },
     degree: {
