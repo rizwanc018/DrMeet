@@ -2,15 +2,22 @@ import { useFormik } from "formik"
 import * as Yup from 'yup'
 import { GrAttachment } from "react-icons/gr";
 import { storage } from "../../config/firebase";
-import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from "uuid"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 function DoctorRegister() {
 
   const [avatar, setAvatar] = useState(null)
+  const [certificates, setCertificates] = useState([])
+
+
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const baseUrl = import.meta.env.VITE_BACKEND_URL
+  console.log("🚀 ~ file: DoctorRegisterForm.jsx:20 ~ DoctorRegister ~ baseUrl:", baseUrl)
 
   const formik = useFormik({
     initialValues: {
@@ -20,9 +27,10 @@ function DoctorRegister() {
       mobile: "9087654321",
       password: "1",
       confirmPassword: "1",
-      department: "1",
+      department: "MBBS",
       degree: "1",
-      image: ""
+      image: "",
+      proof: []
     },
     validationSchema: Yup.object({
       fname: Yup.string().required("Required"),
@@ -34,58 +42,58 @@ function DoctorRegister() {
       department: Yup.string().required("Choose department"),
       degree: Yup.string().required("Required"),
       image: Yup.string().required("Required"),
+      proof: Yup.array().min(1, 'Please upload your proof'),
 
     }),
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: async (values) => {
+      // setTmp(await axios.post(`${baseUrl}/api/doc/reg`, {body : values}))
+      console.log('>>>>>>>>>>>')
+      const response = await axios.post(`${baseUrl}/doc/reg`, {...values})
+      console.log("🚀 ~ file: DoctorRegisterForm.jsx:48 ~ onSubmit: ~ response:", response)
     }
   })
 
+
   const uploadAvatar = async () => {
-    if(!avatar) return
+    if (!avatar) return
     const avatarRef = ref(storage, `doctorImages/${avatar.name + v4()}`)
     const response = await uploadBytes(avatarRef, avatar)
     const imgUrl = await getDownloadURL(avatarRef);
     formik.setFieldValue('image', imgUrl)
+  }
 
+  const handleProofOnChange = e => {
+    const uploaded = [...certificates]
+    for (const file of e.target.files) {
+      uploaded.push(file)
+    }
+    setCertificates(uploaded)
+    uploadProof()
+  }
+
+  const uploadProof = async () => {
+    const pdfUrl = []
+    if (!certificates) return
+    for (const cert of certificates) {
+      const certRef = ref(storage, `doctorProof/${cert.name + v4()}`)
+      const response = await uploadBytes(certRef, cert)
+      pdfUrl.push(await getDownloadURL(certRef))
+    }
+    formik.setFieldValue('proof', pdfUrl)
   }
 
   const handleFormSubmit = (e) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>');
     e.preventDefault()
     uploadAvatar()
-    console.log('<<<<<<<<<<<<<<<<<<');
     formik.handleSubmit()
   }
 
-  console.log(formik.errors)
+  useEffect(() => {
+    uploadProof()
+  }, [certificates])
 
 
-  // <div className="grid ustify-center items-center h-screen">
-  //   <form
-  //     onSubmit={formik.handleSubmit}
-  //     className='flex flex-col'>
-  //     <input
-  //       id='fname'
-  //       name='fname'
-  //       placeholder='FirstName'
-  //       type="text"
-  //       value={formik.values.fname}
-  //       onChange={formik.handleChange}
-  //       onBlur={formik.handleBlur}
-  //     />
-  //     {formik.touched.fname && formik.errors.fname && <p>{formik.errors.fname}</p>}
-  //     <input
-  //       id='lname'
-  //       name='lname'
-  //       placeholder='LastName'
-  //       type="text"
-  //       value={formik.values.lname}
-  //       onChange={formik.handleChange}
-  //     />
-  //     <button type="submit">Submit</button>
-  //   </form>
-  // </div>
+
   return (
     <div className="min-h-screen py-10">
       <div className="container mx-auto">
@@ -216,8 +224,9 @@ function DoctorRegister() {
                   type="file"
                   name="proof"
                   id="proof"
-                  value={formik.values.proof}
-                  onChange={formik.handleChange}
+                  // value={formik.values.proof}
+                  multiple
+                  onChange={e => handleProofOnChange(e)}
                   onBlur={formik.handleBlur}
                   className="ps-8 mt-8"
                 />

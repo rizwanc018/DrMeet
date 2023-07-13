@@ -7,11 +7,11 @@ const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
         const { fname, lname, email, password, mobile, department, degree, proof, image } = req.body
 
-        const isExist = await Doctor.exists({ email })
-        if (isExist) {
-            res.status(409)
-            throw new Error(`Email already exist`)
-        }
+        // const isExist = await Doctor.exists({ email })
+        // if (isExist) {
+        //     res.status(409)
+        //     throw new Error(`Email already exist`)
+        // }
 
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
@@ -22,7 +22,6 @@ const doctorController = {
     authDoctor: asyncHandler(async (req, res) => {
         const { email, password } = req.body
         const doctor = await Doctor.findOne({ email }).populate('department', 'name -_id')
-        console.log("🚀 ~ file: doctorController.js:25 ~ authDoctor:asyncHandler ~ doctor:", doctor)
 
         if(doctor && !doctor.approved){
             res.status(401)

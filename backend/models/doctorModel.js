@@ -30,7 +30,8 @@ const doctorSchema = new mongoose.Schema({
         default: false
     },
     department: {
-        type: mongoose.Schema.Types.ObjectId,
+        // type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "Department"
     },
     degree: {
@@ -38,7 +39,7 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
     proof: {
-        type: String,
+        type: Array,
         required: true
     },
     image: String,
