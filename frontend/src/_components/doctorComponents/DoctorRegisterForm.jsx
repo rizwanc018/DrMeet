@@ -7,6 +7,7 @@ import { v4 } from "uuid"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
+import { Link } from "react-router-dom";
 
 
 function DoctorRegister() {
@@ -106,7 +107,7 @@ function DoctorRegister() {
   return (
     <div className="min-h-screen py-10">
       <div className="container mx-auto">
-        <div className="w-8/12 rounded-xl mx-auto shadow-md p-10">
+        <div className="w-8/12 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
           <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
@@ -266,6 +267,7 @@ function DoctorRegister() {
             }
             {err && <p className="mx-auto w-full text-center error mt-4 text-xl">{err}</p>}
           </form>
+          <p className="mt-6">Already Registered? <Link to='/doctor/login' className="text-primary-600">Login</Link> </p>
         </div>
       </div>
     </div>

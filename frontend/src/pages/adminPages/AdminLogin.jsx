@@ -15,7 +15,7 @@ function AdminLogin() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 ">
-      <div className="w-1/4 mx-auto p-4 bg-white rounded shadow border-solid border-2 border-primary">
+      <div className="w-1/4 mx-auto p-4 bg-white rounded shadow-xl border-solid border-2 border-primary">
         <img src="/assets/logo.png" alt="Logo" className="w-16 mx-auto mb-4" />
         <h1 className='mb-5 font-bold text-red-800'>Admin Login</h1>
         <form onSubmit={(e) => submitHandler(e)}>

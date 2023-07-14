@@ -24,6 +24,7 @@
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
+    "react-table": "^7.8.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
