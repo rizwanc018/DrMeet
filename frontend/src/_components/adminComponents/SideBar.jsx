@@ -16,7 +16,7 @@ function SideBar() {
             title: 'Doctors', icon: <FaUserDoctor />, link: '#', submenu: true,
             submenuItems: [
                 { title: 'Doctors', link: '#' },
-                { title: 'Requests', link: '#' }
+                { title: 'Requests', link: '/admin/doctor-requests' }
             ]
         },
         { title: 'Patients', icon: <FaUserInjured />, link: '#' },
@@ -35,7 +35,9 @@ function SideBar() {
                     <>
                         <li key={index} className="text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
                             <span className="text-2xl block float-left" >{menu.icon}</span>
-                            <NavLink className={`text-md font-medium ${!open && 'hidden'}`} to={menu.link}>{menu.title}</NavLink>
+                            <Link className={`text-md font-medium ${!open && 'hidden'} `} to={menu.link}>
+                                {menu.title}
+                                </Link>
                             {menu.submenu && open && (
                                 <AiOutlineDown className={`ms-auto ${submenuOpen && 'rotate-180'}`} onClick={() => setSubmenuOpen(!submenuOpen)} />
                             )}

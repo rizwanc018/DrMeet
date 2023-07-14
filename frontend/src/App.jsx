@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AdminHome, AdminLogin, Departments, AdminLayout } from './pages/adminPages'
+import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors } from './pages/adminPages'
 import { DoctorHome, DoctorLogin, DoctorRegister } from './pages/doctorPages';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="" element={<AdminHome />} />
           <Route path="departments" element={<Departments />} />
+          <Route path="doctor-requests" element={<RegisteredDoctors />} />
         </Route>
 
         <Route path="/doctor" >
