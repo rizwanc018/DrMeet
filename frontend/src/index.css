@@ -32,5 +32,8 @@
   .error {   
     @apply text-red-700 text-sm
   }
+  .success {   
+    @apply text-emerald-700 text-sm
+  }
   /* ... */
 }

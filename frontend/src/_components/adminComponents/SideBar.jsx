@@ -3,6 +3,7 @@ import { BsArrowLeftShort } from "react-icons/bs"
 import { RiDashboardFill } from "react-icons/ri";
 import { AiOutlineLogout, AiOutlineSchedule, AiOutlineDown } from "react-icons/ai";
 import { FaUserDoctor, FaHospitalUser, FaUserInjured } from "react-icons/fa6";
+import { Link, NavLink } from "react-router-dom";
 
 
 function SideBar() {
@@ -19,7 +20,7 @@ function SideBar() {
             ]
         },
         { title: 'Patients', icon: <FaUserInjured />, link: '#' },
-        { title: 'Departments', icon: <FaHospitalUser />, link: '#' },
+        { title: 'Departments', icon: <FaHospitalUser />, link: '/admin/departments' },
         { title: 'Appointments', icon: <AiOutlineSchedule />, link: '#' },
         { title: 'Logout', icon: <AiOutlineLogout />, link: '#' }
     ]
@@ -34,7 +35,7 @@ function SideBar() {
                     <>
                         <li key={index} className="text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
                             <span className="text-2xl block float-left" >{menu.icon}</span>
-                            <a className={`text-md font-medium ${!open && 'hidden'}`} href={menu.link}>{menu.title}</a>
+                            <NavLink className={`text-md font-medium ${!open && 'hidden'}`} to={menu.link}>{menu.title}</NavLink>
                             {menu.submenu && open && (
                                 <AiOutlineDown className={`ms-auto ${submenuOpen && 'rotate-180'}`} onClick={() => setSubmenuOpen(!submenuOpen)} />
                             )}

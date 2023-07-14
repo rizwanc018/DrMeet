@@ -5,10 +5,12 @@ import { CgOptions } from "react-icons/cg";
 
 
 
-function DepartmentsTable() {
+function DepartmentsTable( props ) {
+    console.log("🚀 ~ file: DepartmentsTable.jsx:9 ~ DepartmentsTable ~ props:", props)
     const baseUrl = import.meta.env.VITE_BACKEND_URL
 
     const [data, setData] = useState([])
+    
 
     const getAllDepartments = async () => {
         const response = await axios.get(`${baseUrl}/admin/department`)
@@ -17,7 +19,7 @@ function DepartmentsTable() {
 
     useEffect(() => {
         getAllDepartments()
-    }, [])
+    },[props.show])
 
 
 
@@ -43,7 +45,7 @@ function DepartmentsTable() {
                                         <button className='border-2 border-primary p-1 px-6 rounded text-emerald-600'>
                                             active</button>
                                     </td>
-                                    <td className='border px-8 py-4 cursor-pointer text-gray-500'><CgOptions className='mx-auto'/></td>
+                                    <td className='border px-8 py-4 cursor-pointer text-gray-500'><CgOptions className='mx-auto' /></td>
                                 </tr>
                             ))
                         }
