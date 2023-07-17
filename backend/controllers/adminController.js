@@ -40,7 +40,13 @@ const adminController = {
             res.status(400)
             throw new Error('Invalid username or password')
         }
-
+    }),
+    logout: asyncHandler(async (req, res) => {
+        res.cookie('jwt', '', {
+            httpOnly: true,
+            expires: new Date(0)
+        })
+        res.status(200).json({ msg: 'Logged out successfuly' })
     }),
 
 }

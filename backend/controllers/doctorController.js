@@ -24,7 +24,7 @@ const doctorController = {
         const doctor = await Doctor.findOne({ email }).populate('department', 'name -_id')
 
         if (doctor && !doctor.approved) {
-            res.status(403)
+            res.status(401)
             throw new Error('Access denied: Approval pending')
         }
 
@@ -43,6 +43,13 @@ const doctorController = {
             res.status(400)
             throw new Error('Invalid username or password')
         }
+    }),
+    logout: asyncHandler(async (req, res) => {
+        res.cookie('jwt', '', {
+            httpOnly: true,
+            expires: new Date(0)
+        })
+        res.status(200).json({msg: 'Logged out successfuly'})
     }),
     getUnapprovedDoctors: asyncHandler(async (req, res) => {
         const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')
