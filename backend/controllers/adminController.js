@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import asyncHandler from 'express-async-handler'
 import Admin from '../models/adminModel.js'
-import { generateAdminJwtToken } from '../utils/generateJWT.js'
+import { generateJWT } from '../utils/generateJWT.js'
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -13,7 +13,7 @@ const adminController = {
         const adminData = await Admin.create({ email, password: hash })
 
         if (adminData) {
-            generateAdminJwtToken(res, adminData._id)
+            generateJWT(res, adminData._id, 10)
             res.status(201).json({
                 _id: adminData._id,
                 name: adminData.name,
@@ -30,7 +30,7 @@ const adminController = {
         const admin = await Admin.findOne({ email })
 
         if (admin && (await admin.matchPassword(password))) {
-            generateAdminJwtToken(res, admin._id)
+            generateJWT(res, admin._id, 10)
             res.status(201).json({
                 _id: admin._id,
                 name: admin.name,

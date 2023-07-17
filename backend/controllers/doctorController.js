@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcrypt'
 import Doctor from '../models/doctorModel.js'
-import { generateDoctorJWT } from '../utils/generateJWT.js'
+import { generateJWT } from '../utils/generateJWT.js'
 
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
@@ -24,12 +24,12 @@ const doctorController = {
         const doctor = await Doctor.findOne({ email }).populate('department', 'name -_id')
 
         if (doctor && !doctor.approved) {
-            res.status(401)
+            res.status(403)
             throw new Error('Access denied: Approval pending')
         }
 
         if (doctor && (await doctor.matchPassword(password))) {
-            generateDoctorJWT(res, doctor._id)
+            generateJWT(res, doctor._id, 30)
             res.status(201).json({
                 _id: doctor._id,
                 fname: doctor.fname,
