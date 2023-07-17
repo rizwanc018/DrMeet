@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken"
 import asyncHandler from "express-async-handler"
 // import User from "../models/User.js"
 import Admin from "../models/adminModel.js"
+import Doctor from "../models/doctorModel.js"
 
 const verifyUser = asyncHandler(async (req, res, next) => {
     // const token = req.cookies.jwt
@@ -21,11 +22,27 @@ const verifyUser = asyncHandler(async (req, res, next) => {
     // }
 })
 
+const verifyDoctor = asyncHandler(async (req, res, next) => {
+    const token = req.cookies.jwt
+    if (token) {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        req.doctor = await Doctor.findById(decoded.id).select('-password')
+        if (req.doctor.isDoctor) next()
+        else {
+            res.status(401);
+            throw new Error('Not authorized, Invalid token');
+        }
+    } else {
+        res.status(401)
+        throw new Error('Not authorized, no token')
+    }
+})
+
 const verifyAdmin = asyncHandler(async (req, res, next) => {
     const token = req.cookies.jwt
     if (token) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.admin = await Admin.findById(decoded.adminId).select('-password')
+        req.admin = await Admin.findById(decoded.id).select('-password')
         if (req.admin.isAdmin) next()
         else {
             res.status(401);
@@ -37,4 +54,4 @@ const verifyAdmin = asyncHandler(async (req, res, next) => {
     }
 })
 
-export { verifyUser, verifyAdmin }
+export { verifyUser, verifyAdmin, verifyDoctor }

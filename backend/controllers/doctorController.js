@@ -5,6 +5,7 @@ import { generateJWT } from '../utils/generateJWT.js'
 
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
+
         const { fname, lname, email, password, mobile, department, degree, proof, image } = req.body
 
         const isExist = await Doctor.exists({ email })
@@ -49,21 +50,10 @@ const doctorController = {
             httpOnly: true,
             expires: new Date(0)
         })
-        res.status(200).json({msg: 'Logged out successfuly'})
+        res.status(200).json({ msg: 'Logged out successfuly' })
     }),
-    getUnapprovedDoctors: asyncHandler(async (req, res) => {
-        const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')
-        res.status(200).json({ unapprovedDoctors })
-
-    }),
-    approveDoctor: asyncHandler(async (req, res) => {
-        const id = req.params.id
-        try {
-            const response = await Doctor.findByIdAndUpdate(id, { approved: true }, { new: true })
-            res.status(200).json({ msg: "Approved succesfully" })
-        } catch (error) {
-            throw new Error("Couldn't approve. Something wrong")
-        }
+    getProfile: asyncHandler(async (req, res) => {
+        res.status(200).json({ msg: req.doctor })
     })
 }
 

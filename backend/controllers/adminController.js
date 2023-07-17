@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import asyncHandler from 'express-async-handler'
 import Admin from '../models/adminModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
+import Doctor from '../models/doctorModel.js'
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -26,6 +27,7 @@ const adminController = {
 
     }),
     authAdmin: asyncHandler(async (req, res) => {
+
         const { email, password } = req.body
         const admin = await Admin.findOne({ email })
 
@@ -46,7 +48,21 @@ const adminController = {
             httpOnly: true,
             expires: new Date(0)
         })
-        res.status(200).json({ msg: 'Logged out successfuly' })
+        res.status(200).json({ msg: 'Admin logged out successfuly' })
+    }),
+    getUnapprovedDoctors: asyncHandler(async (req, res) => {
+        const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')
+        res.status(200).json({ unapprovedDoctors })
+
+    }),
+    approveDoctor: asyncHandler(async (req, res) => {
+        const id = req.params.id
+        try {
+            const response = await Doctor.findByIdAndUpdate(id, { approved: true }, { new: true })
+            res.status(200).json({ msg: "Approved succesfully" })
+        } catch (error) {
+            throw new Error("Couldn't approve. Something wrong")
+        }
     }),
 
 }
