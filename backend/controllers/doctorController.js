@@ -17,7 +17,7 @@ const doctorController = {
         const hash = await bcrypt.hash(password, salt)
         const response = await Doctor.create({ fname, lname, email, password: hash, mobile, department, degree, proof, image })
 
-        if (response) res.status(200).json({ msg: `Registration successfull, kindly wait for admin approval` })
+        if (response) res.status(200).json({ msg: `Registration successfull. Your request will be approved in 2 business days` })
     }),
     authDoctor: asyncHandler(async (req, res) => {
         const { email, password } = req.body
@@ -48,6 +48,15 @@ const doctorController = {
         const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')
         res.status(200).json({ unapprovedDoctors })
 
+    }),
+    approveDoctor: asyncHandler(async (req, res) => {
+        const id = req.params.id
+        try {
+            const response = await Doctor.findByIdAndUpdate(id, { approved: true }, { new: true })
+            res.status(200).json({ msg: "Approved succesfully" })
+        } catch (error) {
+            throw new Error("Couldn't approve. Something wrong")
+        }
     })
 }
 

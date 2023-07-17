@@ -31,12 +31,10 @@ const adminController = {
 
         if (admin && (await admin.matchPassword(password))) {
             generateAdminJwtToken(res, admin._id)
-
             res.status(201).json({
                 _id: admin._id,
                 name: admin.name,
                 isAdmin: admin.isAdmin
-
             })
         } else {
             res.status(400)

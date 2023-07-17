@@ -7,7 +7,7 @@ import { v4 } from "uuid"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function DoctorRegister() {
@@ -17,7 +17,9 @@ function DoctorRegister() {
   const [departments, setDepartments] = useState([])
   const [submitting, setSubmitting] = useState(false)
   const [err, setErr] = useState()
+  const [loginSuccess, setLoginSuccess] = useState()
 
+  const navigate = useNavigate()
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const baseUrl = import.meta.env.VITE_BACKEND_URL
@@ -31,6 +33,8 @@ function DoctorRegister() {
   useEffect(() => {
     getAllDepartments()
   }, [])
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -49,20 +53,26 @@ function DoctorRegister() {
       fname: Yup.string().required("Required"),
       lname: Yup.string().required("Required"),
       email: Yup.string().email('Invalid email').required('Required'),
-      mobile: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+      mobile: Yup.string().required('Required'),
       password: Yup.string().required('Password is required'),
       confirmPassword: Yup.string().required('Passwords must match').oneOf([Yup.ref('password')], 'Passwords must match'),
       department: Yup.string().required("Choose department"),
       degree: Yup.string().required("Required"),
-      proof: Yup.array().min(1, 'Please upload your proof'),
+      proof: Yup.array().min(1, 'No certificates selected'),
       image: Yup.mixed().required('No image selected')
     }),
     onSubmit: async (values) => {
       setSubmitting(true)
+      setErr('')
+      setLoginSuccess('')
       await uploadAvatar()
       await uploadProof()
       try {
         const response = await axios.post(`${baseUrl}/doc/reg`, { ...values })
+        setLoginSuccess(response.data.msg)
+        setTimeout(() => {
+          navigate('/')
+        }, 3000);
       } catch (error) {
         setErr(error.response.data.err)
       }
@@ -159,7 +169,7 @@ function DoctorRegister() {
                   type="tel"
                   name="mobile"
                   id="mobile"
-                  placeholder="LastName"
+                  placeholder="Mobile"
                   value={formik.values.mobile}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -263,8 +273,9 @@ function DoctorRegister() {
             </div>
             {!submitting ?
               <button className='border-2 rounded px-5 py-2  border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit" >Register</button>
-              : <Spinner className='ps-72'/>
+              : <Spinner className='ps-72' />
             }
+            {loginSuccess && <p className="mx-auto w-full text-center text-primary-600 mt-4 text-xl">{loginSuccess}</p>}
             {err && <p className="mx-auto w-full text-center error mt-4 text-xl">{err}</p>}
           </form>
           <p className="mt-6">Already Registered? <Link to='/doctor/login' className="text-primary-600">Login</Link> </p>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs"
 import { RiDashboardFill } from "react-icons/ri";
 import { AiOutlineLogout, AiOutlineSchedule, AiOutlineDown } from "react-icons/ai";
@@ -32,12 +32,12 @@ function SideBar() {
             />
             <ul>
                 {Menus.map((menu, index) => (
-                    <>
-                        <li key={index} className="text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
+                    <React.Fragment key={index} >
+                        <li className="text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
                             <span className="text-2xl block float-left" >{menu.icon}</span>
                             <Link className={`text-md font-medium ${!open && 'hidden'} `} to={menu.link}>
                                 {menu.title}
-                                </Link>
+                            </Link>
                             {menu.submenu && open && (
                                 <AiOutlineDown className={`ms-auto ${submenuOpen && 'rotate-180'}`} onClick={() => setSubmenuOpen(!submenuOpen)} />
                             )}
@@ -51,7 +51,7 @@ function SideBar() {
                                 ))}
                             </ul>
                         )}
-                    </>
+                    </React.Fragment>
                 ))}
             </ul>
         </div>

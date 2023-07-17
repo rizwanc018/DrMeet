@@ -14,6 +14,7 @@ router.post('/auth', adminController.authAdmin)
 router.get('/department', departmentController.getAllDepartments)
 router.post('/department/add', departmentController.addDepartment)
 router.get('/doctors/unapproved', doctorController.getUnapprovedDoctors)
+router.get('/approve/doctor/:id', doctorController.approveDoctor)
 
 
 

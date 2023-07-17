@@ -12,9 +12,15 @@ function Header() {
 
                 </div>
             </div>
-            <div className='flex items-center'>
+            {/* <div className='flex items-center'>
                 <DropDown />
-            </div>
+            </div> */}
+            <ul className='md:flex md:items-center'>
+                <li className='md:ml-8'><a className='hover:text-primary duration-200' href="">Doctors</a></li>
+                <li className='md:ml-8'><a className='hover:text-primary duration-200' href="">Departments</a></li>
+                <li className='md:ml-8'><Link className='hover:text-primary duration-200' to="/doctor/profile">Profile</Link></li>
+                <DropDown />
+            </ul>
         </nav>
 
     )

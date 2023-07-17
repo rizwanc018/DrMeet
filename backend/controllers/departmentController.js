@@ -8,9 +8,8 @@ function capitalize(string) {
 const departmentController = {
     addDepartment: asyncHandler(async (req, res) => {
         let { name, description } = req.body
-        console.log("🚀 ~ file: departmentController.js:11 ~ addDepartment:asyncHandler ~ req.body:", req.body)
         name = capitalize(name)
-        const isExist = await Department.exists({ name: { $regex: new RegExp(name, "i") } })
+        const isExist = await Department.exists({ name: { $regex: new RegExp(`\\b${name}\\b`, "i") } })
 
         if (isExist) {
             res.status(409)

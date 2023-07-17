@@ -38,7 +38,7 @@ function DepartmentsTable( props ) {
                     <tbody>
                         {
                             data.map((row, i) => (
-                                <tr key={i + 1}>
+                                <tr key={i + 1} className='even:bg-primary-100'>
                                     <td className='border px-8 py-4'>{i + 1}</td>
                                     <td className='border px-8 py-4'>{row.name}</td>
                                     <td className='border px-8 py-4'>

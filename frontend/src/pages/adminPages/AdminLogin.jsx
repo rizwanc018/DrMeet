@@ -1,16 +1,42 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function AdminLogin() {
 
+  const baseUrl = import.meta.env.VITE_BACKEND_URL
+
   const [email, setEmail] = useState('')
+  const [emailValid, setEmailValid] = useState(true)
+
   const [password, setPassword] = useState('')
+  const [passwordValid, setPasswordValid] = useState(true)
+
+  const [loginErr, setLoginErr] = useState()
+
+  const navigate = useNavigate()
+
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    const body = { email, password }
-    let result = await axios.post('/api/admin/auth', body)
-    console.log("🚀 ~ file: AdminLogin.jsx:13 ~ submitHandler ~ result:", result)
+    try {
+      if (email && password) {
+        setEmailValid(true)
+        setPasswordValid(true)
+        const body = { email, password }
+        let result = await axios.post(`${baseUrl}/admin/auth`, body, { withCredentials: true })
+        if (result) navigate('/admin')
+      } else {
+        if (email.trim() === '')
+          setEmailValid(false)
+        if (password.trim() === '')
+          setPasswordValid(false)
+
+      }
+    } catch (error) {
+      console.log(error.response.data.err)
+      setLoginErr(error.response.data.err)
+    }
   }
 
   return (
@@ -29,9 +55,11 @@ function AdminLogin() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
+                setEmailValid(true)
               }}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
             />
+            {!emailValid && <p className='text-red-600 text-sm'>Invalid Email</p>}
           </div>
 
           <div className="mb-4">
@@ -44,9 +72,11 @@ function AdminLogin() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value)
+                setPasswordValid(true)
               }}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
             />
+            {!passwordValid && <p className='text-red-600 text-sm'>Invalid Password</p>}
           </div>
 
           <button
@@ -55,6 +85,8 @@ function AdminLogin() {
           >
             Sign In
           </button>
+          {loginErr && <div className='w-full text-center'><p className='text-red-600 text-sm'>{loginErr}</p></div>}
+
         </form>
       </div>
     </div>

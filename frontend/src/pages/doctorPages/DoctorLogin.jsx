@@ -1,8 +1,8 @@
-import React from 'react'
+import { DoctorLoginForm } from "../../_components/doctorComponents"
 
 function DoctorLogin() {
   return (
-    <div>DoctorLogin</div>
+    <DoctorLoginForm />
   )
 }
 

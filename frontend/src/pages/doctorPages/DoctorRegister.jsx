@@ -4,7 +4,7 @@ import { Header, DoctorRegisterForm } from '../../_components/doctorComponents'
 function DoctorRegister() {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <DoctorRegisterForm />
         </>
     )
