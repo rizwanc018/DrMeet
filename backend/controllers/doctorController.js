@@ -50,7 +50,7 @@ const doctorController = {
             httpOnly: true,
             expires: new Date(0)
         })
-        res.status(200).json({ msg: 'Logged out successfuly' })
+        res.status(200).json({ msg: 'Logged out successfuly', success: true})
     }),
     getProfile: asyncHandler(async (req, res) => {
         res.status(200).json({ msg: req.doctor })

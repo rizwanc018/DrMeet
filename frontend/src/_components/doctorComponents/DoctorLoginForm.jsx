@@ -36,7 +36,7 @@ function DoctorLoginForm() {
             setErr('')
 
             try {
-                const response = await axios.post(`/api/doc/auth`, { ...values }, { withCredentials: true })
+                const response = await axios.post(`/api/doc/auth`, { ...values })
                 dispatch(setCredentials({ ...response.data }))
                 navigate('/doctor')
             } catch (error) {
