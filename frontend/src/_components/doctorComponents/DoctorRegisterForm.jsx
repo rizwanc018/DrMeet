@@ -47,7 +47,9 @@ function DoctorRegister() {
       department: "",
       degree: "",
       image: "",
-      proof: []
+      proof: [],
+      experience: "",
+      bio:""
     },
     validationSchema: Yup.object({
       fname: Yup.string().required("Required"),
@@ -59,7 +61,9 @@ function DoctorRegister() {
       department: Yup.string().required("Choose department"),
       degree: Yup.string().required("Required"),
       proof: Yup.array().min(1, 'No certificates selected'),
-      image: Yup.mixed().required('No image selected')
+      image: Yup.mixed().required('No image selected'),
+      experience: Yup.number().required('Number is required').min(0,'Negetive numbers not allowed'),
+      bio: Yup.string().required('Bio is required')
     }),
     onSubmit: async (values) => {
       setSubmitting(true)
@@ -238,6 +242,34 @@ function DoctorRegister() {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.degree && formik.errors.degree && <p className="error">{formik.errors.degree}</p>}
+              </div>
+              {/* Experience */}
+              <div>
+                <label htmlFor="experience">Experience</label>
+                <input
+                  type="number"
+                  name="experience"
+                  id="experience"
+                  placeholder="Yrs"
+                  value={formik.values.experience}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.experience && formik.errors.experience && <p className="error">{formik.errors.experience}</p>}
+              </div>
+              {/* bio */}
+              <div className="col-span-2">
+                <label htmlFor="bio">Bio</label>
+                <textarea className="w-full border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600"
+                  type="text"
+                  name="bio"
+                  id="bio"
+                  placeholder="Bio"
+                  value={formik.values.bio}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.bio && formik.errors.bio && <p className="error">{formik.errors.bio}</p>}
               </div>
               {/* Proof */}
               <div className="relative">

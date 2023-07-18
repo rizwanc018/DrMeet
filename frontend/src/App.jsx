@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors } from './pages/adminPages'
-import { DoctorHome, DoctorLogin, DoctorRegister, DoctorProfile, DoctorLayout } from './pages/doctorPages';
+import { DoctorHome, DoctorLogin, DoctorRegister, DoctorLayout } from './pages/doctorPages';
 import { HomePage } from './pages/userPages';
 
 function App() {
@@ -17,10 +17,9 @@ function App() {
         </Route>
 
         <Route path="/doctor" element={<DoctorLayout />}>
-          <Route path="" element={<DoctorHome />} />
           <Route path="login" element={<DoctorLogin />} />
           <Route path="register" element={<DoctorRegister />} />
-          <Route path="profile/:id" element={<DoctorProfile />} />
+          <Route path="" element={<DoctorHome />} />
         </Route>
 
         <Route path="/" element={<HomePage />} />

@@ -19,7 +19,7 @@ function DropDown() {
 
     return (
         <div className='relative flex flex-col'>
-            <button className='md:ml-8'
+            <button className='md:ml-6'
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <img src="/assets/dropDown.svg" className={`${isOpen && 'rotate-90'} duration-500`} alt="" />

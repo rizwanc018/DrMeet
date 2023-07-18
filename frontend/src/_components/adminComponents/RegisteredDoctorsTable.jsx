@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTable } from 'react-table';
-import { FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const RegisteredDoctorsTable = ({ data, handleApprove }) => {
