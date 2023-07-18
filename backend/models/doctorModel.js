@@ -42,9 +42,19 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
     image: String,
-    leave: [{
-        type: Date
-    }]
+    schedule: [
+        {
+            day: String,
+            startTime: Date,
+            endTime: Date,
+            slot: Number 
+        }
+    ],
+    notification: {
+        type: Array
+    },
+    experience: Number,
+    bio: String
 });
 
 doctorSchema.methods.matchPassword = async function (enteredPassword) {

@@ -6,7 +6,7 @@ import { generateJWT } from '../utils/generateJWT.js'
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
 
-        const { fname, lname, email, password, mobile, department, degree, proof, image } = req.body
+        const { fname, lname, email, password, mobile, department, degree, proof, image, bio, experience } = req.body
 
         const isExist = await Doctor.exists({ email })
         if (isExist) {
@@ -16,7 +16,7 @@ const doctorController = {
 
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
-        const response = await Doctor.create({ fname, lname, email, password: hash, mobile, department, degree, proof, image })
+        const response = await Doctor.create({ fname, lname, email, password: hash, mobile, department, degree, proof, bio, image, experience })
 
         if (response) res.status(200).json({ msg: `Registration successfull. Your request will be approved in 2 business days` })
     }),
@@ -38,7 +38,9 @@ const doctorController = {
                 degree: doctor.degree,
                 department: doctor.department.name,
                 image: doctor.image,
-                isDoctor: doctor.isDoctor
+                isDoctor: doctor.isDoctor,
+                experience: doctor.experience,
+                bio: doctor.bio
             })
         } else {
             res.status(400)
@@ -50,7 +52,7 @@ const doctorController = {
             httpOnly: true,
             expires: new Date(0)
         })
-        res.status(200).json({ msg: 'Logged out successfuly', success: true})
+        res.status(200).json({ msg: 'Logged out successfuly', success: true })
     }),
     getProfile: asyncHandler(async (req, res) => {
         res.status(200).json({ msg: req.doctor })

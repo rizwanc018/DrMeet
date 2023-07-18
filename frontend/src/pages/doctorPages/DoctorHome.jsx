@@ -1,8 +1,11 @@
-import React from 'react'
+import { useState } from 'react'
+
 
 function DoctorHome() {
   return (
-    <div>DoctorHome</div>
+    <div>
+    Doctor  Home
+    </div>
   )
 }
 

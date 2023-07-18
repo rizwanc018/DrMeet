@@ -1,8 +1,7 @@
 import React from 'react'
 import AddButton from '../AddButton'
 
-const Hero = ({ userInfo }) => {
-
+const Hero = ({ userInfo, setShowModal }) => {
 
     return (
         <div className='flex items-center p-4 bg-primary-100 shadow-md  my-4 mx-14 rounded '>
@@ -22,7 +21,7 @@ const Hero = ({ userInfo }) => {
                     </button>
                     <button className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Appointments
                     </button>
-                    <AddButton text={'Add Schedule'} />
+                    <AddButton text={'Add Schedule'} setShowModal={setShowModal} />
                 </div>
             </div>
         </div>
