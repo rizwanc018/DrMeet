@@ -24,8 +24,9 @@ const CreateSchedule = ({ setShowModal }) => {
                             </button>
                         </div>
                         {/*body*/}
-                        <AddScheduleForm />
-
+                        <div className='p-8'>
+                            <AddScheduleForm />
+                        </div>
                     </div>
                 </div>
             </div>

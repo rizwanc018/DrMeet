@@ -24,7 +24,8 @@
   input[type='radio'] ,
   select[multiple] ,
   select ,
-  textarea {
+  textarea
+   {
     @apply w-full border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600
   }
 }
@@ -38,3 +39,7 @@
   }
   /* ... */
 }
+
+/* .ant-col {
+  border: 2px solid red;
+} */

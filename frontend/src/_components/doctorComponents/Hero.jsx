@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddButton from '../AddButton'
+import { Link } from 'react-router-dom'
 
 const Hero = ({ userInfo, setShowModal }) => {
+    
 
     return (
         <div className='flex items-center p-4 bg-primary-100 shadow-md  my-4 mx-14 rounded '>
@@ -17,10 +19,10 @@ const Hero = ({ userInfo, setShowModal }) => {
             <div className='flex-1'>
                 <p>{userInfo.bio}</p>
                 <div className='flex gap-4 mt-2'>
-                    <button className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Schedule
-                    </button>
-                    <button className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Appointments
-                    </button>
+                    <Link to='/doctor' className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Schedules
+                    </Link>
+                    <Link to='/doctor/appointments' className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Appointments
+                    </Link>
                     <AddButton text={'Add Schedule'} setShowModal={setShowModal} />
                 </div>
             </div>

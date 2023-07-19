@@ -17,10 +17,10 @@ function DoctorLoginForm() {
 
     const { userInfo } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        if (userInfo && userInfo.isDoctor)
-            navigate('/doctor')
-    }, [userInfo])
+    // useEffect(() => {
+    //     if (userInfo && userInfo.isDoctor)
+    //         navigate('/doctor')
+    // }, [userInfo])
 
     const formik = useFormik({
         initialValues: {
@@ -38,6 +38,7 @@ function DoctorLoginForm() {
             try {
                 const response = await axios.post(`/api/doc/auth`, { ...values })
                 dispatch(setCredentials({ ...response.data }))
+                console.log("🚀 ", response.data)
                 navigate('/doctor')
             } catch (error) {
                 setErr(error.response.data.err)

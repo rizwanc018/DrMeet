@@ -4,7 +4,7 @@ import { useState } from 'react'
 function DoctorHome() {
   return (
     <div>
-    Doctor  Home
+    Schedules
     </div>
   )
 }
