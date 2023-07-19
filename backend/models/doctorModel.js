@@ -47,7 +47,7 @@ const doctorSchema = new mongoose.Schema({
             day: String,
             startTime: Date,
             endTime: Date,
-            slot: Number 
+            slots: Number 
         }
     ],
     notification: {

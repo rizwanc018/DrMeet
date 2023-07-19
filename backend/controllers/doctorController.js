@@ -30,7 +30,7 @@ const doctorController = {
         }
 
         if (doctor && (await doctor.matchPassword(password))) {
-            generateJWT(res, doctor._id, 30)
+            generateJWT(res, doctor._id, 24 * 60)
             res.status(201).json({
                 _id: doctor._id,
                 fname: doctor.fname,
@@ -56,6 +56,30 @@ const doctorController = {
     }),
     getProfile: asyncHandler(async (req, res) => {
         res.status(200).json({ msg: req.doctor })
+    }),
+    createScedule: asyncHandler(async (req, res) => {
+        const obj = {
+            day: req.body.day,
+            startTime: req.body.time[0],
+            endTime: req.body.time[1],
+            slots: req.body.slots
+        }
+        const id = req.doctor._id
+        const response = await Doctor.findByIdAndUpdate(id, { $push: { schedule: obj } }, { new: true })
+        res.status(200).json({ success: true, msg: 'Schedule created succesdfully', schedules: response.schedule })
+
+    }),
+    getSchedules: asyncHandler(async (req, res) => {
+        const schedules = req.doctor.schedule.sort((a, b) => {
+            return a.day - b.day
+        })
+        res.status(200).json({ success: true, schedules: req.doctor.schedule })
+    }),
+    deleSchedule: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const _id = req.params.id
+        const response = await Doctor.findByIdAndUpdate(docId, { $pull: { schedule: { _id } } }, { new: true })
+        res.status(200).json({ success: true, msg: 'Schedule removed succesfully', schedules: response.schedule })
     })
 }
 

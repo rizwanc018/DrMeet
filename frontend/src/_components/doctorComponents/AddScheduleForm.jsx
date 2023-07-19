@@ -3,13 +3,16 @@ import { Form, Button, TimePicker, Select, InputNumber, ConfigProvider } from "a
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from "react-redux";
+import { setSchedules } from '../../slices/scheduleSlice';
 
 
 const AddScheduleForm = () => {
-  const [submitting, setSubmitting] = useState(false)
-  const [value, onChange] = useState(['10:00', '11:00']);
 
   const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+  const { schedules } = useSelector(state => state.schedule)
 
   const dayOptions = [
     { value: 0, label: 'Sunday' },
@@ -23,7 +26,9 @@ const AddScheduleForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post('/api/doc/schedule', {...values}, {withCredentials: true})
+      const response = await axios.post('/api/doc/schedule', { ...values }, { withCredentials: true })
+      console.log("🚀 ~ file: AddScheduleForm.jsx:28 ~ onFinish ~ response:", response.data.schedules)
+      dispatch(setSchedules(response.data.schedules))
       toast.success(response.data.msg)
     } catch (error) {
       toast.error(error.response.data)
@@ -36,8 +41,8 @@ const AddScheduleForm = () => {
 
   return (
     <>
-    <Toaster />
-      <ConfigProvider 
+      <Toaster />
+      <ConfigProvider
         theme={{
           token: {
             colorPrimary: '#00b96b',

@@ -5,16 +5,15 @@ import { IoCloseSharp } from 'react-icons/io5'
 
 
 
-const ScheduleTable = ({ data }) => {
+const ScheduleTable = ({ handleDeleteSchedule, schedules}) => {
+    const data = schedules
     const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const columns = useMemo(
         () => [
-
             {
                 Header: 'Day',
                 accessor: 'day',
                 Cell: ({ cell: { value } }) => weekday[value]
-
             },
             {
                 Header: 'Time',
@@ -29,7 +28,7 @@ const ScheduleTable = ({ data }) => {
                 Header: '',
                 accessor: '_id',
                 Cell: ({ value }) => (
-                    <button className='border rounded' onClick={() => alert(value)}>
+                    <button className='border rounded' onClick={() => handleDeleteSchedule(value)}>
                         <IoCloseSharp className='text-red-800 font-bold' />
                     </button>
                 )
