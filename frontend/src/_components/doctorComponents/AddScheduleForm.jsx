@@ -23,7 +23,7 @@ const AddScheduleForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post('/api/doc/schedule/add', {...values}, {withCredentials: true})
+      const response = await axios.post('/api/doc/schedule', {...values}, {withCredentials: true})
       toast.success(response.data.msg)
     } catch (error) {
       toast.error(error.response.data)
