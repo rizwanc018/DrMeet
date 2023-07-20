@@ -17,10 +17,10 @@ const UserRegisterForm = () => {
 
   const { userInfo } = useSelector(state => state.auth)
 
-  useEffect(() => {
-      if (userInfo)
-          navigate('/')
-  }, [userInfo])
+  // useEffect(() => {
+  //     if (userInfo)
+  //         navigate('/')
+  // }, [userInfo])
 
 
   const formik = useFormik({

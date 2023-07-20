@@ -23,7 +23,7 @@ function DoctorHome() {
   const handleDeleteSchedule = async (id) => {
     console.log(id)
     try {
-      const response = await axios.delete(`/api/doc/schedule/${id}`)
+      const response = await axios.delete(`/api/doc/schedule/${id}`, { withCredentials: true })
       toast.success(response.data.msg)
       dispatch(setSchedules(response.data.schedules))
     } catch (error) {
@@ -33,7 +33,7 @@ function DoctorHome() {
   return (
     <div className='mx-5'>
       <Toaster />
-      {schedules && <ScheduleTable  schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />}
+      {schedules && <ScheduleTable schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />}
     </div>
   )
 }

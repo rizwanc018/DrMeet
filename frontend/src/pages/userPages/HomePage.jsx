@@ -1,9 +1,9 @@
-import {Header} from "../../_components/userComponents"
+import { Hero } from "../../_components/userComponents"
 
 function HomePage() {
     return (
         <>
-           User Home
+            <Hero />
         </>
     )
 }
