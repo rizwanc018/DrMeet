@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { DoctorCard } from "../../_components/userComponents"
+import { DoctorCard, SearchDoctor } from "../../_components/userComponents"
 import axios from "axios"
 import Spinner from "../../_components/Spinner"
 
@@ -18,8 +18,9 @@ const DoctorsPage = () => {
 
   return (
     <>
-      <div className="w-full mt-4 mb-6 py-4 bg-slate-100">
-        <h1 className="px-4 text-xl">Doctors Available</h1>
+      <div className=" flex justify-between items-center w-full mt-4 mb-6 p-4 px-12 bg-slate-100">
+        <h1 className="text-xl">Doctors Available</h1>
+        <SearchDoctor setDoctors={setDoctors}/>
       </div>
       <div className="flex flex-wrap gap-5 justify-center mx-8">
         {

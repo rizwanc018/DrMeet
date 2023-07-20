@@ -86,7 +86,8 @@ const doctorController = {
         res.status(200).json({ success: true, doctors })
     }),
     getDoctorsByName: asyncHandler(async (req, res) => {
-        const regx = req.query.q
+        const regx = req.query.q || '.*'
+        
         const doctors = await Doctor.find({
             approved: true,
             $or: [
