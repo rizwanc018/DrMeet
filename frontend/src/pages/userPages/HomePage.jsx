@@ -3,7 +3,7 @@ import {Header} from "../../_components/userComponents"
 function HomePage() {
     return (
         <>
-            <Header />
+           User Home
         </>
     )
 }

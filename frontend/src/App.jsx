@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors } from './pages/adminPages'
 import { DoctorHome, DoctorLogin, DoctorRegister, DoctorLayout, Appointments } from './pages/doctorPages';
-import { HomePage } from './pages/userPages';
+import { HomePage, UserLayout, UserLoginPage, UserRgisterPage } from './pages/userPages';
 
 function App() {
 
@@ -21,10 +21,13 @@ function App() {
           <Route path="login" element={<DoctorLogin />} />
           <Route path="register" element={<DoctorRegister />} />
           <Route path="appointments" element={<Appointments />} />
-
         </Route>
 
-        <Route path="/" element={<HomePage />} />
+        <Route path='/' element={<UserLayout />}>
+          <Route path="" element={<HomePage />} />
+          <Route path="login" element={<UserLoginPage />} />
+          <Route path="register" element={<UserRgisterPage />} />
+        </Route>
       </Routes>
     </Router>
   )

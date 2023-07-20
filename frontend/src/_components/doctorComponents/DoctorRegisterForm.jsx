@@ -21,7 +21,6 @@ function DoctorRegister() {
 
   const navigate = useNavigate()
 
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const baseUrl = import.meta.env.VITE_BACKEND_URL
 
 
@@ -122,7 +121,8 @@ function DoctorRegister() {
     <div className="min-h-screen py-10">
       <div className="container mx-auto">
         <div className="w-8/12 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
-          <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
+        <img src="/assets/logo.png" className="mb-4" alt="" />
+          <h2 className="text-xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-2 gap-10 mb-5">
