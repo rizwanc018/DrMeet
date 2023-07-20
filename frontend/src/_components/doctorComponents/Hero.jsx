@@ -19,7 +19,7 @@ const Hero = ({ userInfo, setShowModal }) => {
             <div className='flex-1'>
                 <p>{userInfo.bio}</p>
                 <div className='flex gap-4 mt-2'>
-                    <Link to='/doctor' className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Schedules
+                    <Link to='/doctor/schedules' className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Schedules
                     </Link>
                     <Link to='/doctor/appointments' className='border-2 border-primary p-2 px-6 rounded text-emerald-600 hover:text-white hover:bg-primary active:text-white active:bg-primary'>Appointments
                     </Link>

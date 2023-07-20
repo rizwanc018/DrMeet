@@ -5,21 +5,21 @@ import Admin from "../models/adminModel.js"
 import Doctor from "../models/doctorModel.js"
 
 const verifyUser = asyncHandler(async (req, res, next) => {
-    // const token = req.cookies.jwt
-    // if (token) {
-    //     try {
-    //         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    //         req.user = await User.findById(decoded.userId).select('-password')
-    //         next()
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.status(401);
-    //         throw new Error('Not authorized, Invalid token');
-    //     }
-    // } else {
-    //     res.status(401)
-    //     throw new Error('Not authorized, no token')
-    // }
+    const token = req.cookies.jwt
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            req.user = await User.findById(decoded.userId).select('-password')
+            next()
+        } catch (error) {
+            console.error(error);
+            res.status(401);
+            throw new Error('Not authorized, Invalid token');
+        }
+    } else {
+        res.status(401)
+        throw new Error('Not authorized, no token')
+    }
 })
 
 const verifyDoctor = asyncHandler(async (req, res, next) => {

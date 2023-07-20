@@ -34,7 +34,6 @@ function DoctorRegister() {
   }, [])
 
 
-
   const formik = useFormik({
     initialValues: {
       fname: "",
@@ -48,7 +47,8 @@ function DoctorRegister() {
       image: "",
       proof: [],
       experience: "",
-      bio:""
+      bio:"",
+      fees:""
     },
     validationSchema: Yup.object({
       fname: Yup.string().required("Required"),
@@ -62,7 +62,8 @@ function DoctorRegister() {
       proof: Yup.array().min(1, 'No certificates selected'),
       image: Yup.mixed().required('No image selected'),
       experience: Yup.number().required('Number is required').min(0,'Negetive numbers not allowed'),
-      bio: Yup.string().required('Bio is required')
+      bio: Yup.string().required('Bio is required'),
+      fees: Yup.string().required('Fees is required')
     }),
     onSubmit: async (values) => {
       setSubmitting(true)
@@ -82,7 +83,6 @@ function DoctorRegister() {
       setSubmitting(false)
     }
   })
-
 
   // upload avatar to firebase
   const uploadAvatar = async () => {
@@ -301,6 +301,20 @@ function DoctorRegister() {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.image && formik.errors.image && <p className="error">{formik.errors.image}</p>}
+              </div>
+              {/* Feess */}
+              <div>
+                <label htmlFor="fees">Fees</label>
+                <input
+                  type="number"
+                  name="fees"
+                  id="fees"
+                  placeholder="Fees"
+                  value={formik.values.fees}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.fees && formik.errors.fees && <p className="error">{formik.errors.fees}</p>}
               </div>
             </div>
             {!submitting ?

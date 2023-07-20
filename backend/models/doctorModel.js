@@ -54,7 +54,11 @@ const doctorSchema = new mongoose.Schema({
         type: Array
     },
     experience: Number,
-    bio: String
+    bio: String,
+    fees: {
+        type: String,
+        required: true
+    }
 });
 
 doctorSchema.methods.matchPassword = async function (enteredPassword) {

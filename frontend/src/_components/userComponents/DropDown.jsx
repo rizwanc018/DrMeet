@@ -21,7 +21,7 @@ function DropDown() {
             <button className='md:ml-8'
                 onClick={() => setIsOpen((prev) => !prev)}
             >
-                <img src="./assets/dropDown.svg" className={`${isOpen && 'rotate-90'} duration-500`} alt="" />
+                <img src="/assets/dropDown.svg" className={`${isOpen && 'rotate-90'} duration-500`} alt="" />
             </button>
             {
                 isOpen && (

@@ -5,6 +5,7 @@ import connectDB from "./configs/db.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import adminRouter from './routes/adminRoutes.js'
 import doctorRouter from './routes/doctorRoutes.js'
+import userRouter from './routes/userRoutes.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 
@@ -20,21 +21,16 @@ app.use(express.urlencoded({ extends: true }))
 app.use(cookieParser())
 
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
 }
 app.use(cors(corsOptions));
 
-// app.get('/', (req, res) => {
-//     const ip =  req.socket.remoteAddress;
-//     console.log('>>>>>>',ip); 
-//     res.status(200).json({ip: ip})
-// })
-
 app.use('/api/admin', adminRouter);
 app.use('/api/doc', doctorRouter);
+app.use('/api/user', userRouter)
 
 
 app.use(notFound)
