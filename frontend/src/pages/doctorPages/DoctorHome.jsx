@@ -14,6 +14,7 @@ function DoctorHome() {
   const getDcotorSchedules = async () => {
     const response = await axios.get(`api/doc/schedule`)
     dispatch(setSchedules(response.data.schedules))
+    console.log("🚀 ~ file: DoctorHome.jsx:17 ~ getDcotorSchedules ~ response:", response)
   }
 
   useEffect(() => {

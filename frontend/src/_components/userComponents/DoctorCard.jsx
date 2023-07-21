@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, showBookbutton }) => {
+    const [showButton, setshowButton] = useState(showBookbutton ?? true)
     return (
         <div className="w-1/4 rounded overflow-hidden shadow-lg">
             <div className='h-48 overflow-hidden'>
@@ -13,9 +15,9 @@ const DoctorCard = ({ doctor }) => {
                 <p>Fees: ₹ {doctor.fees}</p>
             </div>
             <div className="px-6 pt-1 pb-4 text-center">
-                <button className='border-2 border-primary p-1 px-4 rounded text-emerald-600
+            { showButton &&    <Link to={`/appointment/apply/${doctor._id}`} className='border-2 border-primary p-1 px-4 rounded text-emerald-600
         hover:text-white hover:bg-primary active:text-white active:bg-primary'
-                >Book Appointment</button>
+                >Book Appointment</Link> }
             </div>
         </div>
     )

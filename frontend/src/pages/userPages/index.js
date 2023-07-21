@@ -3,6 +3,6 @@ import UserLayout from "./UserLayout"
 import UserLoginPage from "./UserLoginPage"
 import UserRgisterPage from "./UserRgisterPage"
 import DoctorsPage from "./DoctorsPage"
-import ApplyAppointment from "./ApplyAppointment"
+import MakeAppointment from "./MakeAppointment"
 
-export { HomePage, UserLayout, UserLoginPage, UserRgisterPage, DoctorsPage, ApplyAppointment }
+export { HomePage, UserLayout, UserLoginPage, UserRgisterPage, DoctorsPage, MakeAppointment }

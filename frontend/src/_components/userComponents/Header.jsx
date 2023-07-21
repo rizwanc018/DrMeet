@@ -15,7 +15,7 @@ function Header() {
                 </div>
             </div>
             <ul className='md:flex md:items-center'>
-                <li className='md:ml-8'><a className='hover:text-primary duration-200' href="">Doctors</a></li>
+                <li className='md:ml-8'><Link className='hover:text-primary duration-200' to='/doctors' href="">Doctors</Link></li>
                 <li className='md:ml-8'><a className='hover:text-primary duration-200' href="">Departments</a></li>
                 <li className='md:ml-8'><Link className='hover:text-primary duration-200' to="/doctor/register">Doctor Reg</Link></li>
                 {false && <Joinbutton />}
