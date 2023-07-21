@@ -29,7 +29,7 @@
     color: #d10000;
    } */
    .react-calendar__tile:disabled {
-    color: grey;
+    color: hsla(0, 0%, 80%, 0.805);
    }
 
    .react-calendar__tile:enabled:hover,

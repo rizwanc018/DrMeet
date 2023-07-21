@@ -2,6 +2,8 @@ import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcrypt'
 import Doctor from '../models/doctorModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
+import moment from 'moment'
+
 
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
@@ -73,6 +75,7 @@ const doctorController = {
         const schedules = req.doctor.schedule.sort((a, b) => {
             return a.day - b.day
         })
+        console.log("🚀 ~ file: doctorController.js:76 ~ schedules ~ schedules:", schedules)
         res.status(200).json({ success: true, schedules: req.doctor.schedule })
     }),
     deleSchedule: asyncHandler(async (req, res) => {
@@ -87,17 +90,40 @@ const doctorController = {
     }),
     getDoctorsByName: asyncHandler(async (req, res) => {
         const regx = req.query.q || '.*'
-        
+
         const doctors = await Doctor.find({
             approved: true,
             $or: [
-                {fname: { $regex: new RegExp(regx, "i") }},
-                {lname: { $regex: new RegExp(regx, "i") }},
+                { fname: { $regex: new RegExp(regx, "i") } },
+                { lname: { $regex: new RegExp(regx, "i") } },
 
             ]
         })
             .populate('department', 'name -_id');
         res.status(200).json({ success: true, doctors })
+    }),
+    getDoctorById: asyncHandler(async (req, res) => {
+        const id = req.params.id
+        const doctor = await Doctor.findById(id).populate('department', 'name -_id')
+        res.status(200).json({ success: true, doctor })
+    }),
+    getScheduleTimes: asyncHandler(async (req, res) => {
+        const { docId, date } = req.body
+        const d = new Date(date)
+        const day = d.getDay()
+        const { schedule } = await Doctor.findById(docId, { schedule: 1 })
+        let objs = schedule.filter(item => item.day == day.toString())
+
+        const timesArray = []
+        for (const obj of objs) {
+            let tmp = {}
+            tmp.id = obj._id
+            tmp.startTime = moment(obj.startTime).format('h:mm A')
+            tmp.endTime = moment(obj.endTime).format('h:mm A')
+            timesArray.push(tmp)
+        }
+        console.log("🚀 ~ file: doctorController.js:131 ~ getScheduleTimes:asyncHandler ~ timesArray:", timesArray)
+        res.status(200).json({ succes: true, timesArray })
     })
 }
 

@@ -5,13 +5,15 @@ import axios from "axios"
 
 const MakeAppointment = () => {
   const [doctor, setDoctor] = useState('')
-  console.log("🚀 ~ file: MakeAppointment.jsx:8 ~ MakeAppointment ~ doctor:", doctor)
   const { id } = useParams()
 
   const getDoctorById = async (id) => {
     const response = await axios.get(`/api/user/doctor/${id}`)
     setDoctor(response.data.doctor)
   }
+
+  const scheduleDays = doctor.schedule ? doctor.schedule.map(schedule => Number(schedule.day)) : [];
+
 
   useEffect(() => {
     getDoctorById(id)
@@ -20,7 +22,7 @@ const MakeAppointment = () => {
   return (
     <div className="flex">
       {doctor && <DoctorCard doctor={doctor} showBookbutton={false} />}
-      <MakeAppointmentForm schedule={doctor.schedule}/>
+      <MakeAppointmentForm schedule={scheduleDays} id={id}  />
     </div>
   )
 }

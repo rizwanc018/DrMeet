@@ -9,8 +9,12 @@ const router = express.Router()
 router.post('/reg', userController.registerUser)
 router.post('/auth', userController.authUser)
 router.get('/logout', userController.logout)
+router.get('/doctor/:id', doctorController.getDoctorById)
 router.get('/doctors', doctorController.getAllDoctors)
 router.get('/doctors/search', doctorController.getDoctorsByName)
+router.post('/schedule/times',doctorController.getScheduleTimes )
+
+
 
 
 

@@ -1,31 +1,33 @@
-
 import { useEffect, useState } from 'react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
+import axios from 'axios';
 
+const MakeAppointmentForm = ({ schedule, id }) => {
+    const [docId, setDocId] = useState(id)
+    const [date, setDate] = useState();
+    const [days, setDays] = useState([])
 
-const MakeAppointmentForm = ({ schedule }) => {
-    console.log("🚀 ~ file: MakeAppointmentForm.jsx:9 ~ MakeAppointmentForm ~ schedule:", schedule)
-    const [value, onChange] = useState(new Date());
-    const [scheduleObj, setScheduleObj] = useState([])
-    const scheduledDays = []
 
     useEffect(() => {
-        setScheduleObj(schedule)
+        setDays([...schedule])
     }, [schedule])
-    
-    const isDateinSchedule = (date) => {
-        return scheduledDays.includes(date.getDay())
+
+    const handleChange = async (date) => {
+        const response =await  axios.post('/api/user/schedule/times', { docId, date })
+        console.log(response.data.timesArray);
     }
 
     return (
-        <Calendar
-            onChange={onChange}
-            value={value}
-            tileDisabled={({ date }) => !isDateinSchedule(date)}
-            minDate={new Date()}
-        />
+        <>
+            <Calendar
+                onChange={(date) => handleChange(date)}
+                value={date}
+                tileDisabled={({ date }) => !days.includes(date.getDay())}
+                minDate={new Date()}
+            />
+        </>
     )
 }
 
