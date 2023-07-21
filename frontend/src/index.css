@@ -19,16 +19,19 @@
   input[type='week'] ,
   input[type='time'] ,
   input[type='search'] ,
-  input[type='tel'] ,
-  input[type='checkbox'] ,
-  input[type='radio'] ,
-  select[multiple] ,
+  [multiple] ,
   select ,
   textarea
    {
     @apply w-full border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600
   }
+  input[type='radio'] ,
+  input[type='checkbox'] {
+    @apply border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600
+  }
 }
+
+
 
 @layer utilities {
   .error {   

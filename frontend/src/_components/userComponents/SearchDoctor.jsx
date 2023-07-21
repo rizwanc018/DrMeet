@@ -10,7 +10,7 @@ const SearchDoctor = ({ setDoctors }) => {
 
     const formik = useFormik({
         initialValues: {
-            search: "*",
+            search: "",
         },
         validationSchema: Yup.object({
             search: Yup.string(),

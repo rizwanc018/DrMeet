@@ -117,7 +117,7 @@ const doctorController = {
         const timesArray = []
         for (const obj of objs) {
             let tmp = {}
-            tmp.id = obj._id
+            tmp._id = obj._id
             tmp.startTime = moment(obj.startTime).format('h:mm A')
             tmp.endTime = moment(obj.endTime).format('h:mm A')
             timesArray.push(tmp)
