@@ -16,6 +16,6 @@ router.get('/doctors/search', doctorController.getDoctorsByName)
 router.post('/schedule/times', doctorController.getScheduleTimes)
 router.post('/appointment', verifyUser, appointmentController.makeAppointment)
 router.post('/appointment/availbility', appointmentController.checkAvailability)
-
+router.post('/appointment/details', appointmentController.getAppontmentDetails)
 
 export default router

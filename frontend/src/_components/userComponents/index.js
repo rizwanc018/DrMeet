@@ -5,5 +5,6 @@ import Hero from "./Hero"
 import DoctorCard from "./DoctorCard"
 import SearchDoctor from "./SearchDoctor"
 import MakeAppointmentForm from "./MakeAppointmentForm"
+import CheckOutModal from "./CheckOutModal"
 
-export { Header, UserLoginForm, UserRegisterForm, Hero, DoctorCard, SearchDoctor, MakeAppointmentForm }
+export { Header, UserLoginForm, UserRegisterForm, Hero, DoctorCard, SearchDoctor, MakeAppointmentForm, CheckOutModal }

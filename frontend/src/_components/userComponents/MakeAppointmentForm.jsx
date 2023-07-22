@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
 import axios from 'axios';
-import Spinner from '../Spinner';
+import CheckOutModal from './CheckOutModal';
 
 const MakeAppointmentForm = ({ schedule, id }) => {
     const [docId, setDocId] = useState(id)
@@ -15,12 +15,14 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     const [showBooking, setShowBooking] = useState(false)
     const [errMsg, setErrMsg] = useState()
     const [loading, setLoading] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
 
     useEffect(() => {
         setDays([...schedule])
     }, [schedule])
 
+    // Calender
     const handleChange = async (date) => {
         setLoading(true)
         setDate(date)
@@ -35,12 +37,13 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     }
 
     const handleBooking = async () => {
-        try {
-            const response = await axios.post('/api/user/appointment', { docId, date, timeId })
-            console.log(response);
-        } catch (error) {
-            console.log(error)
-        }
+        setShowModal(true)
+        // try {
+        //     const response = await axios.post('/api/user/appointment', { docId, date, timeId })
+        //     console.log(response);
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
 
     const checkAvailability = async () => {
@@ -58,6 +61,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
 
     return (
         <div>
+            {showModal && <CheckOutModal setShowModal={setShowModal} docId={docId} date={date} timeId={timeId} />}
             <h1>Choose date</h1>
             <Calendar
                 onChange={(date) => handleChange(date)}
