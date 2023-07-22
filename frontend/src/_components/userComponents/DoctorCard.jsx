@@ -15,9 +15,13 @@ const DoctorCard = ({ doctor, showBookbutton }) => {
                 <p>Fees: ₹ {doctor.fees}</p>
             </div>
             <div className="px-6 pt-1 pb-4 text-center">
-            { showButton &&    <Link to={`/appointment/apply/${doctor._id}`} className='border-2 border-primary p-1 px-4 rounded text-emerald-600
+                {showButton && <Link to={`/appointment/apply/${doctor._id}`} className='border-2 border-primary p-1 px-4 rounded text-emerald-600
         hover:text-white hover:bg-primary active:text-white active:bg-primary'
-                >Book Appointment</Link> }
+                >Book Appointment</Link>
+                }
+                {!showButton &&
+                    <p className='text-left'>{doctor.bio}</p>
+                }
             </div>
         </div>
     )

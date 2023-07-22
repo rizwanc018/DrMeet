@@ -122,7 +122,6 @@ const doctorController = {
             tmp.endTime = moment(obj.endTime).format('h:mm A')
             timesArray.push(tmp)
         }
-        console.log("🚀 ~ file: doctorController.js:131 ~ getScheduleTimes:asyncHandler ~ timesArray:", timesArray)
         res.status(200).json({ succes: true, timesArray })
     })
 }

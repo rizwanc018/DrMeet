@@ -1,7 +1,8 @@
 import express from "express"
 import userController from "../controllers/userController.js"
 import doctorController from "../controllers/doctorController.js"
-// import { verifyDoctor } from "../middlewares/authMiddleware.js"
+import appointmentController from "../controllers/appointmetController.js"
+import { verifyUser } from "../middlewares/authMiddleware.js"
 
 const router = express.Router()
 
@@ -12,10 +13,9 @@ router.get('/logout', userController.logout)
 router.get('/doctor/:id', doctorController.getDoctorById)
 router.get('/doctors', doctorController.getAllDoctors)
 router.get('/doctors/search', doctorController.getDoctorsByName)
-router.post('/schedule/times',doctorController.getScheduleTimes )
-
-
-
+router.post('/schedule/times', doctorController.getScheduleTimes)
+router.post('/appointment', verifyUser, appointmentController.makeAppointment)
+router.post('/appointment/availbility', appointmentController.checkAvailability)
 
 
 export default router

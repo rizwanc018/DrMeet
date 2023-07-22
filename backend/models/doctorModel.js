@@ -1,6 +1,13 @@
 import mongoose from "mongoose"
 import bcrypt from 'bcrypt'
 
+const scheduleSchema = new mongoose.Schema({
+    day: String,
+    startTime: Date,
+    endTime: Date,
+    slots: Number
+})
+
 const doctorSchema = new mongoose.Schema({
     fname: {
         type: String,
@@ -42,14 +49,7 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
     image: String,
-    schedule: [
-        {
-            day: String,
-            startTime: Date,
-            endTime: Date,
-            slots: Number 
-        }
-    ],
+    schedule: [scheduleSchema],
     notification: {
         type: Array
     },
@@ -64,7 +64,6 @@ const doctorSchema = new mongoose.Schema({
 doctorSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
-
 
 const Doctor = mongoose.model('Doctor', doctorSchema)
 export default Doctor

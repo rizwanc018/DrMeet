@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 import asyncHandler from "express-async-handler"
-// import User from "../models/User.js"
+import User from "../models/userModel.js"
 import Admin from "../models/adminModel.js"
 import Doctor from "../models/doctorModel.js"
 
@@ -9,8 +9,12 @@ const verifyUser = asyncHandler(async (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            req.user = await User.findById(decoded.userId).select('-password')
-            next()
+            req.user = await User.findById(decoded.id).select('-password')
+            if (req.user) next()
+            else {
+                res.status(401);
+                throw new Error('Not authorized, Invalid token');
+            }
         } catch (error) {
             console.error(error);
             res.status(401);
