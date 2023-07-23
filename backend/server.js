@@ -6,6 +6,7 @@ import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import adminRouter from './routes/adminRoutes.js'
 import doctorRouter from './routes/doctorRoutes.js'
 import userRouter from './routes/userRoutes.js'
+import stripeRouter from './routes/stripe.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 
@@ -31,6 +32,7 @@ app.use(cors(corsOptions));
 app.use('/api/admin', adminRouter);
 app.use('/api/doc', doctorRouter);
 app.use('/api/user', userRouter)
+app.use(`/api/stripe`, stripeRouter)
 
 
 app.use(notFound)

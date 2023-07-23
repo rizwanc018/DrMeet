@@ -37,7 +37,14 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     }
 
     const handleBooking = async () => {
-        setShowModal(true)
+        try {
+            const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
+            if (response.data.url) window.location.href = response.data.url
+        } catch (error) {
+            console.log(error);
+        }
+
+        // setShowModal(true)
         // try {
         //     const response = await axios.post('/api/user/appointment', { docId, date, timeId })
         //     console.log(response);

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors } from './pages/adminPages'
 import { DoctorHome, DoctorLogin, DoctorRegister, DoctorLayout, Appointments } from './pages/doctorPages';
-import { DoctorsPage, HomePage, UserLayout, UserLoginPage, UserRgisterPage, MakeAppointment } from './pages/userPages';
+import { DoctorsPage, HomePage, UserLayout, UserLoginPage, UserRgisterPage, MakeAppointment, AppointmentSuccess } from './pages/userPages';
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
           <Route path="register" element={<UserRgisterPage />} />
           <Route path="doctors" element={<DoctorsPage />} />
           <Route path="appointment/apply/:id" element={<MakeAppointment />} />
+          <Route path="appointment-success" element={<AppointmentSuccess />} />
         </Route>
       </Routes>
     </Router>
