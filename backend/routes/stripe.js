@@ -4,15 +4,35 @@ import Stripe from 'stripe';
 import { config } from "dotenv";
 import Doctor from "../models/doctorModel.js";
 import moment from "moment";
+import bodyParser from "body-parser";
 import { verifyUser } from "../middlewares/authMiddleware.js";
 
 config()
 const router = express.Router()
 
 const stripe = Stripe(process.env.STRIPE_API_KEY)
-router.post('/create-checkout-session', verifyUser, asyncHandler(async (req, res) => {
-    console.log('>>>>>',req.user)
 
+router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
+    let signinsecret = 'whsec_ef2dfc5887f870636fe513da6ef308b0c2f9b58764289374fa74f1cb4ea58f80'
+    const sig = req.headers['stripe-signature'];
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, signinsecret);
+    } catch (err) {
+        console.log(err)
+        res.status(400).send(`Webhook Error: ${err.message}`);
+        // res.status(400).json({ success: false })
+        return;
+    }
+
+    console.log('event.type',event.type)
+    console.log('event.data.object',event.data.object)
+    res.json({ success: true })
+
+})
+
+router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler(async (req, res) => {
     const { docId, timeId, date } = req.body
 
     const { fname, lname, department, schedule, fees } = await Doctor.findOne({ _id: docId },
@@ -41,11 +61,20 @@ router.post('/create-checkout-session', verifyUser, asyncHandler(async (req, res
             },
         ],
         mode: 'payment',
+        // success_url: `${process.env.CLIENT_URL}/create-appointment?u=${req.user}&d=${req.body}`,
         success_url: `${process.env.CLIENT_URL}/appointment-success`,
         cancel_url: `${process.env.CLIENT_URL}/doctors`,
     });
 
+    // console.log('req.user', req.user)
+    // console.log('req.body', req.body);
+    // console.log('url', session.url)
+
     res.send({ url: session.url });
 }))
+
+
+
+// Webhook
 
 export default router
