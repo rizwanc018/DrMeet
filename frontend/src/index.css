@@ -19,6 +19,7 @@
   input[type='week'] ,
   input[type='time'] ,
   input[type='search'] ,
+  input[type='tel'] ,
   [multiple] ,
   select ,
   textarea

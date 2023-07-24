@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 function DropDown() {
@@ -18,20 +18,39 @@ function DropDown() {
 
     return (
         <div className='relative flex flex-col'>
-            <button className='md:ml-8'
-                onClick={() => setIsOpen((prev) => !prev)}
+            <button className='md:ml-6'
+                onFocus={() => setIsOpen(!isOpen)}
             >
                 <img src="/assets/dropDown.svg" className={`${isOpen && 'rotate-90'} duration-500`} alt="" />
             </button>
             {
                 isOpen && (
-                    <div className={`${!isOpen ? 'h-0' : 'h-0'} duration-700 absolute  bg-white top-[50px] `}>
-                        <ul>
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Regiseter</a></li>
-                            <li><a href="">Appointments</a></li>
-                            <li><a href="">Forgot Password</a></li>
-                            <li><span className='cursor-pointer' onClick={logoutHandler}>Logout</span></li>
+                    <div className='z-10 absolute bg-white top-[50px]'>
+                        <ul className='py-1 shadow-md rounded'>
+                            <li><Link
+                                className='block px-4 py-2'
+                                to="/login"
+                                onBlur={() => setIsOpen(false)}
+                                tabIndex='-1'
+                            >Login</Link></li>
+                            <li><Link
+                                className='block px-4 py-2'
+                                href=""
+                                onBlur={() => setIsOpen(false)}
+                                tabIndex='-1'
+                            >Appointments</Link></li>
+                            <li><Link
+                                className='block px-4 py-2'
+                                to="/register"
+                                onBlur={() => setIsOpen(false)}
+                                tabIndex='-1'
+                            >Regiseter</Link></li>
+                            <li><button
+                                className='block px-4 py-2'
+                                onClick={logoutHandler}
+                                onBlur={() => setIsOpen(false)}
+                                tabIndex='-1'
+                            >Logout</button></li>
                         </ul>
                     </div>
                 )
