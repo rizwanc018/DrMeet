@@ -12,7 +12,7 @@ function DoctorHome() {
   const { schedules } = useSelector(state => state.schedule)
 
   const getDcotorSchedules = async () => {
-    const response = await axios.get(`api/doc/schedule`, {withCredentials: true})
+    const response = await axios.get(`/api/doc/schedule`, {withCredentials: true})
     dispatch(setSchedules(response.data.schedules))
   }
 

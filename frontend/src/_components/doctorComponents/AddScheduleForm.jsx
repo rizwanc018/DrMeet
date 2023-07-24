@@ -26,7 +26,7 @@ const AddScheduleForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post('/api/doc/schedule', { ...values }, { withCredentials: true })
+      const response = await axios.post('/api/doc/schedule', { ...values })
       console.log("🚀 ~ file: AddScheduleForm.jsx:28 ~ onFinish ~ response:", response.data.schedules)
       dispatch(setSchedules(response.data.schedules))
       toast.success(response.data.msg)
