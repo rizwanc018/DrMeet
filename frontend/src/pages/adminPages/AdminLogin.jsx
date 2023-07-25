@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 function AdminLogin() {
 
-  const baseUrl = import.meta.env.VITE_BACKEND_URL
-
   const [email, setEmail] = useState('')
   const [emailValid, setEmailValid] = useState(true)
 
@@ -24,7 +22,7 @@ function AdminLogin() {
         setEmailValid(true)
         setPasswordValid(true)
         const body = { email, password }
-        let result = await axios.post(`${baseUrl}/admin/auth`, body, { withCredentials: true })
+        let result = await axios.post(`/api/admin/auth`, body)
         if (result) navigate('/admin')
       } else {
         if (email.trim() === '')

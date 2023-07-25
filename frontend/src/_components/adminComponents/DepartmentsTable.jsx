@@ -7,13 +7,12 @@ import { CgOptions } from "react-icons/cg";
 
 function DepartmentsTable( props ) {
     console.log("🚀 ~ file: DepartmentsTable.jsx:9 ~ DepartmentsTable ~ props:", props)
-    const baseUrl = import.meta.env.VITE_BACKEND_URL
 
     const [data, setData] = useState([])
     
 
     const getAllDepartments = async () => {
-        const response = await axios.get(`${baseUrl}/admin/department`)
+        const response = await axios.get(`/api/admin/department`)
         setData(response.data.departments)
     }
 

@@ -12,11 +12,8 @@ import toast, { Toaster } from 'react-hot-toast';
 function RegisterdeDoctors() {
     const [data, setData] = useState('')
 
-    const baseUrl = import.meta.env.VITE_BACKEND_URL
-
-
     const getUnapprovedDoctors = async () => {
-      const response = await axios.get(`${baseUrl}/admin/doctors/unapproved`)
+      const response = await axios.get(`/api/admin/doctors/unapproved`)
       setData(response.data.unapprovedDoctors)
     }
 

@@ -21,11 +21,8 @@ function DoctorRegister() {
 
   const navigate = useNavigate()
 
-  const baseUrl = import.meta.env.VITE_BACKEND_URL
-
-
   const getAllDepartments = async () => {
-    const response = await axios.get(`${baseUrl}/admin/department`)
+    const response = await axios.get(`/api/admin/department`)
     setDepartments(response.data.departments)
   }
 

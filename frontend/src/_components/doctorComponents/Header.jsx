@@ -12,7 +12,7 @@ const Header = () => {
 
     let Links = [
         { name: "Home", link: "/doctor" },
-        { name: "Appointments", link: "doctor/appointments" },
+        { name: "Appointments", link: "/doctor/appointments" },
         { name: "Schedules", link: "/doctor/schedules" },
     ];
     let [open, setOpen] = useState(false);

@@ -13,7 +13,6 @@ function AddDepartmentForm() {
 
     
 
-    const baseUrl = import.meta.env.VITE_BACKEND_URL
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -27,7 +26,7 @@ function AddDepartmentForm() {
             try {
                 setErr('')
                 setSuccess('')
-                const response = await axios.post(`${baseUrl}/admin/department/add`, { ...values })
+                const response = await axios.post(`/api/admin/department/add`, { ...values })
                 setSuccess(response.data.msg)
             } catch (error) {
                 setErr(error.response.data.err)

@@ -70,17 +70,11 @@ const doctorController = {
         const endTime = moment(req.body.time[1]).format('hh:mm A')
 
         const id = req.doctor._id
-
         const data = await Doctor.findById(id)
 
-        console.log(moment(data.schedule[0].startTime).format('hh:mm A') <= startTime)
-
         const existingSchedule = data.schedule.find(s => (
-            s.day == day && moment(s.startTime).format('hh:mm A') <= startTime &&  moment(s.endTime).format('hh:mm A') > startTime ||
-            s.day == day && endTime > moment(s.startTime).format('hh:mm A')  && endTime < moment(s.endTime).format('hh:mm A')  
-
-            // s.day == day && moment(s.startTime).format('hh:mm A') == startTime && moment(s.endTime).format('hh:mm A') == endTime
-            // || s.day == day && moment(s.startTime).format('hh:mm A') <= startTime && moment(s.endTime).format('hh:mm A') >= endTime
+            s.day == day && moment(s?.startTime).format('hh:mm A') <= startTime &&  moment(s?.endTime).format('hh:mm A') > startTime ||
+            s.day == day && endTime > moment(s?.startTime).format('hh:mm A')  && endTime < moment(s?.endTime).format('hh:mm A')  
         ))
 
         if (existingSchedule) {
@@ -112,7 +106,6 @@ const doctorController = {
         const schedules = req.doctor.schedule.sort((a, b) => {
             return a.day - b.day
         })
-        console.log("🚀 ~ file: doctorController.js:76 ~ schedules ~ schedules:", schedules)
         res.status(200).json({ success: true, schedules: req.doctor.schedule })
     }),
     deleSchedule: asyncHandler(async (req, res) => {

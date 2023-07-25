@@ -12,7 +12,7 @@ function DoctorHome() {
   const { schedules } = useSelector(state => state.schedule)
 
   const getDcotorSchedules = async () => {
-    const response = await axios.get(`/api/doc/schedule`, {withCredentials: true})
+    const response = await axios.get(`/api/doc/schedule`)
     dispatch(setSchedules(response.data.schedules))
   }
 
@@ -22,7 +22,7 @@ function DoctorHome() {
 
   const handleDeleteSchedule = async (id) => {
     try {
-      const response = await axios.delete(`/api/doc/schedule/${id}`, { withCredentials: true })
+      const response = await axios.delete(`/api/doc/schedule/${id}`)
       toast.success(response.data.msg)
       dispatch(setSchedules(response.data.schedules))
     } catch (error) {
