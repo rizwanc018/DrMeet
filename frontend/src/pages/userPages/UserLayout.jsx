@@ -6,6 +6,7 @@ const UserLayout = () => {
     return (
         <>
             <Header />
+            <div className="mt-20"></div>
             <Outlet />
         </>
     )

@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { GrClose } from 'react-icons/gr'
-import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai'
+import { AiOutlineLogin } from 'react-icons/ai'
+import { useSelector } from "react-redux";
+import DropDown from './DropDown';
 
 const Header = () => {
+
+    const { userInfo } = useSelector(state => state.auth)
 
     let Links = [
         { name: "Home", link: "/" },
         { name: "Doctors", link: "/doctors" },
         { name: "Doctor Reg", link: "/doctor/register" },
-        { name: "BLOG'S", link: "/" },
-        { name: "CONTACT", link: "/" },
     ];
     let [open, setOpen] = useState(false);
     const handleShowNavbar = () => {
@@ -30,7 +32,6 @@ const Header = () => {
                 </div>
 
                 <div onClick={() => setOpen(!open)} className='text-2xl font-bold absolute right-8 top-6 cursor-pointer md:hidden'>
-                    {/* <ion-icon name={open ? 'close' : 'menu'}></ion-icon> */}
                     {open ? (<GrClose />) : (<GiHamburgerMenu />)}
 
                 </div>
@@ -43,6 +44,13 @@ const Header = () => {
                             </li>
                         ))
                     }
+                    <li className='md:ml-6 text-md md:my-0 my-7'>
+                        {
+                            userInfo && userInfo.isUser ?
+                                (<DropDown />)
+                                : (<Link to='/login' className='flex items-center gap-1 text-primary font-bold'><AiOutlineLogin className='text-primary font-bold'/> <span>Login</span></Link>)
+                        }
+                    </li>
                 </ul>
             </div>
         </div>
