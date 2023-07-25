@@ -49,8 +49,8 @@ const UserLoginForm = () => {
 
   return (
     <div className="min-h-screen py-10">
-      <div className="container mx-auto">
-        <div className="w-1/2 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
+      <div className="container flex justify-center">
+        <div className="w-fit md:w-1/2 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
           <h2 className="text-xl text-primary-600 mb-6 font-semibold ">User Login</h2>
           {/* fname and lname */}

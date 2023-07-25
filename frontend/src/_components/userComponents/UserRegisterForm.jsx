@@ -57,12 +57,12 @@ const UserRegisterForm = () => {
   return (
     <div className="min-h-screen py-10">
       <div className="container mx-auto">
-        <div className="w-1/2 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
+        <div className="w-fit mx-5 md:w-1/2 rounded-xl md:mx-auto p-10 shadow-xl border-solid border border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
           <h2 className="text-xl text-primary-600 mb-6 font-semibold ">User Register</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
-            <div className="grid grid-cols-2 gap-10 mb-5">
+            <div className="grid md:grid-cols-2 gap-3 md:gap-10 mb-5">
               <div>
                 <label htmlFor="fname">First Name</label>
                 <input

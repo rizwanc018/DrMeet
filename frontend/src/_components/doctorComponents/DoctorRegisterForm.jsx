@@ -44,8 +44,8 @@ function DoctorRegister() {
       image: "",
       proof: [],
       experience: "",
-      bio:"",
-      fees:""
+      bio: "",
+      fees: ""
     },
     validationSchema: Yup.object({
       fname: Yup.string().required("Required"),
@@ -58,7 +58,7 @@ function DoctorRegister() {
       degree: Yup.string().required("Required"),
       proof: Yup.array().min(1, 'No certificates selected'),
       image: Yup.mixed().required('No image selected'),
-      experience: Yup.number().required('Number is required').min(0,'Negetive numbers not allowed'),
+      experience: Yup.number().required('Number is required').min(0, 'Negetive numbers not allowed'),
       bio: Yup.string().required('Bio is required'),
       fees: Yup.string().required('Fees is required')
     }),
@@ -116,14 +116,14 @@ function DoctorRegister() {
 
   return (
     <div className="min-h-screen py-10">
-      <div className="container mx-auto">
-        <div className="w-8/12 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
-        <img src="/assets/logo.png" className="mb-4" alt="" />
+      <div className="container mx-auto flex justify-center ">
+        <div className="w-fit mx-5 md:w-8/12 rounded-xl md:mx-auto p-10 shadow-xl border-solid border border-primary">
+          <img src="/assets/logo.png" className="mb-4" alt="" />
           <h2 className="text-xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
-            <div className="grid grid-cols-2 gap-10 mb-5">
-              <div>
+            <div className="md:grid md:grid-cols-2 md:gap-10 ">
+              <div className="">
                 <label htmlFor="fname">First Name</label>
                 <input
                   type="text"
@@ -136,7 +136,7 @@ function DoctorRegister() {
                 />
                 {formik.touched.fname && formik.errors.fname && <p className="error">{formik.errors.fname}</p>}
               </div>
-              <div>
+              <div className="">
                 <label htmlFor="laname">Last Name</label>
                 <input
                   type="text"
@@ -158,6 +158,7 @@ function DoctorRegister() {
                   name="email"
                   id="email"
                   placeholder="Email"
+
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -269,14 +270,13 @@ function DoctorRegister() {
                 {formik.touched.bio && formik.errors.bio && <p className="error">{formik.errors.bio}</p>}
               </div>
               {/* Proof */}
-              <div className="relative">
+              <div className="relative my-5">
                 <label htmlFor="proof">Certificate</label>
                 <GrAttachment className="absolute text-2xl top-14" />
                 <input
                   type="file"
                   name="proof"
                   id="proof"
-                  // value={formik.values.proof}
                   multiple
                   onChange={e => handleProofOnChange(e)}
                   onBlur={formik.handleBlur}
@@ -285,7 +285,7 @@ function DoctorRegister() {
                 {formik.touched.proof && formik.errors.proof && <p className="error">{formik.errors.proof}</p>}
               </div>
               {/* Avatar */}
-              <div className="">
+              <div className="my-5">
                 <img className='border-2 rounded-2xl  border-primary' alt="Posts" width="100px" height="100px" src={`${avatar ? URL.createObjectURL(avatar) : '/assets/avatar.svg'}`}></img>
                 <input
                   type="file"
@@ -315,7 +315,8 @@ function DoctorRegister() {
               </div>
             </div>
             {!submitting ?
-              <button className='border-2 rounded px-5 py-2  border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit" >Register</button>
+              <button className='border-2 rounded px-5 py-2 mt-8 border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit"
+              >Register</button>
               : <Spinner className='ps-72' />
             }
             {loginSuccess && <p className="mx-auto w-full text-center text-primary-600 mt-4 text-xl">{loginSuccess}</p>}
