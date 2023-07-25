@@ -60,15 +60,52 @@ const doctorController = {
         res.status(200).json({ msg: req.doctor })
     }),
     createScedule: asyncHandler(async (req, res) => {
-        const obj = {
+        const newSchedule = {
             day: req.body.day,
             startTime: req.body.time[0],
             endTime: req.body.time[1],
-            slots: req.body.slots
         }
+        const day = req.body.day
+        const startTime = moment(req.body.time[0]).format('hh:mm A')
+        const endTime = moment(req.body.time[1]).format('hh:mm A')
+
         const id = req.doctor._id
-        const response = await Doctor.findByIdAndUpdate(id, { $push: { schedule: obj } }, { new: true })
-        res.status(200).json({ success: true, msg: 'Schedule created succesdfully', schedules: response.schedule })
+
+        const data = await Doctor.findById(id)
+
+        console.log(moment(data.schedule[0].startTime).format('hh:mm A') <= startTime)
+
+        const existingSchedule = data.schedule.find(s => (
+            s.day == day && moment(s.startTime).format('hh:mm A') <= startTime &&  moment(s.endTime).format('hh:mm A') > startTime ||
+            s.day == day && endTime > moment(s.startTime).format('hh:mm A')  && endTime < moment(s.endTime).format('hh:mm A')  
+
+            // s.day == day && moment(s.startTime).format('hh:mm A') == startTime && moment(s.endTime).format('hh:mm A') == endTime
+            // || s.day == day && moment(s.startTime).format('hh:mm A') <= startTime && moment(s.endTime).format('hh:mm A') >= endTime
+        ))
+
+        if (existingSchedule) {
+            res.status(200).json({ succes: false, msg: "Schedule already exist", schedules: data.schedule })
+        } else {
+            const response = await Doctor.findByIdAndUpdate(id, { $push: { schedule: newSchedule } }, { new: true })
+            res.status(200).json({ success: true, msg: 'Schedule created succesdfully', schedules: response.schedule })
+        }
+
+        // const response = await Doctor.findByIdAndUpdate(id, {
+        //     $or: [
+        //         { 'schedules.$.endTime': { $lte: newSchedule.startTime } },
+        //         { 'schedules.$.startTime': { $gte: newSchedule.endTime } },
+        //         {
+        //             $and: [
+        //                 { 'schedules.$.startTime': { $lte: newSchedule.startTime } },
+        //                 { 'schedules.$.endTime': { $gte: newSchedule.endTime } },
+        //             ],
+        //         }
+        //     ]
+        // }, { $push: { schedules: newSchedule } },
+        //     { new: true, upsert: true })
+        //     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>> Response : ',response);
+        // /////////////////////////
+        // res.status(200).json({ success: true, msg: 'Schedule created succesdfully' })
 
     }),
     getSchedules: asyncHandler(async (req, res) => {

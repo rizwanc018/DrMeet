@@ -27,9 +27,11 @@ const AddScheduleForm = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post('/api/doc/schedule', { ...values })
-      console.log("🚀 ~ file: AddScheduleForm.jsx:28 ~ onFinish ~ response:", response.data.schedules)
       dispatch(setSchedules(response.data.schedules))
-      toast.success(response.data.msg)
+      if (response.data.success)
+        toast.success(response.data.msg)
+        else 
+        toast.error(response.data.msg)
     } catch (error) {
       toast.error(error.response.data)
     }
@@ -75,7 +77,7 @@ const AddScheduleForm = () => {
           >
             <TimePicker.RangePicker />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label='Slots'
             name='slots'
             rules={[
@@ -84,7 +86,7 @@ const AddScheduleForm = () => {
             ]}
           >
             <InputNumber min={1} />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item>
 
             <Button className=" text-[14px] text-center px-3  block  mx-auto border-2 border-primary text-emerald-600

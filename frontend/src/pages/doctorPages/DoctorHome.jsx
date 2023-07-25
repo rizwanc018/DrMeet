@@ -21,7 +21,6 @@ function DoctorHome() {
   }, [])
 
   const handleDeleteSchedule = async (id) => {
-    console.log(id)
     try {
       const response = await axios.delete(`/api/doc/schedule/${id}`, { withCredentials: true })
       toast.success(response.data.msg)

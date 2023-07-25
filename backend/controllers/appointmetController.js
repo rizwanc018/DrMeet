@@ -5,10 +5,12 @@ import moment from 'moment'
 
 const appointmentController = {
     makeAppointment: asyncHandler(async (req, res) => {
-        const patientId = req.user._id
-        const { docId, timeId, date } = req.body
-        const response = await Appointment.create({ docId, timeId, date, patientId })
-        res.status(200).json({ success: true })
+        // const patientId = req.user._id
+        // const { docId, timeId, date } = req.body
+        // const response = await Appointment.create({ docId, timeId, date, patientId })
+        // res.status(200).json({ success: true })
+        res.status(400).json({ err: 'not working' })
+
     }),
     checkAvailability: asyncHandler(async (req, res) => {
         const { docId, timeId, date } = req.body
@@ -46,7 +48,7 @@ const appointmentController = {
             endTime: moment(endTime).format('h:mm A'),
             date: moment(date).format('DD-MMM-YYYY')
         }
-        res.status(200).json({success: true, details})
+        res.status(200).json({ success: true, details })
     })
 
 }

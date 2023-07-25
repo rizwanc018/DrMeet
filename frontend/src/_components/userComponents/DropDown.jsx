@@ -23,7 +23,6 @@ function DropDown() {
     const { userInfo } = useSelector(state => state.auth)
 
     const logoutHandler = async () => {
-        console.log('clicked')
         const response = await axios.get('/api/user/logout')
         if (response.data.success)
             dispatch(clearCredentials())

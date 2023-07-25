@@ -5,7 +5,6 @@ const scheduleSchema = new mongoose.Schema({
     day: String,
     startTime: Date,
     endTime: Date,
-    slots: Number
 })
 
 const doctorSchema = new mongoose.Schema({

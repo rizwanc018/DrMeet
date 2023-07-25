@@ -24,8 +24,8 @@ const MakeAppointment = () => {
       <div className=" flex justify-between items-center w-full mt-4 mb-6 p-4 px-12 bg-slate-100">
         <h1 className="text-xl">Book appointment</h1>
       </div>
-      <div className="mt-8 flex items-start justify-around">
-        {doctor && <DoctorCard doctor={doctor} showBookbutton={false} />}
+      <div className="mt-8 flex items-start justify-center md:justify-around">
+          {doctor && <DoctorCard visibility={'invisible md:visible'} doctor={doctor} showBookbutton={false} />}
         <MakeAppointmentForm schedule={scheduleDays} id={id} />
       </div>
     </>

@@ -11,6 +11,7 @@ const DoctorLayout = () => {
   return (
     <>
       <Header />
+      <div className="mt-20"></div>
       {userInfo && userInfo.isDoctor && <Hero userInfo={userInfo} setShowModal={setShowModal} />}
       {showModal && <CreateSchedule setShowModal={setShowModal} />}
       <Outlet />

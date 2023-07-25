@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const appointmentSchema = new mongoose.Schema({
-    date : {
+    date: {
         type: Date,
         required: true
     },
@@ -15,8 +15,12 @@ const appointmentSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    timeId: mongoose.Schema.Types.ObjectId
-})
+    finished: {
+        type: Boolean,
+        default: false
+    },
+    timeId: mongoose.Schema.Types.ObjectId,
+}, { timestamps: true })
 
 const Appointment = mongoose.model('Appointment', appointmentSchema)
 export default Appointment

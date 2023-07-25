@@ -41,6 +41,10 @@
   .success {   
     @apply text-emerald-700 text-sm
   }
+
+  .ant-btn {
+    @apply border border-red-700
+  }
   /* ... */
 }
 
