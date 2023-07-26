@@ -5,7 +5,6 @@ import UserRgisterPage from "./UserRgisterPage"
 import DoctorsPage from "./DoctorsPage"
 import MakeAppointment from "./MakeAppointment"
 import AppointmentSuccess from "./AppointmentSuccess"
-import AppointmentsBooked from "./AppointmentsBooked"
 
 export {
     HomePage,
@@ -15,5 +14,4 @@ export {
     DoctorsPage,
     MakeAppointment,
     AppointmentSuccess,
-    AppointmentsBooked
 }

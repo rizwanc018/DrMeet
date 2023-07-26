@@ -12,9 +12,12 @@ const scheduleSlice = createSlice({
     reducers: {
         setSchedules: (state, action) => {
             state.schedules = action.payload
+        },
+        clearSchedule: (state, action) => {
+            state.schedules = null
         }
     }
 })
 
-export const { setSchedules } = scheduleSlice.actions
+export const { setSchedules, clearSchedule } = scheduleSlice.actions
 export default scheduleSlice.reducer

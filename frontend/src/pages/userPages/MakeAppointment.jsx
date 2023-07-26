@@ -5,19 +5,26 @@ import axios from "axios"
 
 const MakeAppointment = () => {
   const [doctor, setDoctor] = useState('')
+  const [scheduleDays, setScheduleDays] = useState([])
   const { id } = useParams()
 
-  const getDoctorById = async (id) => {
-    const response = await axios.get(`/api/user/doctor/${id}`)
-    setDoctor(response.data.doctor)
-  }
+  const fetchData = async (id) => {
+    try {
+      const [doctorResponse, scheduleResponse] = await Promise.all([
+        axios.get(`/api/user/doctor/${id}`),
+        axios.get(`/api/user/doctor/schedule/days/${id}`)
+      ]);
 
-  const scheduleDays = doctor.schedule ? doctor.schedule.map(schedule => Number(schedule.day)) : [];
-
+      setDoctor(doctorResponse.data.doctor);
+      setScheduleDays(scheduleResponse.data.days?.map(day => Number(day)) || []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    getDoctorById(id)
-  }, [])
+    fetchData(id)
+  }, [id])
 
   return (
     <>
@@ -25,8 +32,8 @@ const MakeAppointment = () => {
         <h1 className="text-xl">Book appointment</h1>
       </div>
       <div className="mt-8 flex items-start justify-center md:justify-around">
-          {doctor && <DoctorCard visibility={'invisible md:visible'} doctor={doctor} showBookbutton={false} />}
-        <MakeAppointmentForm schedule={scheduleDays} id={id} />
+        {doctor && <DoctorCard visibility={'invisible md:visible'} doctor={doctor} showBookbutton={false} />}
+        {scheduleDays && <MakeAppointmentForm schedule={scheduleDays} id={id} />}
       </div>
     </>
   )

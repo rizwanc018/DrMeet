@@ -1,12 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from 'bcrypt'
 
-const scheduleSchema = new mongoose.Schema({
-    day: String,
-    startTime: Date,
-    endTime: Date,
-})
-
 const doctorSchema = new mongoose.Schema({
     fname: {
         type: String,
@@ -48,7 +42,6 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
     image: String,
-    schedule: [scheduleSchema],
     notification: {
         type: Array
     },

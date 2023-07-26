@@ -35,6 +35,7 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
             .then(async (customer) => {
                 try {
                     const { docId, timeId, date, userId } = customer.metadata
+                    console.log("🚀 ~ file: stripe.js:38 ~ .then ~ date:", date)
                     const patientId = userId.slice(1, -1)
                     const response = await Appointment.create({ docId, timeId, date, patientId })
                     if (response) res.status(200).json({ success: true })
@@ -45,14 +46,16 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
                 }
             }).catch(err => console.log(err))
     }
-    res.json({ success: true })
+    // res.json({ success: true })
 
 })
 
 router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler(async (req, res) => {
-    const { docId, timeId, date } = req.body
-    const userId = JSON.stringify(req.user._id)
+    const { docId, timeId } = req.body
+    let { date } = req.body
+    date = moment(date).startOf('day').toISOString()
 
+    const userId = JSON.stringify(req.user._id)
     const customer = await stripe.customers.create({
         metadata: {
             userId,
@@ -98,64 +101,5 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
 }))
 
 
-
-// Webhook
-// router.post(
-//     "/webhook",
-//     express.json({ type: "application/json" }),
-//     async (req, res) => {
-//         let data;
-//         let eventType;
-
-//         // Check if webhook signing is configured.
-//         let webhookSecret;
-//         //webhookSecret = 'whsec_ef2dfc5887f870636fe513da6ef308b0c2f9b58764289374fa74f1cb4ea58f80';
-
-//         if (webhookSecret) {
-//             // Retrieve the event by verifying the signature using the raw body and secret.
-//             let event;
-//             let signature = req.headers["stripe-signature"];
-
-//             try {
-//                 event = stripe.webhooks.constructEvent(
-//                     req.body,
-//                     signature,
-//                     webhookSecret
-//                 );
-//             } catch (err) {
-//                 console.log(`⚠️  Webhook signature verification failed:  ${err}`);
-//                 return res.sendStatus(400);
-//             }
-//             // Extract the object from the event.
-//             data = event.data.object;
-//             eventType = event.type;
-//         } else {
-//             // Webhook signing is recommended, but if the secret is not configured in `config.js`,
-//             // retrieve the event data directly from the request body.
-//             data = req.body.data.object;
-//             eventType = req.body.type;
-//         }
-
-//         // Handle the checkout.session.completed event
-//         if (eventType === "checkout.session.completed") {
-//             stripe.customers
-//                 .retrieve(data.customer)
-//                 .then(async (customer) => {
-//                     try {
-//                         // CREATE ORDER
-//                         console.log('>>>>>>>>>>>>> Customer : ', customer)
-//                         console.log('>>>>>>>>>>>>> Data : ', data)
-
-//                     } catch (err) {
-//                         console.log(typeof createOrder);
-//                         console.log(err);
-//                     }
-//                 })
-//                 .catch((err) => console.log(err.message));
-//         }
-
-//         res.status(200).end();
-//     }
-// );
 
 export default router

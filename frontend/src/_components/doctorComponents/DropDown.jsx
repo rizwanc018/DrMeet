@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Menu, Transition } from '@headlessui/react'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { clearCredentials } from '../../slices/authSlice'
+import { clearSchedule } from '../../slices/scheduleSlice'
 import { AiOutlineLogout } from 'react-icons/ai'
 
 
@@ -26,6 +27,7 @@ function DropDown() {
         const response = await axios.get('/api/doc/logout')
         if (response.data.success)
             dispatch(clearCredentials())
+            dispatch(clearSchedule())
         navigate('/')
     }
 

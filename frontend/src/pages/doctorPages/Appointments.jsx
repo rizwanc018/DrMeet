@@ -1,8 +1,8 @@
-import React from 'react'
+import { AppointmentsBooked } from "../../_components/doctorComponents"
 
 const Appointments = () => {
   return (
-    <div>Appointments</div>
+    <AppointmentsBooked />
   )
 }
 
