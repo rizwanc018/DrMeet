@@ -5,7 +5,7 @@ import { generateJWT } from '../utils/generateJWT.js'
 import moment from 'moment'
 import Appointment from '../models/appointmentModel.js'
 
-  function filterObjectsWithUniqueTimeIds(a1, a2) {
+  function filterTimeWithoutAppointments(a1, a2) {
     return a1.filter(objA1 => !a2.some(objA2 => objA2.timeId.toString() == objA1._id.toString()));
   }
   
@@ -13,13 +13,11 @@ const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
 
         const { fname, lname, email, password, mobile, department, degree, proof, image, bio, experience, fees } = req.body
-
         const isExist = await Doctor.exists({ email })
         if (isExist) {
             res.status(409)
             throw new Error(`Email already exist`)
         }
-
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
         const response = await Doctor.create({ fname, lname, email, password: hash, mobile, department, degree, proof, bio, image, experience, fees })
@@ -128,14 +126,9 @@ const doctorController = {
         const d = new Date(date)
         const day = d.getDay()
         const { schedule } = await Doctor.findById(docId, { schedule: 1 })
-        // selected day's schedule
-        const daysSchedule = schedule.filter(item => item.day == day.toString())
-        // appointments already booked for that day
-        const booked = await Appointment.find({docId, date} )
-
-
-        const filtered = filterObjectsWithUniqueTimeIds(daysSchedule, booked)
-        // console.log('>>>>>>>>timesArray : ', timesArray);
+        const daysSchedule = schedule.filter(item => item.day == day.toString())  // selected day's schedule
+        const booked = await Appointment.find({docId, date} ) // appointments already booked for that day
+        const filtered = filterTimeWithoutAppointments(daysSchedule, booked)
 
         const timesArray = []
         for (const item of filtered) {
@@ -145,7 +138,7 @@ const doctorController = {
             tmp.endTime = moment(item.endTime).format('h:mm A')
             timesArray.push(tmp)
         }
-        res.status(200).json({ succes: true, timesArray })
+        res.status(200).json({ success: true, timesArray })
     })
 }
 

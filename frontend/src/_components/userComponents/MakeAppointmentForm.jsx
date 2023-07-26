@@ -3,7 +3,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
 import axios from 'axios';
-import CheckOutModal from './CheckOutModal';
 
 const MakeAppointmentForm = ({ schedule, id }) => {
     const [docId, setDocId] = useState(id)
@@ -15,8 +14,6 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     const [showBooking, setShowBooking] = useState(false)
     const [errMsg, setErrMsg] = useState()
     const [loading, setLoading] = useState(false)
-    const [showModal, setShowModal] = useState(false)
-
 
     useEffect(() => {
         setDays([...schedule])
@@ -26,51 +23,33 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     const handleChange = async (date) => {
         setLoading(true)
         setDate(date)
-        const response = await axios.post('/api/user/schedule/times', { docId, date })
-        if (response.data.timesArray) setShowTimeSelector(true)
-        setTimes(response.data.timesArray);
+        try {
+            const response = await axios.post('/api/user/schedule/times', { docId, date })
+            if (response.data.timesArray) setShowTimeSelector(true)
+            setTimes(response.data.timesArray);
+        } catch (error) {
+            setErrMsg('Somthing wrong')
+        }
         setLoading(false)
     }
 
     const handleRadioButton = (event) => {
         setTimeId(event.target.value)
+        setShowBooking(true)
     }
 
     const handleBooking = async () => {
-        const response = await axios.post(`/api/user/appointment`, { docId, date, timeId })
 
-        // try {
-        //     const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
-        //     if (response.data.url) window.location.href = response.data.url
-        // } catch (error) {
-        //     console.log(error);
-        // }
-
-        // setShowModal(true)
-        // try {
-        //     const response = await axios.post('/api/user/appointment', { docId, date, timeId })
-        //     console.log(response);
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    }
-
-    const checkAvailability = async () => {
         try {
-            setLoading(true)
-            const response = await axios.post('/api/user/appointment/availbility', { docId, date, timeId })
-            setShowBooking(response.data.success)
-            setErrMsg(response.data.msg)
-            setLoading(false)
+            const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
+            if (response.data.url) window.location.href = response.data.url
         } catch (error) {
-            // console.log(error)
-            setErrMsg('Somthing wrong')
+            console.log(error);
         }
     }
 
     return (
-        <div className=''>
-            {showModal && <CheckOutModal setShowModal={setShowModal} docId={docId} date={date} timeId={timeId} />}
+        <div className='w-full md:w-[40%] lg:w-1/3'>
             <h1>Choose date</h1>
             <Calendar
                 onChange={(date) => handleChange(date)}
@@ -81,7 +60,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             {showTimeSelector &&
                 <>
                     <h1 className='mt-3'>Choose Time:</h1>
-                    <div className="flex gap-6 ">
+                    <div className="flex flex-wrap gap-3 ">
 
                         {times.map((item, i) => (
                             <label key={i} >
@@ -100,15 +79,8 @@ const MakeAppointmentForm = ({ schedule, id }) => {
                     </div>
                 </>
             }
-            <div className='flex flex-col'>
-                {timeId &&
-                    <button
-                        onClick={checkAvailability}
-                        className='my-3 bg-primary border-primary border-2 text-white py-2 px-6 rounded hover:bg-primary-600 duration-200'
-                    >Check Availability
-                    </button>
-                }
-                {errMsg && <p className='text-center text-red-700'>{errMsg}</p>}
+            <div className='flex flex-col mt-5'>
+
                 {showBooking &&
                     <button
                         onClick={handleBooking}
