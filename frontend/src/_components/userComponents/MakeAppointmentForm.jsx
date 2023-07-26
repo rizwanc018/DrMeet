@@ -37,12 +37,14 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     }
 
     const handleBooking = async () => {
-        try {
-            const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
-            if (response.data.url) window.location.href = response.data.url
-        } catch (error) {
-            console.log(error);
-        }
+        const response = await axios.post(`/api/user/appointment`, { docId, date, timeId })
+
+        // try {
+        //     const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
+        //     if (response.data.url) window.location.href = response.data.url
+        // } catch (error) {
+        //     console.log(error);
+        // }
 
         // setShowModal(true)
         // try {
@@ -67,7 +69,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     }
 
     return (
-        <div>
+        <div className=''>
             {showModal && <CheckOutModal setShowModal={setShowModal} docId={docId} date={date} timeId={timeId} />}
             <h1>Choose date</h1>
             <Calendar

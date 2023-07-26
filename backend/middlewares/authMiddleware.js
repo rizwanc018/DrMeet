@@ -10,7 +10,6 @@ const verifyUser = asyncHandler(async (req, res, next) => {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
             req.user = await User.findById(decoded.id).select('-password')
-            console.log("🚀 ~ file: authMiddleware.js:13 ~ verifyUser ~ req.user:", req.user)
             if (req.user) next()
             else {
                 res.status(401);

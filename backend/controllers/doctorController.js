@@ -3,8 +3,12 @@ import bcrypt from 'bcrypt'
 import Doctor from '../models/doctorModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
 import moment from 'moment'
+import Appointment from '../models/appointmentModel.js'
 
-
+  function filterObjectsWithUniqueTimeIds(a1, a2) {
+    return a1.filter(objA1 => !a2.some(objA2 => objA2.timeId.toString() == objA1._id.toString()));
+  }
+  
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
 
@@ -83,24 +87,6 @@ const doctorController = {
             const response = await Doctor.findByIdAndUpdate(id, { $push: { schedule: newSchedule } }, { new: true })
             res.status(200).json({ success: true, msg: 'Schedule created succesdfully', schedules: response.schedule })
         }
-
-        // const response = await Doctor.findByIdAndUpdate(id, {
-        //     $or: [
-        //         { 'schedules.$.endTime': { $lte: newSchedule.startTime } },
-        //         { 'schedules.$.startTime': { $gte: newSchedule.endTime } },
-        //         {
-        //             $and: [
-        //                 { 'schedules.$.startTime': { $lte: newSchedule.startTime } },
-        //                 { 'schedules.$.endTime': { $gte: newSchedule.endTime } },
-        //             ],
-        //         }
-        //     ]
-        // }, { $push: { schedules: newSchedule } },
-        //     { new: true, upsert: true })
-        //     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>> Response : ',response);
-        // /////////////////////////
-        // res.status(200).json({ success: true, msg: 'Schedule created succesdfully' })
-
     }),
     getSchedules: asyncHandler(async (req, res) => {
         const schedules = req.doctor.schedule.sort((a, b) => {
@@ -142,14 +128,21 @@ const doctorController = {
         const d = new Date(date)
         const day = d.getDay()
         const { schedule } = await Doctor.findById(docId, { schedule: 1 })
-        let objs = schedule.filter(item => item.day == day.toString())
+        // selected day's schedule
+        const daysSchedule = schedule.filter(item => item.day == day.toString())
+        // appointments already booked for that day
+        const booked = await Appointment.find({docId, date} )
+
+
+        const filtered = filterObjectsWithUniqueTimeIds(daysSchedule, booked)
+        // console.log('>>>>>>>>timesArray : ', timesArray);
 
         const timesArray = []
-        for (const obj of objs) {
+        for (const item of filtered) {
             let tmp = {}
-            tmp._id = obj._id
-            tmp.startTime = moment(obj.startTime).format('h:mm A')
-            tmp.endTime = moment(obj.endTime).format('h:mm A')
+            tmp._id = item._id
+            tmp.startTime = moment(item.startTime).format('h:mm A')
+            tmp.endTime = moment(item.endTime).format('h:mm A')
             timesArray.push(tmp)
         }
         res.status(200).json({ succes: true, timesArray })
