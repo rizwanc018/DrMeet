@@ -7,6 +7,8 @@ import moment from "moment";
 import bodyParser from "body-parser";
 import { verifyUser } from "../middlewares/authMiddleware.js";
 import Appointment from "../models/appointmentModel.js";
+import Schedule from '../models/scheduleModel.js'
+
 
 config()
 const router = express.Router()
@@ -35,7 +37,6 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
             .then(async (customer) => {
                 try {
                     const { docId, timeId, date, userId } = customer.metadata
-                    console.log("🚀 ~ file: stripe.js:38 ~ .then ~ date:", date)
                     const patientId = userId.slice(1, -1)
                     const response = await Appointment.create({ docId, timeId, date, patientId })
                     if (response) res.status(200).json({ success: true })
@@ -54,8 +55,8 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
     const { docId, timeId } = req.body
     let { date } = req.body
     date = moment(date).startOf('day').toISOString()
-
     const userId = JSON.stringify(req.user._id)
+    console.log({docId, timeId, date, userId})
     const customer = await stripe.customers.create({
         metadata: {
             userId,
@@ -65,13 +66,11 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
         },
     });
 
-    const { fname, lname, department, schedule, fees } = await Doctor.findOne({ _id: docId },
-        { fname: 1, lname: 1, department: 1, schedule: 1, fees: 1 })
+    const { fname, lname, department, fees } = await Doctor.findOne({ _id: docId },
+        { fname: 1, lname: 1, department: 1, fees: 1 })
         .populate('department', 'name -_id')
 
-    const { startTime, endTime } = schedule.find((item) => {
-        return item._id == timeId
-    })
+    const { startTime, endTime } = await Schedule.findById(timeId)
 
     const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -99,7 +98,5 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
 
     res.send({ url: session.url });
 }))
-
-
 
 export default router

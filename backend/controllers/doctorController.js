@@ -5,10 +5,6 @@ import { generateJWT } from '../utils/generateJWT.js'
 import moment from 'moment'
 import Appointment from '../models/appointmentModel.js'
 
-function filterTimeWithoutAppointments(a1, a2) {
-    return a1.filter(objA1 => !a2.some(objA2 => objA2.timeId.toString() == objA1._id.toString()));
-}
-
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
 
@@ -85,28 +81,28 @@ const doctorController = {
         const doctor = await Doctor.findById(id).populate('department', 'name -_id')
         res.status(200).json({ success: true, doctor })
     }),
-    getScheduleTimes: asyncHandler(async (req, res) => {
+    // getScheduleTimes: asyncHandler(async (req, res) => {
 
-        const { docId } = req.body
-        let { date } = req.body
-        date = moment(date).startOf('day')
-        const day = date.day()
-        const { schedule } = await Doctor.findById(docId, { schedule: 1 })
-        const daysSchedule = schedule.filter(item => item.day == day.toString())  // selected day's schedule
-        const booked = await Appointment.find({ docId, date:date.toISOString() }) // appointments already booked for that day
+    //     const { docId } = req.body
+    //     let { date } = req.body
+    //     date = moment(date).startOf('day')
+    //     const day = date.day()
+    //     const { schedule } = await Doctor.findById(docId, { schedule: 1 })
+    //     const daysSchedule = schedule.filter(item => item.day == day.toString())  // selected day's schedule
+    //     const booked = await Appointment.find({ docId, date:date.toISOString() }) // appointments already booked for that day
 
-        const filtered = filterTimeWithoutAppointments(daysSchedule, booked)
+    //     const filtered = filterTimeWithoutAppointments(daysSchedule, booked)
 
-        const timesArray = []
-        for (const item of filtered) {
-            let tmp = {}
-            tmp._id = item._id
-            tmp.startTime = moment(item.startTime).format('h:mm A')
-            tmp.endTime = moment(item.endTime).format('h:mm A')
-            timesArray.push(tmp)
-        }
-        res.status(200).json({ success: true, timesArray })
-    }),
+    //     const timesArray = []
+    //     for (const item of filtered) {
+    //         let tmp = {}
+    //         tmp._id = item._id
+    //         tmp.startTime = moment(item.startTime).format('h:mm A')
+    //         tmp.endTime = moment(item.endTime).format('h:mm A')
+    //         timesArray.push(tmp)
+    //     }
+    //     res.status(200).json({ success: true, timesArray })
+    // }),
 
 }
 
