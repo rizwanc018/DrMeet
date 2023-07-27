@@ -10,7 +10,7 @@ const appointmentController = {
         const appointments = await Appointment.find({ docId, date, finished: false })
             .populate('patientId', 'fname lname mobile')
             .populate('timeId', 'startTime endTime')
-            .sort({startTime: 1})
+            .sort({ startTime: 1 })
         res.status(200).json({ succes: true, appointments })
     }),
     getAppontmentDetails: asyncHandler(async (req, res) => {
@@ -33,7 +33,12 @@ const appointmentController = {
             date: moment(date).format('DD-MMM-YYYY')
         }
         res.status(200).json({ success: true, details })
-    })
+    }),
+    getAllAppointmentDatesOfDoctor: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const dates = await Appointment.find({ docId }, { date: 1 })
+        res.status(200).json({dates})
+})
 
 }
 

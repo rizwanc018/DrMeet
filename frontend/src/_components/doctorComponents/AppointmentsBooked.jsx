@@ -5,9 +5,13 @@ import { MdVideoCall } from 'react-icons/md'
 
 const AppointmentsBooked = ({ data }) => {
 
-
   const columns = useMemo(
     () => [
+      {
+        Header: '#',
+        accessor: 'rowNumber',
+        Cell: ({ row }) => <div>{row.index + 1}</div>,
+      },
       {
         Header: 'FirstName',
         accessor: 'patientId.fname', // accessor is the "key" in the data object
@@ -23,7 +27,6 @@ const AppointmentsBooked = ({ data }) => {
       {
         Header: 'Time',
         accessor: 'timeId.startTime',
-        // Cell: ({ cell: { row } }) => moment(row.original.startTime) + ' - ' + moment(row.original.endTime)
         Cell: ({ cell: { row } }) => (
           moment(row.original.timeId.startTime).format('hh:mm a') + ' - ' + moment(row.original.timeId.endTime).format('hh:mm a')
         )
@@ -50,35 +53,69 @@ const AppointmentsBooked = ({ data }) => {
   } = useTable({ columns, data });
 
   return (
-    <div className='w-full  p-10'>
-      <table {...getTableProps()} className='text-center w-fit table-auto shadow-lg bg-white'>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className='bg-primary-500 border text-left px-8 py-4'>
-                  {column.render('Header')}
-                </th>
+    <>
+      {data.length === 0 ? (<h1 className="mt-10 font-bold text-3xl">No Appointments</h1>) : (
+        <div className='p-10 overflow-x-auto'>
+          <table {...getTableProps()} className='text-center w-auto table-auto shadow-lg bg-white'>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
+                      {column.render('Header')}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className='even:bg-primary-100'>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className='border-2 px-8 py-4'>
-                    {cell.render('Cell')}
-                  </td>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} className='even:bg-primary-100'>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} className='capitalize border-2 px-4 py-2'>
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* <div className='p-10 overflow-x-auto'>
+        <table {...getTableProps()} className='text-center w-auto table-auto shadow-lg bg-white'>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
+                    {column.render('Header')}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className='even:bg-primary-100'>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} className='capitalize border-2 px-4 py-2'>
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div> */}
+    </>
   )
 }
 

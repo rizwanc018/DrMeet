@@ -1,12 +1,14 @@
-import { AppointmentsBooked } from "../../_components/doctorComponents"
+import { AppointmentsBooked, CalenderToShowAppointments } from "../../_components/doctorComponents"
 import { useEffect, useState, } from "react"
 import axios from "axios"
 import moment from "moment"
 import Spinner from '../../_components/Spinner'
 
 const Appointments = () => {
+  const [date, setDate] = useState(moment().startOf('day').toISOString())
+  // console.log(date);
   const [data, setData] = useState()
-  console.log(data);
+  // console.log(data);
 
   const getAppointments = async (date) => {
     const response = await axios.post('/api/doc/appointments', { date })
@@ -14,20 +16,22 @@ const Appointments = () => {
   }
 
   useEffect(() => {
-    const date = moment().startOf('day').toISOString()
     getAppointments(date)
   }, [])
 
   return (
-    <>
-      {
-        data ? (
-          <AppointmentsBooked data={data} />
-        ) : (
-          <div><Spinner /></div>
-        )
-      }
-    </>
+    <div className="w-full flex justify-center">
+      <div className="flex justify-evenly items-start mx-auto">
+        <CalenderToShowAppointments date={date} setDate={setDate} />
+        {
+          data ? (
+            <AppointmentsBooked data={data} />
+          ) : (
+            <div><Spinner /></div>
+          )
+        }
+      </div>
+    </div>
   )
 }
 
