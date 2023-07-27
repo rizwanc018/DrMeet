@@ -99,7 +99,7 @@ const RegisteredDoctorsTable = ({ data, handleApprove }) => {
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
 export default RegisteredDoctorsTable;

@@ -19,7 +19,11 @@ const appointmentSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    timeId: mongoose.Schema.Types.ObjectId,
+    timeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Schedule",
+        required: true
+    }
 }, { timestamps: true })
 
 const Appointment = mongoose.model('Appointment', appointmentSchema)

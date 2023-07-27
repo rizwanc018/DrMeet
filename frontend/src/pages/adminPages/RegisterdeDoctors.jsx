@@ -1,13 +1,9 @@
 import React from 'react'
 import { RegisteredDoctorsTable } from '../../_components/adminComponents'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import {useState, useEffect } from 'react'
 import axios from 'axios'
 import Spinner from '../../_components/Spinner'
 import toast, { Toaster } from 'react-hot-toast';
-
-
-
 
 function RegisterdeDoctors() {
     const [data, setData] = useState('')

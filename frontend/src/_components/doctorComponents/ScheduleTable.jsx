@@ -20,7 +20,6 @@ const ScheduleTable = ({ handleDeleteSchedule, schedules}) => {
                 accessor: 'startTime',
                 Cell: ({ cell: { row } }) => moment(row.original.startTime).format('h:mm A') + ' - ' + moment(row.original.endTime).format('h:mm A')
             },
-
             {
                 Header: '',
                 accessor: '_id',
