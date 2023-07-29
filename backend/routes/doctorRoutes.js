@@ -17,5 +17,4 @@ router.delete('/schedule/:id', verifyDoctor, scheduleController.deleteSchedule)
 router.post('/appointments', verifyDoctor, appointmentController.getAppointmentsByDate)
 router.get('/appointment/dates', verifyDoctor, appointmentController.getAllAppointmentDatesOfDoctor)
 
-
 export default router
