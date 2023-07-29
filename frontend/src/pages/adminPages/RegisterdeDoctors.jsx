@@ -18,7 +18,7 @@ function RegisterdeDoctors() {
     }, [])
 
     const handleApprove = async (id) => {
-      const response = await axios.get(`${baseUrl}/admin/approve/doctor/${id}`)
+      const response = await axios.get(`/api/admin/approve/doctor/${id}`)
       toast.success(response.data.msg)
       getUnapprovedDoctors()
     }

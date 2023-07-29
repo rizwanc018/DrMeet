@@ -63,21 +63,21 @@ function DoctorRegister() {
       fees: Yup.string().required('Fees is required')
     }),
     onSubmit: async (values) => {
-      setSubmitting(true)
+      setSubmitting(false) /////////////////////////
       setErr('')
       setLoginSuccess('')
       await uploadAvatar()
       await uploadProof()
       try {
-        const response = await axios.post(`${baseUrl}/doc/reg`, { ...values })
+        const response = await axios.post(`/api/doc/reg`, { ...values })
         setLoginSuccess(response.data.msg)
         setTimeout(() => {
           navigate('/')
         }, 3000);
       } catch (error) {
         setErr(error.response.data.err)
+        setSubmitting(false)
       }
-      setSubmitting(false)
     }
   })
 
