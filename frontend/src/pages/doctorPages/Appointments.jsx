@@ -6,7 +6,7 @@ import Spinner from '../../_components/Spinner'
 
 const Appointments = () => {
   const [date, setDate] = useState(moment().startOf('day').toISOString())
-  // console.log(date);
+  console.log(date);
   const [data, setData] = useState()
   // console.log(data);
 
@@ -17,11 +17,11 @@ const Appointments = () => {
 
   useEffect(() => {
     getAppointments(date)
-  }, [])
+  }, [date])
 
   return (
     <div className="w-full flex justify-center">
-      <div className="flex justify-evenly items-start mx-auto">
+      <div className="flex justify-between items-start mx-auto">
         <CalenderToShowAppointments date={date} setDate={setDate} />
         {
           data ? (

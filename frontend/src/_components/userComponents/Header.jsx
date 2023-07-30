@@ -44,6 +44,7 @@ const Header = () => {
                             </li>
                         ))
                     }
+                    <li><Link to='/meet'>Join</Link></li>
                     <li className='md:ml-6 text-md md:my-0 my-7'>
                         {
                             userInfo && userInfo.isUser ?

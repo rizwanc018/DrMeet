@@ -6,5 +6,16 @@ import CreateSchedule from "./AddScheduleModal";
 import ScheduleTable from "./ScheduleTable";
 import AppointmentsBooked from "./AppointmentsBooked"
 import CalenderToShowAppointments from "./CalenderToShowAppointments";
+import VideoCall from "./VideoCall";
 
-export { Header, DoctorRegisterForm, DoctorLoginForm, Hero, CreateSchedule, ScheduleTable, AppointmentsBooked, CalenderToShowAppointments }
+export {
+    Header,
+    DoctorRegisterForm,
+    DoctorLoginForm,
+    Hero,
+    CreateSchedule,
+    ScheduleTable,
+    AppointmentsBooked,
+    CalenderToShowAppointments,
+    VideoCall
+}

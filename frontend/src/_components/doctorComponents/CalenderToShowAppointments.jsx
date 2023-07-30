@@ -25,14 +25,17 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
     return !givenDates.some((givenDate) => givenDate.isSame(momentDate, 'day'));
   }
 
+  const handleChange = (d) => {
+    setDate(moment(d).startOf('day'))
+  }
+
   return (
     <>
       {givenDates &&
         <Calendar
-          onChange={(date) => setDate(moment(date).startOf('day'))}
+          onChange={(date) => handleChange(date)}
           value={date}
           tileDisabled={({ date }) => dateIsDisabled(date)}
-          minDate={new Date()}
         />
       }
     </>

@@ -2,8 +2,15 @@ import { useMemo } from "react"
 import moment from "moment"
 import { useTable } from 'react-table';
 import { MdVideoCall } from 'react-icons/md'
+import { useNavigate } from "react-router-dom";
 
 const AppointmentsBooked = ({ data }) => {
+
+  const navigate = useNavigate()
+
+  const startVideoCall =(patientId) => {
+    navigate(`/doctor/consoltation/${patientId}`)
+  }
 
   const columns = useMemo(
     () => [
@@ -36,7 +43,7 @@ const AppointmentsBooked = ({ data }) => {
         accessor: '_id',
         Cell: ({ value }) => (
           <button className=' rounded'>
-            <MdVideoCall className='text-primary text-3xl font-bold' />
+            <MdVideoCall className='text-primary text-3xl font-bold' onClick={() => startVideoCall(value)}/>
           </button>
         )
       }
@@ -54,7 +61,7 @@ const AppointmentsBooked = ({ data }) => {
 
   return (
     <>
-      {data.length === 0 ? (<h1 className="mt-10 font-bold text-3xl">No Appointments</h1>) : (
+      {data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Appointments</h1>) : (
         <div className='p-10 overflow-x-auto'>
           <table {...getTableProps()} className='text-center w-auto table-auto shadow-lg bg-white'>
             <thead>

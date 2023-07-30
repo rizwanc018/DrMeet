@@ -6,5 +6,17 @@ import DoctorCard from "./DoctorCard"
 import SearchDoctor from "./SearchDoctor"
 import MakeAppointmentForm from "./MakeAppointmentForm"
 import CheckOutModal from "./CheckOutModal"
+import VideoCall from "./VideoCall"
 
-export { Header, UserLoginForm, UserRegisterForm, Hero, DoctorCard, SearchDoctor, MakeAppointmentForm, CheckOutModal }
+
+export {
+    Header,
+    UserLoginForm,
+    UserRegisterForm,
+    Hero,
+    DoctorCard,
+    SearchDoctor,
+    MakeAppointmentForm,
+    CheckOutModal,
+    VideoCall
+}
