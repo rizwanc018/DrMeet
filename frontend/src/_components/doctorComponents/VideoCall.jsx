@@ -2,9 +2,9 @@ import { useRef, useState, useEffect } from 'react'
 import Peer from 'simple-peer'
 import io from 'socket.io-client'
 
+
+
 const socket = io.connect('http://localhost:5001')
-
-
 const VideoCall = ({ patientId }) => {
 
   const [me, setMe] = useState("")
