@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect } from 'react'
 import Peer from 'simple-peer'
-import io from 'socket.io-client'
+import socket from '../../config/socket.js'
+// import io from 'socket.io-client'
 
-
-
-const socket = io.connect('http://localhost:5001')
+// const socket = io.connect('http://localhost:5001')
 const VideoCall = ({ patientId }) => {
 
   const [me, setMe] = useState("")
+  // console.log({me});
   const [stream, setStream] = useState()
   const [receivingCall, setReceivingCall] = useState(false)
   const [caller, setCaller] = useState("")
@@ -26,10 +26,17 @@ const VideoCall = ({ patientId }) => {
       if (myVideo.current) myVideo.current.srcObject = stream
     })
 
-    socket.on("me", (id) => {
-      console.log('Id >> ', id)
+    // socket.on("me", (id) => {
+    //   console.log('Id >> ', id)
+    //   setMe(id)
+    // })
+
+    socket.emit("get-my-id", id => {
+      console.log({ doc: id })
       setMe(id)
     })
+
+
 
     socket.on("callUser", (data) => {
       setReceivingCall(true)
@@ -89,64 +96,37 @@ const VideoCall = ({ patientId }) => {
   }
 
   return (
-    <>
-  <h1 className="text-center text-white">Zoomish</h1>
-  <div className="container grid grid-cols-2 gap-10 justify-center items-center mt-20 ml-10">
-    <div className="video">
-      {stream && <video playsInline muted ref={myVideo} autoPlay className="w-72" />}
-    </div>
-    <div className="video">
-      {callAccepted && !callEnded ? (
-        <video playsInline ref={userVideo} autoPlay className="w-72" />
-      ) : null}
-    </div>
-  </div>
-  <div className="myId mr-20 rounded-md bg-gradient-to-r from-gray-300 to-blue-300 p-8 grid justify-center items-center">
-    {/* <TextField
-      id="filled-basic"
-      label="Name"
-      variant="filled"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      className="mb-8"
-    /> */}
-    {/* <CopyToClipboard text={me} className="mb-10">
-      <Button variant="contained" color="primary" startIcon={<AssignmentIcon className="text-lg" />}>
-        Copy ID
-      </Button>
-    </CopyToClipboard> */}
-
-    {/* <TextField
-      id="filled-basic"
-      label="ID to call"
-      variant="filled"
-      value={idToCall}
-      onChange={(e) => setIdToCall(e.target.value)}
-    /> */}
-    <div className="call-button mt-8">
-      {callAccepted && !callEnded ? (
-        <button variant="contained" color="secondary" onClick={leaveCall}>
-          End Call
-        </button>
-      ) : (
-        <button color="primary" aria-label="call" onClick={() => callUser(idToCall)}>
-          <span className="text-lg" >phone icon</span>
-        </button>
-      )}
-      {idToCall}
-    </div>
-  </div>
-  <div>
-    {receivingCall && !callAccepted ? (
-      <div className="caller">
-        <h1>{name} is calling...</h1>
-        <button variant="contained" color="primary" onClick={answerCall}>
-          Answer
-        </button>
+    <div className='relative min-h-screen bg-gray-100 flex flex-col items-center justify-center'>
+        <div className="relative flex-1 w-full ">
+          <div className="video absolute bottom-4 right-4 w-48 h-36 bg-black z-10 border border-primary-600">
+            {stream && <video playsInline muted ref={myVideo} autoPlay className="w-full h-full object-cover" />}
+          </div>
+          <div className="video absolute inset-0 bg-black">
+            {callAccepted && !callEnded ? (
+              <video playsInline ref={userVideo} autoPlay className="w-full h-full object-cover" />
+            ) : null}
+          </div>
+        </div>
+        <div className="">
+          {callAccepted && !callEnded ? (
+            <button className='absolute bottom-10 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={leaveCall}>
+              End Call
+            </button>
+          ) : (
+            null
+          )}
+        </div>
+      <div className="absolute bottom-20">
+        {receivingCall && !callAccepted ? (
+          <div className="flex justify-center items-center">
+            <h1>{name} is calling...</h1>
+            <button className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" onClick={answerCall}>
+              Answer
+            </button>
+          </div>
+        ) : null}
       </div>
-    ) : null}
-  </div>
-</>
+    </div>
 
   )
 }

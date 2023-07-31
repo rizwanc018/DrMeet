@@ -12,6 +12,7 @@ export default {
         'primary-500': 'hsl(168, 75%, 52%)',
         primary: 'hsl(168, 75%, 42%)',
         'primary-600': 'hsl(168, 75%, 32%)',
+        'primary-700': 'hsl(168, 75%, 22%)',
         'primary-o': 'hsl(168, 20%, 52%)',
       },
     },

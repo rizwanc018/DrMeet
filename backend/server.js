@@ -31,8 +31,13 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    console.log('Connection....',socket.id)
-    socket.emit("me", socket.id)
+    console.log('Connection....', socket.id)
+    // socket.emit("me", socket.id)
+
+    socket.on("get-my-id", cb => {
+        console.log('>>>>> ',socket.id);
+        cb( socket.id)
+    })
 
     socket.on("disconnect", () => {
         socket.broadcast.emit("callEnded")

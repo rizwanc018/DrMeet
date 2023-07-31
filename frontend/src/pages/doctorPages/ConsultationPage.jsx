@@ -5,10 +5,9 @@ const ConsultationPage = () => {
     const { patientId } = useParams()
     // console.log(patientId)
     return (
-        <>
+        <div className="">
             <VideoCall patientId={patientId} />
-            <div>ConsultationPage</div>
-        </>
+        </div>
     )
 }
 
