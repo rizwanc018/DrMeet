@@ -4,12 +4,13 @@ import socket from '../../config/socket.js'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
+import Spinner from '../Spinner.jsx'
 
 
 
 const VideoCall = ({ docSokId }) => {
   const navigate = useNavigate()
-
+  const [showSpinner, setShowSpinner] = useState(false)
   const { userInfo } = useSelector(state => state.auth)
 
 
@@ -50,12 +51,10 @@ const VideoCall = ({ docSokId }) => {
     })
 
     socket.on("callEnded", () => {
-      console.log('Call -ended');
-      socket.disconnect()
       toast.error("Request declined")
       setTimeout(() => {
         navigate('/')
-      }, 3000);
+      }, 1000);
     })
 
     setName(userInfo.fname + ' ' + userInfo.lname)
@@ -64,6 +63,7 @@ const VideoCall = ({ docSokId }) => {
 
 
   const callDoctor = (id) => {
+    setShowSpinner(true)
     const peer = new Peer({
       initiator: true,
       trickle: false,
@@ -124,14 +124,23 @@ const VideoCall = ({ docSokId }) => {
                 End Call
               </button>
             ) : (
-              <button className="absolute  bottom-20 bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" onClick={() => callDoctor(idToCall)}>
-                <span className="text-lg ">Request Permission</span>
-              </button>
+
+              showSpinner ?
+                (
+                  <button className="absolute  bottom-20 bg-black  font-bold py-2 px-4 rounded" onClick={() => callDoctor(idToCall)}>
+                    <Spinner />
+                  </button>
+                ) : (
+                  <button className="absolute  bottom-20 bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" onClick={() => callDoctor(idToCall)}>
+                    <span className="text-lg ">Request Permission</span>
+                  </button>
+                )
+
             )}
 
           </div>
         </div>
-      </div>
+      </div >
     </>
 
   )
