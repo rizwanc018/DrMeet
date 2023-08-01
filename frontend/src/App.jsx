@@ -37,7 +37,7 @@ function App() {
           <Route path="doctors" element={<DoctorsPage />} />
           <Route path="appointment/apply/:id" element={<MakeAppointment />} />
           <Route path="appointment-success" element={<AppointmentSuccess />} />
-          <Route path="meet" element={<MeetDoctorPage />} />
+          <Route path="meet/:docSokId" element={<MeetDoctorPage />} />
         </Route>
       </Routes>
     </Router>

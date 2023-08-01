@@ -23,7 +23,8 @@ const userController = {
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,
-                isUser: user.isUser
+                isUser: user.isUser,
+                id: user._id
             })
         } else {
             res.status(400)
@@ -40,7 +41,8 @@ const userController = {
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,
-                isUser: user.isUser
+                isUser: user.isUser,
+                id: user._id
             })
         } else {
             res.status(400)

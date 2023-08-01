@@ -1,14 +1,40 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { GrClose } from 'react-icons/gr'
 import { AiOutlineLogin } from 'react-icons/ai'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import DropDown from './DropDown';
+import socket from '../../config/socket.js'
+
 
 const Header = () => {
+    const [callTo, setCallTo] = useState()
+    const navigate = useNavigate()
 
     const { userInfo } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        userInfo ?
+            socket.emit('join-room', userInfo?.id, msg => {
+            }) : null
+    }, [userInfo])
+
+    useEffect(() => {
+        socket.emit("get-my-id", id => {
+            socket.on('call-id', docId => {
+                if (docId) {
+                    setCallTo(docId)
+                }
+            })
+        })
+    }, [])
+
+    const handleJoin = () => {
+        const tmp = callTo
+        setCallTo(null)
+        navigate(`/meet/${tmp}`)
+    }
 
     let Links = [
         { name: "Home", link: "/" },
@@ -18,7 +44,7 @@ const Header = () => {
     let [open, setOpen] = useState(false);
     const handleShowNavbar = () => {
         setShowNavbar(!showNavbar);
-    };
+    }
 
     return (
         <div className='z-10 shadow-md w-full fixed top-0 left-0'>
@@ -44,17 +70,19 @@ const Header = () => {
                             </li>
                         ))
                     }
-                    <li><Link to='/meet'>Join</Link></li>
+                    {callTo  &&
+                        <li><button className='animate-ping text-white bg-primary p-1 rounded ml-6 ' onClick={handleJoin}>Join</button></li>
+                    }
                     <li className='md:ml-6 text-md md:my-0 my-7'>
                         {
                             userInfo && userInfo.isUser ?
                                 (<DropDown />)
-                                : (<Link to='/login' className='flex items-center gap-1 text-primary font-bold'><AiOutlineLogin className='text-primary font-bold'/> <span>Login</span></Link>)
+                                : (<Link to='/login' className='flex items-center gap-1 text-primary font-bold'><AiOutlineLogin className='text-primary font-bold' /> <span>Login</span></Link>)
                         }
                     </li>
                 </ul>
             </div>
-        </div>
+        </div >
     )
 }
 

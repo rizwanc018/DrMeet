@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"],
     }
 })
@@ -35,7 +35,6 @@ io.on('connection', (socket) => {
     // socket.emit("me", socket.id)
 
     socket.on("get-my-id", cb => {
-        console.log('>>>>> ',socket.id);
         cb( socket.id)
     })
 
@@ -50,6 +49,20 @@ io.on('connection', (socket) => {
     socket.on("answerCall", (data) => {
         io.to(data.to).emit("callAccepted", data.signal);
     });
+
+    socket.on('join-room', (room, cb) => {
+        socket.join(room)
+        cb(`Joined room : ${room}`)
+    })
+
+    socket.on('send-docId', (docId, room) => {
+        socket.to(room).emit('call-id', docId)
+    })
+
+    socket.on("callEnded", ({ callerId, patientId }) => {
+        // Find the other user (patient) in the same room and notify them that the call has ended
+        socket.to(patientId).emit("callEnded", { callerId });
+      });
 })
 
 server.listen(5001, () => console.log('socket running on port 5001'))

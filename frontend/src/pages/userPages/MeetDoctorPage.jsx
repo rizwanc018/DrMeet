@@ -1,10 +1,11 @@
+import { useParams } from "react-router-dom"
 import { VideoCall } from "../../_components/userComponents"
 
 const MeetDoctorPage = () => {
+    const { docSokId } = useParams()
     return (
         <>
-            <div>MeetDoctorPage</div>
-            <VideoCall />
+            <VideoCall docSokId={docSokId} />
         </>
     )
 }

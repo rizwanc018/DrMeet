@@ -40,7 +40,7 @@ const AppointmentsBooked = ({ data }) => {
       },
       {
         Header: '',
-        accessor: '_id',
+        accessor: 'patientId._id',
         Cell: ({ value }) => (
           <button className=' rounded'>
             <MdVideoCall className='text-primary text-3xl font-bold' onClick={() => startVideoCall(value)}/>
