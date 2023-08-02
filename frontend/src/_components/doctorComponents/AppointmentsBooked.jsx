@@ -61,7 +61,7 @@ const AppointmentsBooked = ({ data }) => {
 
   return (
     <>
-      {data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Appointments</h1>) : (
+      {data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Appointments Today</h1>) : (
         <div className='p-10 overflow-x-auto'>
           <table {...getTableProps()} className='text-center w-auto table-auto shadow-lg bg-white'>
             <thead>

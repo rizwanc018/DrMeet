@@ -8,9 +8,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 function DoctorRegister() {
+
+  const { userInfo } = useSelector(state => state.auth)
+
 
   const [avatar, setAvatar] = useState(null)
   const [certificates, setCertificates] = useState([])
@@ -25,6 +29,10 @@ function DoctorRegister() {
     const response = await axios.get(`/api/admin/department`)
     setDepartments(response.data.departments)
   }
+
+  useEffect(() => {
+    if(userInfo && userInfo.isDoctor) navigate('/doctor')
+  },[])
 
   useEffect(() => {
     getAllDepartments()

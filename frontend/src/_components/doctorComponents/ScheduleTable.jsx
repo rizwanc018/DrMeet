@@ -46,9 +46,9 @@ const ScheduleTable = ({ handleDeleteSchedule, schedules}) => {
             <table {...getTableProps()} className='text-center w-full table-auto shadow-lg bg-white'>
                 <thead>
                     {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
+                        <tr {...headerGroup.getHeaderGroupProps()}  style={{ borderBottom: '1px solid black' }}>
                             {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()} className='bg-primary-500 border text-left px-8 py-4'>
+                                <th {...column.getHeaderProps()} className=' bg-primary-500 border  px-8 py-4'>
                                     {column.render('Header')}
                                 </th>
                             ))}

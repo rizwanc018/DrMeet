@@ -7,6 +7,7 @@ import ScheduleTable from "./ScheduleTable";
 import AppointmentsBooked from "./AppointmentsBooked"
 import CalenderToShowAppointments from "./CalenderToShowAppointments";
 import VideoCall from "./VideoCall";
+import WeekDaysHeader from "./WeekDaysHeader";
 
 export {
     Header,
@@ -17,5 +18,6 @@ export {
     ScheduleTable,
     AppointmentsBooked,
     CalenderToShowAppointments,
-    VideoCall
+    VideoCall,
+    WeekDaysHeader
 }

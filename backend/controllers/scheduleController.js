@@ -31,7 +31,10 @@ const scheduleController = {
     }),
     getSchedules: asyncHandler(async (req, res) => {
         const docId = req.doctor._id
-        const response = await Schedule.find({ docId }).sort({ day: 1, startTime: 1 })
+        const day = req.params.day
+        console.log("🚀 ~ file: scheduleController.js:35 ~ getSchedules:asyncHandler ~ day:", day)
+        
+        const response = await Schedule.find({ docId, day }).sort({ day: 1, startTime: 1 })
 
         res.status(200).json({ success: true, schedules: response })
     }),
