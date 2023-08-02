@@ -6,7 +6,7 @@ import moment from 'moment'
 const appointmentController = {
     getAppointmentsByDate: asyncHandler(async (req, res) => {
         const docId = req.doctor._id
-        let { date } = req.body
+        const { date } = req.body
         const appointments = await Appointment.find({ docId, date, finished: false })
             .populate('patientId', 'fname lname mobile')
             .populate('timeId', 'startTime endTime')
@@ -37,9 +37,18 @@ const appointmentController = {
     getAllAppointmentDatesOfDoctor: asyncHandler(async (req, res) => {
         const docId = req.doctor._id
         const dates = await Appointment.find({ docId }, { date: 1 })
-        res.status(200).json({dates})
-})
-
+        res.status(200).json({ dates })
+    }),
+    getUpComingAppointmentsOfPatient: asyncHandler(async (req, res) => {
+        const patientId = req.user._id
+        const date = moment().startOf('day')
+        const appointments = await Appointment.find({
+            $and: [{ patientId }, { date: { $gte: date } }]
+        })
+            .populate('docId', 'fname lname').populate('timeId')
+            .sort({ date: 1 })
+            res.status(200).json({appointments})
+    })
 }
 
 export default appointmentController

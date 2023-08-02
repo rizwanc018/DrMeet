@@ -34,10 +34,26 @@ const VideoCall = ({ docSokId }) => {
 
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-      setStream(stream)
-      if (myVideo.current) myVideo.current.srcObject = stream
-    })
+    // navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+    //   setStream(stream)
+    //   if (myVideo.current) myVideo.current.srcObject = stream
+    // })
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          setStream(stream);
+          if (myVideo.current) {
+            myVideo.current.srcObject = stream;
+          }
+        })
+        .catch((error) => {
+          // Handle permission denied or other errors
+          console.error('Error accessing media devices:', error);
+        });
+    } else {
+      console.error('getUserMedia is not supported in this browser.');
+    }
 
     socket.emit("get-my-id", id => {
       setMe(id)

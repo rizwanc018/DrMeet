@@ -6,7 +6,6 @@ import Spinner from '../../_components/Spinner'
 
 const Appointments = () => {
   const [date, setDate] = useState(moment().startOf('day').toISOString())
-  console.log(date);
   const [data, setData] = useState()
   // console.log(data);
 

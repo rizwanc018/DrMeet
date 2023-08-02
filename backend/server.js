@@ -60,18 +60,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on("callEnded", ({ callerId, patientId }) => {
-        // Find the other user (patient) in the same room and notify them that the call has ended
         socket.to(patientId).emit("callEnded", { callerId });
       });
 })
 
-server.listen(5001, () => console.log('socket running on port 5001'))
 /////////////////////////////////////////////////////
 
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extends: true }))
 app.use(cookieParser())
-
 app.use(`/api/stripe`, stripeRouter)
 app.use(express.json())
 
@@ -91,3 +88,4 @@ app.use(notFound)
 app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
+server.listen(5001, () => console.log('socket running on port 5001'))

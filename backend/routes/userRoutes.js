@@ -19,5 +19,6 @@ router.post('/schedule/times', scheduleController.getScheduleTimes)
 // router.post('/appointment/availbility', appointmentController.checkAvailability)
 router.post('/appointment/details', verifyUser, appointmentController.getAppontmentDetails)
 router.get('/doctor/schedule/days/:id', verifyUser, scheduleController.getScheduledDays)
+router.get('/appointments', verifyUser, appointmentController.getUpComingAppointmentsOfPatient)
 
 export default router
