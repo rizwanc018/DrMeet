@@ -31,7 +31,7 @@ const Appointments = () => {
     <div className="w-full flex justify-center">
       <div className="w-full flex flex-col items-center md:flex-row md:justify-between px-4">
         <CalenderToShowAppointments date={date} setDate={setDate} />
-        <div className="w-full md:w-fit overflow-x-auto mt-4 md:mt-0">
+        <div className="w-full flex justify-center overflow-x-auto mt-4 md:mt-0">
           {data ? <AppointmentsBooked data={data} /> : <div className="flex justify-center"><Spinner /></div>}
         </div>
       </div>
