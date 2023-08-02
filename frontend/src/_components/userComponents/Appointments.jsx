@@ -1,9 +1,13 @@
 import moment from 'moment';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 
 
 const Appointments = ({ data }) => {
+    // const [tableData, setTableData] = useState([])
+    // useEffect(() => {
+    //     setTableData(data)
+    // },[])
     const columns = useMemo(
         () => [
             {
@@ -47,7 +51,7 @@ const Appointments = ({ data }) => {
 
     return (
         <>
-            {data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
+            {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
                 <div className=' overflow-x-auto'>
                     <table {...getTableProps()} className='text-center w-auto table-auto shadow bg-white'>
                         <thead>

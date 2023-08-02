@@ -1,61 +1,85 @@
 import jwt from "jsonwebtoken"
-import asyncHandler from "express-async-handler"
 import User from "../models/userModel.js"
 import Admin from "../models/adminModel.js"
 import Doctor from "../models/doctorModel.js"
 
-const verifyUser = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            req.user = await User.findById(decoded.id).select('-password')
-            if (req.user) next()
-            else {
-                res.status(401);
-                throw new Error('Not authorized, Invalid token');
-            }
-        } catch (error) {
-            console.error(error);
-            res.status(401);
-            throw new Error('Not authorized, Invalid token');
-        }
-    } else {
-        res.status(401)
-        throw new Error('Not authorized, no token')
-    }
-})
 
-const verifyDoctor = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.doctor = await Doctor.findById(decoded.id).select('-password')
-        if (req.doctor.isDoctor) next()
-        else {
-            res.status(401);
-            throw new Error('Not authorized, Invalid token');
+const verifyUser = async (req, res, next) => {
+    const token = req.cookies.jwt;
+    try {
+        if (!token) {
+            throw new Error('Not authorized, no token');
         }
-    } else {
-        res.status(401)
-        throw new Error('Not authorized, no token')
-    }
-})
 
-const verifyAdmin = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.admin = await Admin.findById(decoded.id).select('-password')
-        if (req.admin.isAdmin) next()
-        else {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (decoded.exp && Date.now() >= decoded.exp * 1000) {
+            res.status(401);
+            throw new Error('Token has expired');
+        }
+
+        req.user = await User.findById(decoded.id).select('-password');
+        if (!req.user) {
+            throw new Error('Not authorized, Invalid token');
+        }
+        next();
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: error.message });
+    }
+};
+
+
+const verifyDoctor = async (req, res, next) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        res.status(401);
+        throw new Error('Not authorized, no token');
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.exp && Date.now() >= decoded.exp * 1000) {
+            res.status(401);
+            throw new Error('Token has expired');
+        }
+
+        req.doctor = await Doctor.findById(decoded.id).select('-password');
+        if (!req.doctor.isDoctor) {
             res.status(401);
             throw new Error('Not authorized, Invalid token');
         }
-    } else {
-        res.status(401)
-        throw new Error('Not authorized, no token')
+        next();
+    } catch (err) {
+        res.status(401);
+        throw new Error('Not authorized, Invalid token');
     }
-})
+}
+
+const verifyAdmin = async (req, res, next) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        res.status(401);
+        throw new Error('Not authorized, no token');
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.exp && Date.now() >= decoded.exp * 1000) {
+            res.status(401);
+            throw new Error('Token has expired');
+        }
+
+        req.admin = await Admin.findById(decoded.id).select('-password');
+        if (!req.admin.isAdmin) {
+            res.status(401);
+            throw new Error('Not authorized, Invalid token');
+        }
+        next();
+    } catch (err) {
+        res.status(401);
+        throw new Error('Not authorized, Invalid token');
+    }
+}
 
 export { verifyUser, verifyAdmin, verifyDoctor }

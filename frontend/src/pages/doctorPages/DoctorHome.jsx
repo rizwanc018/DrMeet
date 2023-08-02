@@ -41,7 +41,7 @@ function DoctorHome() {
     <div className='flex flex-col justify-center'>
       <Toaster />
       <WeekDaysHeader setDay={setDay}/>
-      {schedules.length > 0 ? (<ScheduleTable schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />
+      {schedules?.length > 0 ? (<ScheduleTable schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />
       ):(
         <h1 className='text-center mt-10 p-10 font-bold text-3xl'>No slots scheduled for today</h1>
       )}

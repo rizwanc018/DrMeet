@@ -30,7 +30,7 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
   }
 
   return (
-    <>
+    <div className="w-full md:w-auto md:flex-grow-0">
       {givenDates &&
         <Calendar
           onChange={(date) => handleChange(date)}
@@ -38,7 +38,7 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
           tileDisabled={({ date }) => dateIsDisabled(date)}
         />
       }
-    </>
+    </div>
   )
 }
 
