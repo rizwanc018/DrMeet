@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import DropDown from './DropDown';
 import socket from '../../config/socket.js'
 
-
 const Header = () => {
     const [callTo, setCallTo] = useState()
     const navigate = useNavigate()
@@ -37,9 +36,9 @@ const Header = () => {
     }
 
     let Links = [
-        { name: "AI Dietitian", link: "/dietitian" },
+        { name: "Home", link: "/" },
         { name: "Doctors", link: "/doctors" },
-        { name: "Doctor Reg", link: "/doctor/register" },
+        { name: "For Doctor", link: "/doctor" },
     ];
     let [open, setOpen] = useState(false);
     const handleShowNavbar = () => {
@@ -61,7 +60,9 @@ const Header = () => {
 
                 </div>
 
+
                 <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-18 ' : 'top-[-490px]'}`}>
+
                     {
                         Links.map((link) => (
                             <li key={link.name} className='md:ml-6 text-md md:my-0 my-7'>
@@ -69,7 +70,15 @@ const Header = () => {
                             </li>
                         ))
                     }
-                    {callTo  &&
+                    {userInfo && userInfo.isUser &&
+
+                        <li className='md:ml-6 text-md md:my-0 my-7'>
+                            <Link to='/dietitian' 
+                            className='border border-primary-600 px-2 py-1 rounded text-primary-600 hover:text-white hover:bg-primary-600'
+                            >AI Dietitian</Link>
+                        </li>
+                    }
+                    {callTo &&
                         <li><button className='animate-ping text-white bg-primary p-1 rounded ml-6 ' onClick={handleJoin}>Join</button></li>
                     }
                     <li className='md:ml-6 text-md md:my-0 my-7'>

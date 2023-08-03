@@ -32,7 +32,7 @@ function DropDown() {
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="inline-flex w-full capitalize justify-center items-center gap bg-white px-3 py-1 text font-semibold rounded ring-1 ring-inset ring-primary hover:bg-gray-50">
+                <Menu.Button className="inline-flex w-full capitalize justify-center items-center gap bg-white px-3 py-1  font-semibold rounded ring-1 ring-inset ring-primary hover:bg-primary-600 hover:text-white">
                     {userInfo.fname} {userInfo.lname}
                     <RiArrowDropDownLine className="-mr-1 h-5 w-5 text-xl" aria-hidden="true" />
                 </Menu.Button>
