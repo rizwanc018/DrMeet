@@ -3,8 +3,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
 import axios from 'axios';
+import Spinner from '../Spinner';
 
 const MakeAppointmentForm = ({ schedule, id }) => {
+    const [showSpinner, setShowSpinner] = useState(false)
     const [docId, setDocId] = useState(id)
     const [days, setDays] = useState([]) // doc scheduled days, passed from parent component
     const [date, setDate] = useState(new Date()); // booking date
@@ -39,18 +41,20 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     }
 
     const handleBooking = async () => {
+        setShowSpinner(true)
 
         try {
             const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
             if (response.data.url) window.location.href = response.data.url
         } catch (error) {
-            console.log(error);
+            setShowSpinner(false)
+            console.log(error)
         }
     }
 
     return (
         <div className='w-full md:w-[40%] lg:w-1/3'>
-            <h1>Choose date</h1>
+            <h1 className='py-2 font-semibold'>Choose date: </h1>
             <Calendar
                 onChange={(date) => handleChange(date)}
                 value={date}
@@ -59,7 +63,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             />
             {showTimeSelector &&
                 <>
-                    <h1 className='mt-3'>Choose Time:</h1>
+                    <h1 className='mt-4 py-1 font-semibold'>Choose Time:</h1>
                     <div className="flex flex-wrap gap-3 ">
 
                         {times.map((item, i) => (
@@ -82,11 +86,20 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             <div className='flex flex-col mt-5'>
 
                 {showBooking &&
-                    <button
-                        onClick={handleBooking}
-                        className='bg-primary border-primary border-2 text-white py-2 px-6 rounded hover:bg-primary-600 hover:text-white duration-200'
-                    >Book Now
-                    </button>
+                    (
+                        showSpinner ? (
+                            <div className='flex justify-center'>
+                                <Spinner />
+                            </div>
+                        ) : (
+                            <button
+                                onClick={handleBooking}
+                                className='bg-primary border-primary border-2 text-white py-2 px-6 rounded hover:bg-primary-600 hover:text-white duration-200'
+                            >Book Now
+                            </button>
+
+                        )
+                    )
                 }
             </div>
         </div>

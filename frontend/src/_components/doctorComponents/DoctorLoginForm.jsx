@@ -49,7 +49,7 @@ function DoctorLoginForm() {
     return (
         <div className="min-h-screen py-10">
             <div className="container mx-auto flex justify-center">
-                <div className="w-fit  md:w-1/2 rounded-xl  p-10 shadow-xl border-solid border border-primary">
+                <div className="w-fit  md:w-1/2 rounded p-10 shadow-xl border-solid border-2 border-primary">
                     <img src="/assets/logo.png" className="mb-4" alt="" />
                     <h2 className="text-xl text-primary-600 mb-6 font-semibold ">Doctor Login</h2>
                     {/* fname and lname */}

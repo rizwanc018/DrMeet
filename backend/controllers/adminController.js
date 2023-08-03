@@ -24,7 +24,6 @@ const adminController = {
             res.status(400)
             throw new Error('Invalid admin data')
         }
-
     }),
     authAdmin: asyncHandler(async (req, res) => {
 
@@ -32,6 +31,7 @@ const adminController = {
         const admin = await Admin.findOne({ email })
 
         if (admin && (await admin.matchPassword(password))) {
+            console.log("🚀 ~ file: adminController.js:35 ~ authAdmin:asyncHandler ~ admin:", admin)
             generateJWT(res, admin._id, 24 * 60)
             res.status(201).json({
                 _id: admin._id,
@@ -48,7 +48,7 @@ const adminController = {
             httpOnly: true,
             expires: new Date(0)
         })
-        res.status(200).json({ msg: 'Admin logged out successfuly' })
+        res.status(200).json({ msg: 'Admin logged out successfuly', success: true })
     }),
     getUnapprovedDoctors: asyncHandler(async (req, res) => {
         const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')

@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
+import { SiWorldhealthorganization } from 'react-icons/si'
 
 
 const Dietitian = () => {
@@ -45,16 +46,16 @@ const Dietitian = () => {
         setUserInput('')
         setTyping(true)
 
-        // setTimeout(() => {
-        //     const aiResponse = {
-        //         message: "I understand. Let me fetch the information for you.",
-        //         sender: "ChatGPT",
-        //         direction: "incoming",
-        //     };
-        //     setMessages((prevMessages) => [...prevMessages, aiResponse]);
-        //     setTyping(false);
-        // }, 500);
-        await processMessageToChatGPT(newMessages);
+        setTimeout(() => {
+            const aiResponse = {
+                message: "I understand. Let me fetch the information for you.",
+                sender: "ChatGPT",
+                direction: "incoming",
+            };
+            setMessages((prevMessages) => [...prevMessages, aiResponse]);
+            setTyping(false);
+        }, 500);
+        // await processMessageToChatGPT(newMessages);
     }
 
     async function processMessageToChatGPT(chatMessages) {
@@ -102,18 +103,21 @@ const Dietitian = () => {
     const handleChange = (e) => {
         setUserInput(e.target.value);
     };
-
+    // mr-2 py-3 px-4  rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white
     return (
         <div className="chat-card  mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden sm:w-full sm:max-w-lg">
             <div className="chat-header p-4 bg-primary flex items-center">
-                <div className="text-base font-bold text-black">Diet Bot</div>
+                <div className='flex items-center gap-2'>
+                    <SiWorldhealthorganization  className='text-3xl'/>
+                    <span className="text-base text-black">Diet Bot</span>
+                </div>
             </div>
             <div className='h-full flex flex-col justify-between'>
                 <div className="chat-body flex-1 max-h-[calc(100%-80px)] overflow-y-scroll p-4" ref={chatMessagesRef} >
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.direction === 'outgoing' ? 'justify-end' : 'justify-start'}`}>
                             <div
-                                className={`message max-w-[85%] mb-6 p-4 rounded-5 ${msg.direction === 'outgoing' ? 'bg-green-200' : 'bg-blue-200'
+                                className={`message max-w-[85%] mb-6 p-4  ${msg.direction === 'outgoing' ? 'bg-blue-100 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl' : 'bg-green-200 rounded-br-3xl rounded-tr-3xl rounded-tl-xl'
                                     } `}
                             >
                                 <p className="text-base text-gray-700">{msg.message}</p>

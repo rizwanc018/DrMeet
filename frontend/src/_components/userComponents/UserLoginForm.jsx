@@ -37,7 +37,6 @@ const UserLoginForm = () => {
 
       try {
         const response = await axios.post(`/api/user/auth`, { ...values })
-        console.log(response.data)
         dispatch(setCredentials({ ...response.data }))
         navigate('/')
       } catch (error) {
@@ -50,7 +49,7 @@ const UserLoginForm = () => {
   return (
     <div className="min-h-screen w-full py-10">
       <div className="flex justify-center">
-        <div className="w-fit md:w-1/2 rounded-xl mx-auto p-10 shadow-xl border-solid border border-primary">
+        <div className="w-fit md:w-1/2 rounded-md mx-auto p-10 shadow-xl border-solid border-2 border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
           <h2 className="text-xl text-primary-600 mb-6 font-semibold ">User Login</h2>
           {/* fname and lname */}

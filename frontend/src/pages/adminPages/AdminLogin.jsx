@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "../../slices/authSlice";
 
 function AdminLogin() {
 
@@ -13,7 +15,9 @@ function AdminLogin() {
   const [loginErr, setLoginErr] = useState()
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+  const { userInfo } = useSelector(state => state.auth)
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -22,17 +26,16 @@ function AdminLogin() {
         setEmailValid(true)
         setPasswordValid(true)
         const body = { email, password }
-        let result = await axios.post(`/api/admin/auth`, body)
-        if (result) navigate('/admin')
+        let response = await axios.post(`/api/admin/auth`, body)
+        dispatch(setCredentials({ ...response.data }))
+        if (response.data.isAdmin) navigate('/admin')
       } else {
         if (email.trim() === '')
           setEmailValid(false)
         if (password.trim() === '')
           setPasswordValid(false)
-
       }
     } catch (error) {
-      console.log(error.response.data.err)
       setLoginErr(error.response.data.err)
     }
   }
@@ -84,7 +87,6 @@ function AdminLogin() {
             Sign In
           </button>
           {loginErr && <div className='w-full text-center'><p className='text-red-600 text-sm'>{loginErr}</p></div>}
-
         </form>
       </div>
     </div>
