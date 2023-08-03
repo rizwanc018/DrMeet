@@ -7,6 +7,7 @@ import MakeAppointment from "./MakeAppointment"
 import AppointmentSuccess from "./AppointmentSuccess"
 import MeetDoctorPage from "./MeetDoctorPage"
 import AppointmentsPage from "./AppointmentsPage"
+import DietitianPage from "./DietitianPage"
 
 export {
     HomePage,
@@ -17,5 +18,6 @@ export {
     MakeAppointment,
     AppointmentSuccess,
     MeetDoctorPage,
-    AppointmentsPage
+    AppointmentsPage,
+    DietitianPage
 }

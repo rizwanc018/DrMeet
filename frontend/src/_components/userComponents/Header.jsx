@@ -37,7 +37,7 @@ const Header = () => {
     }
 
     let Links = [
-        { name: "Home", link: "/" },
+        { name: "AI Dietitian", link: "/dietitian" },
         { name: "Doctors", link: "/doctors" },
         { name: "Doctor Reg", link: "/doctor/register" },
     ];
@@ -51,10 +51,9 @@ const Header = () => {
             <div className='md:flex items-center justify-between bg-white py-1 md:px-10 px-7'>
                 <div className='font-bold text-md cursor-pointer flex items-center font-[Poppins] 
           text-gray-800'>
-                    <span className='text-3xl text-indigo-600 mr-1'>
+                    <Link to='/' className='text-3xl text-indigo-600 mr-1'>
                         <img src="/assets/logo.png" alt="LifeLine" />
-
-                    </span>
+                    </Link>
                 </div>
 
                 <div onClick={() => setOpen(!open)} className='text-2xl font-bold absolute right-8 top-6 cursor-pointer md:hidden'>

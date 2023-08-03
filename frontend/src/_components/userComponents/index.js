@@ -7,6 +7,7 @@ import SearchDoctor from "./SearchDoctor"
 import MakeAppointmentForm from "./MakeAppointmentForm"
 import CheckOutModal from "./CheckOutModal"
 import VideoCall from "./VideoCall"
+import Dietitian from "./Dietitian"
 
 
 export {
@@ -18,5 +19,6 @@ export {
     SearchDoctor,
     MakeAppointmentForm,
     CheckOutModal,
-    VideoCall
+    VideoCall,
+    Dietitian
 }
