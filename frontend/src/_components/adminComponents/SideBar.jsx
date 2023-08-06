@@ -62,7 +62,7 @@ function SideBar() {
                             <ul>
                                 {menu.submenuItems.map((item, i) => (
                                     <li key={i} className="text-white flex items-center mb-1 p-2 ps-10 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
-                                        <a className={`text-md font-medium`} href={item.link}>{item.title}</a>
+                                        <Link className={`text-md font-medium`} to={item.link}>{item.title}</Link>
                                     </li>
                                 ))}
                             </ul>

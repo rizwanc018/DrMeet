@@ -11,5 +11,6 @@ router.get('/department', departmentController.getAllDepartments)
 router.post('/department/add', verifyToken, verifyAdmin, departmentController.addDepartment)
 router.get('/doctors/unapproved', verifyToken, verifyAdmin, adminController.getUnapprovedDoctors)
 router.get('/approve/doctor/:id', verifyToken, verifyAdmin, adminController.approveDoctor)
+router.put('/block/doctor/:id', verifyToken, verifyAdmin, adminController.blockDoctor)
 
 export default router

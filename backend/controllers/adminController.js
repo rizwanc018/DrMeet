@@ -26,12 +26,9 @@ const adminController = {
         }
     }),
     authAdmin: asyncHandler(async (req, res) => {
-
         const { email, password } = req.body
         const admin = await Admin.findOne({ email })
-
         if (admin && (await admin.matchPassword(password))) {
-            console.log("🚀 ~ file: adminController.js:35 ~ authAdmin:asyncHandler ~ admin:", admin)
             generateJWT(res, admin._id, 24 * 60)
             res.status(201).json({
                 _id: admin._id,
@@ -51,7 +48,7 @@ const adminController = {
         res.status(200).json({ msg: 'Admin logged out successfuly', success: true })
     }),
     getUnapprovedDoctors: asyncHandler(async (req, res) => {
-        const unapprovedDoctors = await Doctor.find({ approved: false }).populate('department', 'name -_id')
+        const unapprovedDoctors = await Doctor.find({ approved: false, blocked: false }).populate('department', 'name -_id')
         res.status(200).json({ unapprovedDoctors })
 
     }),
@@ -60,6 +57,15 @@ const adminController = {
         try {
             const response = await Doctor.findByIdAndUpdate(id, { approved: true }, { new: true })
             res.status(200).json({ msg: "Approved succesfully" })
+        } catch (error) {
+            throw new Error("Couldn't approve. Something wrong")
+        }
+    }),
+    blockDoctor: asyncHandler(async (req, res) => {
+        const id = req.params.id
+        try {
+            const response = await Doctor.findByIdAndUpdate(id, { $set: { blocked: true } }, { new: true })
+            res.status(200).json({ msg: "Blocked succesfully" })
         } catch (error) {
             throw new Error("Couldn't approve. Something wrong")
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useTable } from 'react-table';
 import { Link } from 'react-router-dom';
 
-const RegisteredDoctorsTable = ({ data, handleApprove }) => {
+const RegisteredDoctorsTable = ({ data, handleApprove, handleDelete }) => {
 
   const columns = React.useMemo(
     () => [
@@ -52,9 +52,16 @@ const RegisteredDoctorsTable = ({ data, handleApprove }) => {
         accessor: '_id',
         // Cell: () => <FaEdit />,
         Cell: ({ value }) => (
-          <button
-            className='inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]'
-            data-id={value} onClick={() => handleApprove(value)}>Approve</button>
+          <div className='flex flex-col gap-2'>
+            <button
+              className='inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]'
+              data-id={value} onClick={() => handleApprove(value)}
+            >Approve</button>
+            <button
+              className='inline-block rounded bg-red-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-red-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]'
+              data-id={value} onClick={() => handleDelete(value)}
+            >Reject</button>
+          </div>
         )
       },
     ],
@@ -70,7 +77,7 @@ const RegisteredDoctorsTable = ({ data, handleApprove }) => {
   } = useTable({ columns, data });
 
   return (
-    <div className='w-full  p-10'>
+    <div className='overflow-x-auto  p-10'>
       <table {...getTableProps()} className='text-center w-full table-auto shadow-lg bg-white'>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -100,6 +107,8 @@ const RegisteredDoctorsTable = ({ data, handleApprove }) => {
       </table>
     </div>
   )
+
+
 }
 
 export default RegisteredDoctorsTable;

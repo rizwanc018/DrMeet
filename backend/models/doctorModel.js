@@ -29,6 +29,10 @@ const doctorSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    blocked: {
+        type: Boolean,
+        default: false
+    },
     department: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Department"

@@ -23,12 +23,18 @@ function RegisterdeDoctors() {
       getUnapprovedDoctors()
     }
 
+    const handleDelete = async (id) => {
+      const response = await axios.put(`/api/admin/block/doctor/${id}`)
+      toast.success(response.data.msg)
+      getUnapprovedDoctors()
+    }
+
     return (
       <>
         <Toaster />
 
         {data ? (
-          <RegisteredDoctorsTable data={data} handleApprove={handleApprove} />
+          <RegisteredDoctorsTable data={data} handleApprove={handleApprove} handleDelete={handleDelete}/>
         ) : (
           <div><Spinner /></div>
         )}

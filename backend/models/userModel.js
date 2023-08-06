@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    blocked: {
+        type: Boolean,
+        default: false
+    },
     image: String,
 })
 

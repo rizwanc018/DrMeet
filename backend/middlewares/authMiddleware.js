@@ -41,6 +41,12 @@ const verifyDoctor = async (req, res, next) => {
     if (!req.doctor || !req.doctor.isDoctor) {
         return res.status(401).json({ msg: 'Not Authorized, Invalid Token' });
     }
+    if (req.doctor.blocked) {
+        return res.status(401).json({ msg: 'Not Authorized, You have been blocked by Admin' });
+    }
+    if (!req.doctor.approved) {
+        return res.status(401).json({ msg: 'Not Authorized, Approval pending' });
+    }
     next();
 };
 
