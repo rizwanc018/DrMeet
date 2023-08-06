@@ -35,8 +35,10 @@ const userController = {
         const { email, password } = req.body
         const user = await User.findOne({ email })
 
-
-        if (user && (await user.matchPassword(password))) {
+        if (user && user.blocked) {
+            return res.status(400).json({ msg: 'You have been blocked by Admin' })
+        }
+        else if (await user.matchPassword(password)) {
             generateJWT(res, user._id, 24 * 60)
             res.status(201).json({
                 fname: user.fname,

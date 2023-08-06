@@ -34,7 +34,7 @@ function SideBar() {
                 { title: 'Requests', link: '/admin/doctor-requests' }
             ]
         },
-        { title: 'Patients', icon: <FaUserInjured />, link: '#' },
+        { title: 'Patients', icon: <FaUserInjured />, link: '/admin/patients' },
         { title: 'Departments', icon: <FaHospitalUser />, link: '/admin/departments' },
         { title: 'Appointments', icon: <AiOutlineSchedule />, link: '#' },
     ]

@@ -40,7 +40,7 @@ const UserLoginForm = () => {
         dispatch(setCredentials({ ...response.data }))
         navigate('/')
       } catch (error) {
-        setErr(error.response.data.err)
+        setErr(error.response.data.msg)
       }
       setSubmitting(false)
     }

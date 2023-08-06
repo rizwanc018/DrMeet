@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import Admin from '../models/adminModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
 import Doctor from '../models/doctorModel.js'
+import User from '../models/userModel.js'
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -70,6 +71,17 @@ const adminController = {
         const doctor = await Doctor.findById(id);
         doctor.blocked = !doctor.blocked;
         await doctor.save();
+        res.status(200).json({ msg: "Block status changed succesfully" })
+    }),
+    getAllPatients: asyncHandler(async (req, res) => {
+        const patients = await User.find({})
+        res.status(200).json({ patients })
+    }),
+    blockPatient: asyncHandler(async (req, res) => {
+        const id = req.params.id
+        const patient = await User.findById(id);
+        patient.blocked = !patient.blocked;
+        await patient.save();
         res.status(200).json({ msg: "Block status changed succesfully" })
     }),
 

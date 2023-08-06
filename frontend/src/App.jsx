@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors, ApprovedDoctors } from './pages/adminPages'
+import { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors, ApprovedDoctors, Patients } from './pages/adminPages'
 import { DoctorHome, DoctorLogin, DoctorRegister, DoctorLayout, Appointments, ConsultationPage } from './pages/doctorPages';
 import { DoctorsPage, HomePage, UserLayout, UserLoginPage, UserRgisterPage, MakeAppointment, AppointmentSuccess, MeetDoctorPage, AppointmentsPage, DietitianPage } from './pages/userPages';
 import { DoctorPirvateRoutes, AdminPrivateRoutes, UserPrivateRoutes } from './utils';
@@ -17,6 +17,8 @@ function App() {
             <Route path="departments" element={<Departments />} />
             <Route path="doctors" element={<ApprovedDoctors />} />
             <Route path="doctor-requests" element={<RegisteredDoctors />} />
+            <Route path="patients" element={<Patients />} />
+
           </Route>
         </Route>
 
