@@ -30,7 +30,7 @@ function SideBar() {
         {
             title: 'Doctors', icon: <FaUserDoctor />, link: '#', submenu: true,
             submenuItems: [
-                { title: 'Doctors', link: '#' },
+                { title: 'Doctors', link: '/admin/doctors' },
                 { title: 'Requests', link: '/admin/doctor-requests' }
             ]
         },

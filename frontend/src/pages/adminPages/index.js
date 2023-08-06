@@ -3,5 +3,6 @@ import AdminLogin from "./AdminLogin";
 import Departments from "./Departments";
 import AdminLayout from "./AdminLayout";
 import RegisteredDoctors from "./RegisterdeDoctors";
+import ApprovedDoctors from "./ApprovedDoctors";
 
-export { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors }
+export { AdminHome, AdminLogin, Departments, AdminLayout, RegisteredDoctors, ApprovedDoctors }

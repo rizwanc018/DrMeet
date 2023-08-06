@@ -47,6 +47,10 @@ const adminController = {
         })
         res.status(200).json({ msg: 'Admin logged out successfuly', success: true })
     }),
+    getApprovedDoctors: asyncHandler(async (req, res) => {
+        const appovedDoctors = await Doctor.find({ approved: true }).populate('department', 'name -_id')
+        res.status(200).json({ appovedDoctors })
+    }),
     getUnapprovedDoctors: asyncHandler(async (req, res) => {
         const unapprovedDoctors = await Doctor.find({ approved: false, blocked: false }).populate('department', 'name -_id')
         res.status(200).json({ unapprovedDoctors })
@@ -63,12 +67,10 @@ const adminController = {
     }),
     blockDoctor: asyncHandler(async (req, res) => {
         const id = req.params.id
-        try {
-            const response = await Doctor.findByIdAndUpdate(id, { $set: { blocked: true } }, { new: true })
-            res.status(200).json({ msg: "Blocked succesfully" })
-        } catch (error) {
-            throw new Error("Couldn't approve. Something wrong")
-        }
+        const doctor = await Doctor.findById(id);
+        doctor.blocked = !doctor.blocked;
+        await doctor.save();
+        res.status(200).json({ msg: "Block status changed succesfully" })
     }),
 
 }
