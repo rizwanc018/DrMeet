@@ -4,12 +4,13 @@ import doctorController from "../controllers/doctorController.js"
 import appointmentController from "../controllers/appointmetController.js"
 import { verifyUser } from "../middlewares/authMiddleware.js"
 import scheduleController from "../controllers/scheduleController.js"
+import { limiter } from '../middlewares/securityMiddleware.js'
 
 const router = express.Router()
 
 // /api/doc
 router.post('/reg', userController.registerUser)
-router.post('/auth', userController.authUser)
+router.post('/auth',limiter, userController.authUser)
 router.get('/logout', userController.logout)
 router.get('/doctor/:id', verifyUser, doctorController.getDoctorById)
 router.get('/doctors', doctorController.getAllDoctors)

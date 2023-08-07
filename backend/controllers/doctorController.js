@@ -44,7 +44,7 @@ const doctorController = {
             })
         } else {
             res.status(400)
-            throw new Error('Invalid username or password')
+            throw new Error('Invalid email or password')
         }
     }),
     logout: asyncHandler(async (req, res) => {

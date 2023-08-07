@@ -37,6 +37,7 @@ const UserLoginForm = () => {
 
       try {
         const response = await axios.post(`/api/user/auth`, { ...values })
+        console.log(response.data)
         dispatch(setCredentials({ ...response.data }))
         navigate('/')
       } catch (error) {

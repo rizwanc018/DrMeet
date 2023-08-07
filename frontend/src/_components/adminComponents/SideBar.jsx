@@ -36,7 +36,6 @@ function SideBar() {
         },
         { title: 'Patients', icon: <FaUserInjured />, link: '/admin/patients' },
         { title: 'Departments', icon: <FaHospitalUser />, link: '/admin/departments' },
-        { title: 'Appointments', icon: <AiOutlineSchedule />, link: '#' },
     ]
     return (
         <div className={`bg-primary h-screen p-5 pt-8 relative ${open ? 'w-60' : 'w-20'} duration-500`}>

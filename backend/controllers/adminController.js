@@ -28,6 +28,7 @@ const adminController = {
     }),
     authAdmin: asyncHandler(async (req, res) => {
         const { email, password } = req.body
+        const ip = req.ip
         const admin = await Admin.findOne({ email })
         if (admin && (await admin.matchPassword(password))) {
             generateJWT(res, admin._id, 24 * 60)
@@ -38,7 +39,7 @@ const adminController = {
             })
         } else {
             res.status(400)
-            throw new Error('Invalid username or password')
+            throw new Error('Invalid email or password')
         }
     }),
     logout: asyncHandler(async (req, res) => {
@@ -68,8 +69,8 @@ const adminController = {
     }),
     blockDoctor: asyncHandler(async (req, res) => {
         const id = req.params.id
-        const doctor = await Doctor.findById(id);
-        doctor.blocked = !doctor.blocked;
+        const doctor = await Doctor.findById(id)
+        doctor.blocked = !doctor.blocked
         await doctor.save();
         res.status(200).json({ msg: "Block status changed succesfully" })
     }),

@@ -28,7 +28,7 @@ const userController = {
             })
         } else {
             res.status(400)
-            throw new Error('Invalid username or password')
+            throw new Error('Invalid email or password')
         }
     }),
     authUser: asyncHandler(async (req, res) => {
@@ -48,7 +48,7 @@ const userController = {
             })
         } else {
             res.status(400)
-            throw new Error('Invalid username or password')
+            throw new Error('Invalid email or password')
         }
     }),
     logout: asyncHandler(async (req, res) => {
