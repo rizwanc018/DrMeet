@@ -27,6 +27,8 @@ function AdminLogin() {
         setPasswordValid(true)
         const body = { email, password }
         let response = await axios.post(`/api/admin/auth`, body)
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        console.log(response)
         dispatch(setCredentials({ ...response.data }))
         if (response.data.isAdmin) navigate('/admin')
       } else {

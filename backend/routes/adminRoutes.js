@@ -2,11 +2,12 @@ import express from "express"
 import adminController from "../controllers/adminController.js"
 import departmentController from "../controllers/departmentController.js"
 import { verifyAdmin } from '../middlewares/authMiddleware.js'
-import { limiter } from '../middlewares/securityMiddleware.js'
+import { limiter, verifyIpNotBlocked } from '../middlewares/securityMiddleware.js'
+
 
 const router = express.Router()
 router.post('/reg', adminController.registerAdmin)
-router.post('/auth',limiter, adminController.authAdmin)
+router.post('/auth',limiter, verifyIpNotBlocked, adminController.authAdmin)
 router.get('/logout', verifyAdmin, adminController.logout)
 router.get('/department', departmentController.getAllDepartments)
 router.post('/department/add', verifyAdmin, departmentController.addDepartment)

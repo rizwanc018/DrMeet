@@ -4,6 +4,8 @@ import Admin from '../models/adminModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
 import Doctor from '../models/doctorModel.js'
 import User from '../models/userModel.js'
+import FailedLogin from '../models/failedLogins.js'
+import BlockedIp from '../models/blockedIpModel.js'
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -27,9 +29,12 @@ const adminController = {
         }
     }),
     authAdmin: asyncHandler(async (req, res) => {
+        const maxLoginAttempts = 5
         const { email, password } = req.body
         const ip = req.ip
+
         const admin = await Admin.findOne({ email })
+
         if (admin && (await admin.matchPassword(password))) {
             generateJWT(res, admin._id, 24 * 60)
             res.status(201).json({
@@ -38,6 +43,16 @@ const adminController = {
                 isAdmin: admin.isAdmin
             })
         } else {
+            const failedLogins = await FailedLogin.findOneAndUpdate({ ip },
+                { $inc: { attempts: 1 } },
+                { upsert: true, new: true })
+
+            if (failedLogins.attempts >= maxLoginAttempts) {
+                await BlockedIp.findOneAndUpdate({ ip },
+                    { $inc: { attempts: 1 } },
+                    { upsert: true, new: true })
+            }
+
             res.status(400)
             throw new Error('Invalid email or password')
         }
