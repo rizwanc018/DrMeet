@@ -2,6 +2,7 @@ import rateLimit from "express-rate-limit"
 import BlockedIp from "../models/blockedIpModel.js"
 
 const blockedIps = BlockedIp.find({})
+// console.log("🚀 ~ file: securityMiddleware.js:5 ~ blockedIps:", blockedIps)
 
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
@@ -14,7 +15,7 @@ const verifyIpNotBlocked = async (req, res, next) => {
         const ip = req.ip;
         const isIpExist = await BlockedIp.exists({ ip });
         if (isIpExist) {
-            return res.status(403);
+            return res.status(400)
         }
         next();
     } catch (error) {
