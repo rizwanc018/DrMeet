@@ -7,7 +7,7 @@ import { limiter, verifyIpNotBlocked } from '../middlewares/securityMiddleware.j
 
 const router = express.Router()
 router.post('/reg', adminController.registerAdmin)
-router.post('/auth',limiter, verifyIpNotBlocked, adminController.authAdmin)
+router.post('/auth',limiter, adminController.authAdmin)
 router.get('/logout', verifyAdmin, adminController.logout)
 router.get('/department', departmentController.getAllDepartments)
 router.post('/department/add', verifyAdmin, departmentController.addDepartment)

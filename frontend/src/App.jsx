@@ -38,13 +38,11 @@ function App() {
           <Route path="login" element={<UserLoginPage />} />
           <Route path="register" element={<UserRgisterPage />} />
           <Route path="doctors" element={<DoctorsPage />} />
-          <Route element={<UserPrivateRoutes />}>
-            <Route path="dietitian" element={<DietitianPage />} />
-            <Route path="appointment/apply/:id" element={<MakeAppointment />} />
-            <Route path="appointment-success" element={<AppointmentSuccess />} />
-            <Route path="meet/:docSokId" element={<MeetDoctorPage />} />
-            <Route path="appointments" element={<AppointmentsPage />} />
-          </Route>
+          <Route path="dietitian" element={<DietitianPage />} />
+          <Route path="appointment/apply/:id" element={<MakeAppointment />} />
+          <Route path="appointment-success" element={<AppointmentSuccess />} />
+          <Route path="meet/:docSokId" element={<MeetDoctorPage />} />
+          <Route path="appointments" element={<AppointmentsPage />} />
         </Route>
       </Routes>
     </Router>

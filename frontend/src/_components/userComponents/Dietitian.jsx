@@ -26,7 +26,7 @@ const Dietitian = () => {
 
     const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
     const systemMessage = {
-        "role": "system", "content": "Explain like dietition"
+        "role": "system", "content": "Explain like dietition answer only diet related questions"
     }
 
 
@@ -46,16 +46,16 @@ const Dietitian = () => {
         setUserInput('')
         setTyping(true)
 
-        setTimeout(() => {
-            const aiResponse = {
-                message: "I understand. Let me fetch the information for you.",
-                sender: "ChatGPT",
-                direction: "incoming",
-            };
-            setMessages((prevMessages) => [...prevMessages, aiResponse]);
-            setTyping(false);
-        }, 500);
-        // await processMessageToChatGPT(newMessages);
+        // setTimeout(() => {
+        //     const aiResponse = {
+        //         message: "I understand. Let me fetch the information for you.",
+        //         sender: "ChatGPT",
+        //         direction: "incoming",
+        //     };
+        //     setMessages((prevMessages) => [...prevMessages, aiResponse]);
+        //     setTyping(false);
+        // }, 500);
+        await processMessageToChatGPT(newMessages);
     }
 
     async function processMessageToChatGPT(chatMessages) {
