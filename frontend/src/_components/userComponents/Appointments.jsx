@@ -16,8 +16,8 @@ const Appointments = ({ data }) => {
                 Cell: ({ row }) => <div>{row.index + 1}</div>,
             },
             {
-                Header: 'Date',
-                accessor: 'date',
+                Header: 'Booking Date',
+                accessor: 'createdAt',
                 Cell: ({ cell: { value } }) => (
                     moment(value).format('YYYY-MM-DD')
                 ),
@@ -28,7 +28,13 @@ const Appointments = ({ data }) => {
                     row.original.docId.fname + ' ' + row.original.docId.lname
                 )
             },
-
+            {
+                Header: 'Appointmnent Date',
+                accessor: 'date',
+                Cell: ({ cell: { value } }) => (
+                    moment(value).format('YYYY-MM-DD')
+                ),
+            },
             {
                 Header: 'Time',
                 accessor: 'timeId.startTime',

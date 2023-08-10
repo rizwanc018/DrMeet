@@ -3,7 +3,8 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
 import axios from 'axios';
-import Spinner from '../Spinner';
+import Spinner from '../Spinner'
+import moment from 'moment';
 
 const MakeAppointmentForm = ({ schedule, id }) => {
     const [showSpinner, setShowSpinner] = useState(false)
@@ -23,6 +24,8 @@ const MakeAppointmentForm = ({ schedule, id }) => {
 
     // Calender
     const handleChange = async (date) => {
+        setTimeId('')
+        setShowBooking(false)
         setLoading(true)
         setDate(date)
         try {
@@ -64,24 +67,31 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             {showTimeSelector &&
                 <>
                     <h1 className='mt-4 py-1 font-semibold'>Choose Time:</h1>
-                    <div className="flex flex-wrap gap-3 ">
+                    <div className="flex flex-wrap gap-3">
+                        {times.map((item, i) => {
+                            const startTime = moment(item.startTime);
+                            const isDisabled = startTime.isBefore(moment());
+                            const isSameDay = moment(date).isSame(moment(), 'date');
 
-                        {times.map((item, i) => (
-                            <label key={i} >
-                                <input
-                                    type="radio"
-                                    name="time"
-                                    className="form-radio h-5 w-5"
-                                    value={item._id}
-                                    onChange={handleRadioButton}
-                                />
-                                <span className="ml-2">
-                                    {item.startTime} - {item.endTime}
-                                </span>
-                            </label>
-                        ))}
+                            return (
+                                <label key={i} >
+                                    <input
+                                        type="radio"
+                                        name="time"
+                                        className="form-radio h-5 w-5"
+                                        value={item._id}
+                                        onChange={handleRadioButton}
+                                        disabled={isSameDay && isDisabled}
+                                    />
+                                    <span className={`ml-2 ${(isSameDay && isDisabled) ? 'text-gray-400' : ''}`}>
+                                        {startTime.format('HH:mm A')} - {moment(item.endTime).format('HH:mm A')}
+                                    </span>
+                                </label>
+                            );
+                        })}
                     </div>
                 </>
+
             }
             <div className='flex flex-col mt-5'>
 

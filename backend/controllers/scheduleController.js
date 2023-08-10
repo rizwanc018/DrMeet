@@ -65,8 +65,10 @@ const scheduleController = {
 
         const timesArray = filtered.map(item => ({
             _id: item._id,
-            startTime: moment(item.startTime).format('h:mm A'),
-            endTime: moment(item.endTime).format('h:mm A'),
+            startTime: item.startTime,
+            endTime: item.endTime,
+            // startTime: moment(item.startTime).format('h:mm A'),
+            // endTime: moment(item.endTime).format('h:mm A'),
           }));
 
         res.status(200).json({ success: true, timesArray })
