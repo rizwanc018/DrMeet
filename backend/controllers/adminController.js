@@ -17,7 +17,7 @@ const adminController = {
         const adminData = await Admin.create({ email, password: hash })
 
         if (adminData) {
-            generateJWT(res, adminData._id, 24 * 60)
+            generateJWT(res, adminData._id, 'admin', false, 24 * 60)
             res.status(201).json({
                 _id: adminData._id,
                 name: adminData.name,
@@ -36,7 +36,7 @@ const adminController = {
         const admin = await Admin.findOne({ email })
 
         if (admin && (await admin.matchPassword(password))) {
-            generateJWT(res, admin._id, 24 * 60)
+            generateJWT(res, admin._id, 'admin', false, 24 * 60)
             res.status(201).json({
                 _id: admin._id,
                 name: admin.name,

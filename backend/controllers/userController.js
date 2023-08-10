@@ -19,7 +19,7 @@ const userController = {
         const user = await User.create({ fname, lname, email, password: hash, mobile })
 
         if (user) {
-            generateJWT(res, user._id, 24 * 60)
+            generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,
@@ -39,7 +39,7 @@ const userController = {
             return res.status(400).json({ msg: 'You have been blocked by Admin' })
         }
         else if (await user.matchPassword(password)) {
-            generateJWT(res, user._id, 24 * 60)
+            generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,

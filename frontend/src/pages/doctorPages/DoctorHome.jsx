@@ -11,7 +11,6 @@ function DoctorHome() {
   const [day , setDay] = useState()
   const dispatch = useDispatch()
   const { schedules } = useSelector(state => state.schedule)
-  console.log( schedules)
 
   const getDcotorSchedules = async () => {
     const response = await axios.get(`/api/doc/schedule/${day}`)
