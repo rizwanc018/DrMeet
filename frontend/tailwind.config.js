@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         'primary-100': 'hsl(168, 75%, 92%)',
+        'primary-200': 'hsl(168, 75%, 82%)',
         'primary-500': 'hsl(168, 75%, 52%)',
         primary: 'hsl(168, 75%, 42%)',
         'primary-600': 'hsl(168, 75%, 32%)',

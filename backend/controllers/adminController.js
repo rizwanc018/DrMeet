@@ -6,6 +6,8 @@ import Doctor from '../models/doctorModel.js'
 import User from '../models/userModel.js'
 import FailedLogin from '../models/failedLogins.js'
 import BlockedIp from '../models/blockedIpModel.js'
+import Appointment from '../models/appointmentModel.js'
+
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -100,6 +102,29 @@ const adminController = {
         await patient.save();
         res.status(200).json({ msg: "Block status changed succesfully" })
     }),
+    getAllDoctorsCount: asyncHandler(async (req, res) => {
+        const count = await Doctor.countDocuments({ approved: true })
+        res.status(200).json({ success: true, count })
+    }),
+    getAllPatientCount: asyncHandler(async (req, res) => {
+        const count = await User.countDocuments({})
+        res.status(200).json({ success: true, count })
+    }),
+    getAllAppointmentsCount: asyncHandler(async (req, res) => {
+        const count = await Appointment.countDocuments({})
+        res.status(200).json({ success: true, count })
+    }),
+    getTotalEarinings: asyncHandler(async (req, res) => {
+        let earning = 0
+        const feeArray = await Appointment.find({}, { docId: 1, _id: 0 }).populate('docId', 'fees -_id')
+        for (const item of feeArray) {
+            const fee = parseInt(item.docId.fees);
+            earning += fee;
+        }
+        console.log("🚀 ~ file: adminController.js:123 ~ getTotalEarinings:asyncHandler ~ earning:", earning)
+        res.status(200).json({ success: true, earning })
+    }),
+
 
 }
 

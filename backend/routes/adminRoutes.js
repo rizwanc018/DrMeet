@@ -17,5 +17,14 @@ router.get('/approve/doctor/:id', verifyAdmin, adminController.approveDoctor)
 router.put('/block/doctor/:id', verifyAdmin, adminController.blockDoctor)
 router.get('/patients', verifyAdmin, adminController.getAllPatients)
 router.put('/block/patient/:id', verifyAdmin, adminController.blockPatient)
+router.get('/doctor/count', verifyAdmin, adminController.getAllDoctorsCount)
+router.get('/patient/count', verifyAdmin, adminController.getAllPatientCount)
+router.get('/appointment/count', verifyAdmin, adminController.getAllAppointmentsCount)
+router.get('/earning', verifyAdmin, adminController.getTotalEarinings)
+
+
+
+
+
 
 export default router
