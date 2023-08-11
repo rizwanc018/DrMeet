@@ -121,8 +121,22 @@ const adminController = {
             const fee = parseInt(item.docId.fees);
             earning += fee;
         }
-        console.log("🚀 ~ file: adminController.js:123 ~ getTotalEarinings:asyncHandler ~ earning:", earning)
         res.status(200).json({ success: true, earning })
+    }),
+    getAppointmentsData: asyncHandler(async (req, res) => {
+        // const data = await Appointment.find({})
+
+        const data = await Appointment.aggregate([
+            {
+                $group: {
+                    _id: { $dateToString: { format: '%d-%m-%Y', date: '$createdAt' } },
+                    count: { $sum: 1 }
+                }
+            },
+
+        ])
+        console.log("🚀 ~ file: adminController.js:138 ~ getAppointmentsData:asyncHandler ~ data:", data)
+        res.status(200).json({ success: true, data })
     }),
 
 
