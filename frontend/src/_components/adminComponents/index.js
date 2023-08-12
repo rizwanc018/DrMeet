@@ -10,6 +10,7 @@ import Patients from "./Patients"
 import Appointments from "./Appointments"
 import Earnings from "./Earnings"
 import AppointmetntsChart from "./AppointmentsChart"
+import DonutChart from "./DonutChart"
 
 export {
     SideBar,
@@ -23,5 +24,6 @@ export {
     Patients,
     Appointments,
     Earnings,
-    AppointmetntsChart
+    AppointmetntsChart,
+    DonutChart
 }

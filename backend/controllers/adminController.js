@@ -124,8 +124,6 @@ const adminController = {
         res.status(200).json({ success: true, earning })
     }),
     getAppointmentsData: asyncHandler(async (req, res) => {
-        // const data = await Appointment.find({})
-
         const data = await Appointment.aggregate([
             {
                 $group: {
@@ -133,9 +131,42 @@ const adminController = {
                     count: { $sum: 1 }
                 }
             },
-
+            {
+                $sort: { _id: -1 } // Sort by createdAt date in ascending order
+            }
         ])
-        console.log("🚀 ~ file: adminController.js:138 ~ getAppointmentsData:asyncHandler ~ data:", data)
+        res.status(200).json({ success: true, data })
+    }),
+    getAppointmentsPerWeekDay: asyncHandler(async (req, res) => {
+        const data = await Appointment.aggregate([
+            {
+                $group: {
+                    _id: { $dayOfWeek: '$date' },
+                    count: { $sum: 1 },
+                },
+            },
+            {
+                $project: {
+                    dayOfWeek: {
+                        $switch: {
+                            branches: [
+                                { case: { $eq: ['$_id', 1] }, then: 'Sunday' },
+                                { case: { $eq: ['$_id', 2] }, then: 'Monday' },
+                                { case: { $eq: ['$_id', 3] }, then: 'Tuesday' },
+                                { case: { $eq: ['$_id', 4] }, then: 'Wednesday' },
+                                { case: { $eq: ['$_id', 5] }, then: 'Thursday' },
+                                { case: { $eq: ['$_id', 6] }, then: 'Friday' },
+                                { case: { $eq: ['$_id', 7] }, then: 'Saturday' },
+                            ],
+                            default: 'Unknown',
+                        },
+                    },
+                    count: 1,
+                    _id: 0,
+                },
+            },
+        ]).sort({ dayOfWeek: 1 })
+        console.log("🚀 ~ file: adminController.js:171 ~ getAppointmentsPerWeekDay:asyncHandler ~ data:", data)
         res.status(200).json({ success: true, data })
     }),
 

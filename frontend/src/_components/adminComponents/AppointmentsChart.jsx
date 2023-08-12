@@ -8,8 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-
+} from 'recharts'
 
 const AppointmetntsChart = () => {
   const [data, setData] = useState([])
@@ -38,6 +37,9 @@ const AppointmetntsChart = () => {
             bottom: 0,
           }}
         >
+          <text className='font-bold' x={350} y={30} textAnchor="middle" dominantBaseline="middle">
+            Booking Rate
+          </text>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="_id" />
           <YAxis />

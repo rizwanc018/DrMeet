@@ -37,6 +37,8 @@ function SideBar() {
         { title: 'Patients', icon: <FaUserInjured />, link: '/admin/patients' },
         { title: 'Departments', icon: <FaHospitalUser />, link: '/admin/departments' },
     ]
+
+
     return (
         <div className={`bg-primary h-screen p-5 pt-8 relative ${open ? 'w-60' : 'w-20'} duration-500`}>
             <BsArrowLeftShort
@@ -47,7 +49,9 @@ function SideBar() {
                 {Menus.map((menu, index) => (
                     <React.Fragment key={index} >
                         <li>
-                            <Link to={menu.link} className="text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded hover:bg-primary-600">
+                            <NavLink to={menu.link}
+                                className={`text-white flex items-center mb-2 p-2 gap-x-4 cursor-pointer rounded grid-cols-4 hover:bg-primary-600`}
+                            >
                                 <span className="text-2xl block float-left" >{menu.icon}</span>
                                 <span className={`text-md font-medium ${!open && 'hidden'} `} >
                                     {menu.title}
@@ -55,7 +59,7 @@ function SideBar() {
                                 {menu.submenu && open && (
                                     <AiOutlineDown className={`ms-auto ${submenuOpen && 'rotate-180'}`} onClick={() => setSubmenuOpen(!submenuOpen)} />
                                 )}
-                            </Link>
+                            </NavLink>
                         </li>
                         {menu.submenu && submenuOpen && open && (
                             <ul>

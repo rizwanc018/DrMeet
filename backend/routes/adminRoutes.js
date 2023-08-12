@@ -22,6 +22,8 @@ router.get('/patient/count', verifyAdmin, adminController.getAllPatientCount)
 router.get('/appointment/count', verifyAdmin, adminController.getAllAppointmentsCount)
 router.get('/earning', verifyAdmin, adminController.getTotalEarinings)
 router.get('/appointments/data', verifyAdmin, adminController.getAppointmentsData)
+router.get('/appointments/weekday/data', verifyAdmin, adminController.getAppointmentsPerWeekDay)
+
 
 
 
