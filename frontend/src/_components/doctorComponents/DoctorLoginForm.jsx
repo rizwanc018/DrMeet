@@ -37,7 +37,7 @@ function DoctorLoginForm() {
             try {
                 const response = await axios.post(`/api/doc/auth`, { ...values })
                 dispatch(setCredentials({ ...response.data }))
-                navigate('/doctor/schedules')
+                navigate('/doctor')
             } catch (error) {
                 setErr(error.response.data.err)
             }

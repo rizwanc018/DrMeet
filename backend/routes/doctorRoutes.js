@@ -17,5 +17,11 @@ router.post('/schedule', verifyDoctor, scheduleController.createScedule)
 router.delete('/schedule/:id', verifyDoctor, scheduleController.deleteSchedule)
 router.post('/appointments', verifyDoctor, appointmentController.getAppointmentsByDate)
 router.get('/appointment/dates', verifyDoctor, appointmentController.getAllAppointmentDatesOfDoctor)
+router.get('/appointment/count', verifyDoctor, doctorController.getAppointmentsCount)
+router.get('/earning', verifyDoctor, doctorController.getEarning)
+router.get('/schedules', verifyDoctor, doctorController.getScheduleDays)
+
+
+
 
 export default router

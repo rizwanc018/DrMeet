@@ -6,8 +6,8 @@ const Earnings = () => {
     const [EarningsCount, setEarningsCount] = useState(0)
 
     const getEarningsCount = async () => {
-        const response = await axios.get('/api/admin/earning')
-        setEarningsCount(response.data.earning)
+        const response = await axios.get('/api/doc/earning')
+        setEarningsCount(response.data.earnings)
     }
 
     useEffect(() => {

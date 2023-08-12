@@ -4,6 +4,8 @@ import Doctor from '../models/doctorModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
 import moment from 'moment'
 import Appointment from '../models/appointmentModel.js'
+import mongoose from 'mongoose'
+import Schedule from '../models/scheduleModel.js'
 
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
@@ -80,6 +82,32 @@ const doctorController = {
         const id = req.params.id
         const doctor = await Doctor.findById(id).populate('department', 'name -_id')
         res.status(200).json({ success: true, doctor })
+    }),
+    getAppointmentsCount: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const count = await Appointment.countDocuments({ docId })
+        res.status(200).json({ success: true, count })
+    }),
+    getEarning: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const result = await Appointment.find({ docId }).populate('docId', 'fees -_id')
+        const earnings = Number(result[0].docId.fees) * result.length
+        res.status(200).json({ success: true, earnings })
+    }),
+    getScheduleDays: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const data = await Schedule.aggregate([
+            {
+                $match : {docId : new mongoose.Types.ObjectId(docId) }
+            },
+            {
+                $group: {
+                    _id: '$day',
+                    count: { $sum: 1 },
+                },
+            },
+        ])
+        res.status(200).json({ success: true, data: data.length })
     }),
 }
 

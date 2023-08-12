@@ -8,6 +8,9 @@ import AppointmentsBooked from "./AppointmentsBooked"
 import CalenderToShowAppointments from "./CalenderToShowAppointments";
 import VideoCall from "./VideoCall";
 import WeekDaysHeader from "./WeekDaysHeader";
+import Appointments from "./Appointments";
+import Earnings from "./Earnings";
+import ScheduleDays from "./ScheduleDays";
 
 export {
     Header,
@@ -19,5 +22,8 @@ export {
     AppointmentsBooked,
     CalenderToShowAppointments,
     VideoCall,
-    WeekDaysHeader
+    WeekDaysHeader,
+    Appointments,
+    Earnings,
+    ScheduleDays
 }

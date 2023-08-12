@@ -166,7 +166,6 @@ const adminController = {
                 },
             },
         ]).sort({ dayOfWeek: 1 })
-        console.log("🚀 ~ file: adminController.js:171 ~ getAppointmentsPerWeekDay:asyncHandler ~ data:", data)
         res.status(200).json({ success: true, data })
     }),
 

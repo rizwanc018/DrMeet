@@ -47,8 +47,8 @@ const appointmentController = {
         })
             .populate('docId', 'fname lname').populate('timeId')
             .sort({ date: 1 })
-            res.status(200).json({appointments})
-    })
+        res.status(200).json({ appointments })
+    }),
 }
 
 export default appointmentController

@@ -6,7 +6,8 @@ import {
     DoctorRegister,
     DoctorLayout,
     Appointments,
-    ConsultationPage
+    ConsultationPage,
+    DashBoard
 } from '../pages/doctorPages';
 
 const DoctorRoutes = () => {
@@ -16,7 +17,7 @@ const DoctorRoutes = () => {
                 <Route path="login" element={<DoctorLogin />} />
                 <Route path="register" element={<DoctorRegister />} />
                 <Route element={<DoctorPirvateRoutes />}>
-                    <Route path="" element={<DoctorHome />} />
+                    <Route path="" element={<DashBoard />} />
                     <Route path="schedules" element={<DoctorHome />} />
                     <Route path="appointments" element={<Appointments />} />
                     <Route path="consoltation/:patientId" element={<ConsultationPage />} />
