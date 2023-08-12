@@ -20,6 +20,10 @@ router.get('/appointment/dates', verifyDoctor, appointmentController.getAllAppoi
 router.get('/appointment/count', verifyDoctor, doctorController.getAppointmentsCount)
 router.get('/earning', verifyDoctor, doctorController.getEarning)
 router.get('/schedules', verifyDoctor, doctorController.getScheduleDays)
+router.get('/slots', verifyDoctor, doctorController.getSlotsCount)
+router.get('/appointments/data', verifyDoctor, doctorController.getAppointmentsData)
+
+
 
 
 

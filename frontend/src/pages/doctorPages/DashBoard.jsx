@@ -1,5 +1,5 @@
-import { Doctors, Patients, AppointmetntsChart, DonutChart } from "../../_components/adminComponents"
-import { Appointments, Earnings, ScheduleDays } from '../../_components/doctorComponents'
+// import { Doctors, Patients, , DonutChart } from "../../_components/adminComponents"
+import { Appointments, Earnings, ScheduleDays, Slots, AppointmetntsChart } from '../../_components/doctorComponents'
 
 const DashBoard = () => {
     return (
@@ -9,7 +9,7 @@ const DashBoard = () => {
                 <ScheduleDays />
                 <AppointmetntsChart />
                 <Earnings />
-                <Patients />
+                <Slots />
             </div>
         </div>
     )

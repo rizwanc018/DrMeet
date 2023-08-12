@@ -11,6 +11,8 @@ import WeekDaysHeader from "./WeekDaysHeader";
 import Appointments from "./Appointments";
 import Earnings from "./Earnings";
 import ScheduleDays from "./ScheduleDays";
+import Slots from "./Slots";
+import AppointmetntsChart from "./AppointmentsChart";
 
 export {
     Header,
@@ -25,5 +27,7 @@ export {
     WeekDaysHeader,
     Appointments,
     Earnings,
-    ScheduleDays
+    ScheduleDays,
+    Slots,
+    AppointmetntsChart
 }

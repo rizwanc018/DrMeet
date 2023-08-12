@@ -98,7 +98,7 @@ const doctorController = {
         const docId = req.doctor._id
         const data = await Schedule.aggregate([
             {
-                $match : {docId : new mongoose.Types.ObjectId(docId) }
+                $match: { docId: new mongoose.Types.ObjectId(docId) }
             },
             {
                 $group: {
@@ -108,6 +108,29 @@ const doctorController = {
             },
         ])
         res.status(200).json({ success: true, data: data.length })
+    }),
+    getSlotsCount: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const count = await Schedule.countDocuments({ docId })
+        res.status(200).json({ success: true, count })
+    }),
+    getAppointmentsData: asyncHandler(async (req, res) => {
+        const docId = req.doctor._id
+        const data = await Appointment.aggregate([
+            {
+                $match: { docId: new mongoose.Types.ObjectId(docId) }
+            },
+            {
+                $group: {
+                    _id: { $dateToString: { format: '%d-%m-%Y', date: '$createdAt' } },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: -1 } // Sort by createdAt date in ascending order
+            }
+        ])
+        res.status(200).json({ success: true, data })
     }),
 }
 
