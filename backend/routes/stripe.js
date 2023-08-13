@@ -19,8 +19,9 @@ const stripe = Stripe(process.env.STRIPE_API_KEY)
 router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
     let signinsecret = 'whsec_ef2dfc5887f870636fe513da6ef308b0c2f9b58764289374fa74f1cb4ea58f80'
     const sig = req.headers['stripe-signature'];
-    let event;
-    let data;
+    let event
+    let data
+    let payload = req.body;
 
     try {
         event = await stripe.webhooks.constructEvent(req.body, sig, signinsecret);
@@ -32,13 +33,15 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
     }
 
     if (event.type === 'checkout.session.completed') {
+        payload = JSON.parse(payload)
+        const payment_intent = payload.data.object.payment_intent
         stripe.customers
             .retrieve(data.customer)
             .then(async (customer) => {
                 try {
                     const { docId, timeId, date, userId } = customer.metadata
                     const patientId = userId.slice(1, -1)
-                    const response = await Appointment.create({ docId, timeId, date, patientId })
+                    const response = await Appointment.create({ docId, timeId, date, patientId, payment_intent })
                     if (response) res.status(200).json({ success: true })
                 } catch (error) {
                     console.log(error);
@@ -47,8 +50,6 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
                 }
             }).catch(err => console.log(err))
     }
-    // res.json({ success: true })
-
 })
 
 router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler(async (req, res) => {
@@ -56,7 +57,6 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
     let { date } = req.body
     date = moment(date).startOf('day').toISOString()
     const userId = JSON.stringify(req.user._id)
-    console.log({docId, timeId, date, userId})
     const customer = await stripe.customers.create({
         metadata: {
             userId,
@@ -97,6 +97,21 @@ router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler
 
 
     res.send({ url: session.url });
+}))
+
+router.post('/refund', express.json(), verifyUser, asyncHandler(async (req, res) => {
+    const { appointmentId, payment_intent } = req.body
+
+    const refund = await stripe.refunds.create({
+        payment_intent: payment_intent,
+    })
+    if (refund.status === 'succeeded') {
+        const response = await Appointment.findByIdAndDelete(appointmentId)
+        res.status(200).json({ success: true, msg: 'Appointment cancelled successfully' })
+    } else {
+        res.status(200).json({ success: false, msg: 'Error cancelling appointment' })
+    }
+
 }))
 
 export default router

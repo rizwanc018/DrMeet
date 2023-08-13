@@ -3,9 +3,7 @@ import UserRoutes from './Routes/UserRoutes'
 import AdminRoutes from './Routes/AdminRoutes'
 import DoctorRoutes from './Routes/DoctorRoutes'
 
-
 function App() {
-
   return (
     <Router>
       <AdminRoutes />

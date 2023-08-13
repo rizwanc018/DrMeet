@@ -50,7 +50,6 @@ const RegisteredDoctorsTable = ({ data, handleApprove, handleDelete }) => {
       {
         Header: 'Action',
         accessor: '_id',
-        // Cell: () => <FaEdit />,
         Cell: ({ value }) => (
           <div className='flex flex-col gap-2'>
             <button

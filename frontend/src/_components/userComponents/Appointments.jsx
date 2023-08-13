@@ -1,13 +1,27 @@
-import moment from 'moment';
-import { useEffect, useMemo, useState } from 'react';
-import { useTable } from 'react-table';
+import moment from 'moment'
+import { useMemo, useState } from 'react'
+import { useTable } from 'react-table'
+import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast'
 
 
-const Appointments = ({ data }) => {
-    // const [tableData, setTableData] = useState([])
-    // useEffect(() => {
-    //     setTableData(data)
-    // },[])
+const Appointments = ({ data, getUpcomingAppointments }) => {
+    const [date, setDate] = useState(moment().startOf('day').toISOString())
+
+    const handleCancel = async (appointmentId, payment_intent) => {
+        try {
+            const response = await axios.post('/api/stripe/refund', { appointmentId, payment_intent })
+            if (response.data.success) {
+                toast.success(response.data.msg)
+                getUpcomingAppointments(date)
+            }
+            else
+                toast.error(response.data.msg)
+        } catch (error) {
+            toast.error('Error cancelling appointment')
+        }
+    }
+
     const columns = useMemo(
         () => [
             {
@@ -42,6 +56,18 @@ const Appointments = ({ data }) => {
                     moment(row.original.timeId.startTime).format('hh:mm a') + ' - ' + moment(row.original.timeId.endTime).format('hh:mm a')
                 )
             },
+            {
+                Header: 'Action',
+                accessor: '',
+                Cell: ({ row }) => (
+                    <div className='flex flex-col gap-2'>
+                        <button
+                            className='inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-sm focus:bg-primary-600 focus:shadow-sm focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-sm'
+                            onClick={() => handleCancel(row.original._id, row.original.payment_intent)}
+                        >Cancel</button>
+                    </div>
+                )
+            },
 
         ], []
     )
@@ -57,6 +83,7 @@ const Appointments = ({ data }) => {
 
     return (
         <>
+            <Toaster />
             {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
                 <div className=' overflow-x-auto'>
                     <table {...getTableProps()} className='text-center w-auto table-auto shadow bg-white'>

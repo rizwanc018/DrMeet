@@ -21,6 +21,8 @@ const verifyUser = async (req, res, next) => {
         if (decoded.blocked) {
             return res.status(401).json({ msg: 'Not Authorized, You have been blocked by Admin' });
         }
+        req.user = {}
+        req.user._id = decoded.id
         next();
     } catch (error) {
         console.error(error);

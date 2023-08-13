@@ -23,7 +23,7 @@ const AppointmentsPage = () => {
                 <h1 className="text-xl">Upcoming Appointments</h1>
             </div>
             <div className='flex justify-center'>
-                {data && <Appointments data={data} />}
+                {data && <Appointments data={data} getUpcomingAppointments={getUpcomingAppointments} />}
             </div>
         </>
     )

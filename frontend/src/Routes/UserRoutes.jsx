@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { UserPrivateRoutes } from '../utils'
+import ErrorPage from '../pages/ErrorPage';
 import {
     DoctorsPage,
     HomePage,
@@ -16,6 +17,7 @@ import {
 const UserRoutes = () => {
     return (
         <Routes>
+            <Route element={<ErrorPage />} />
             <Route path='/' element={<UserLayout />}>
                 <Route path="" element={<HomePage />} />
                 <Route path="login" element={<UserLoginPage />} />

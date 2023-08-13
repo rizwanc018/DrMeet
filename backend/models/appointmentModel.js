@@ -15,6 +15,10 @@ const appointmentSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+    payment_intent: {
+        type: String,
+        required: true
+    },
     finished: {
         type: Boolean,
         default: false

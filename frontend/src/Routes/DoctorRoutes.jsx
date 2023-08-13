@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { DoctorPirvateRoutes } from '../utils'
+import ErrorPage from '../pages/ErrorPage';
 import {
     DoctorHome,
     DoctorLogin,
