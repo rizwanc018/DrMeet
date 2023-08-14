@@ -1,4 +1,4 @@
-import { Header } from "../../_components/userComponents"
+import { Header, Footer } from "../../_components/userComponents"
 import { Outlet } from 'react-router-dom'
 
 
@@ -8,6 +8,7 @@ const UserLayout = () => {
             <Header />
             <div className="mt-20"></div>
             <Outlet />
+            <Footer />
         </>
     )
 }

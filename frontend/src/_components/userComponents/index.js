@@ -9,6 +9,7 @@ import CheckOutModal from "./CheckOutModal"
 import VideoCall from "./VideoCall"
 import Dietitian from "./Dietitian"
 import About from "./About"
+import Footer from "./Footer"
 
 
 export {
@@ -22,5 +23,6 @@ export {
     CheckOutModal,
     VideoCall,
     Dietitian,
-    About
+    About,
+    Footer
 }
