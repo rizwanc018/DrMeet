@@ -17,7 +17,6 @@ import {
 const UserRoutes = () => {
     return (
         <Routes>
-            <Route element={<ErrorPage />} />
             <Route path='/' element={<UserLayout />}>
                 <Route path="" element={<HomePage />} />
                 <Route path="login" element={<UserLoginPage />} />
@@ -28,6 +27,7 @@ const UserRoutes = () => {
                 <Route path="appointment-success" element={<AppointmentSuccess />} />
                 <Route path="meet/:docSokId" element={<MeetDoctorPage />} />
                 <Route path="appointments" element={<AppointmentsPage />} />
+                <Route path='*' element={<ErrorPage />} />
             </Route>
         </Routes>
     )

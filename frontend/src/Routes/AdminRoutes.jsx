@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { AdminPrivateRoutes } from '../utils'
+import ErrorPage from '../pages/ErrorPage'
 import {
     AdminHome,
     AdminLogin,
@@ -14,8 +15,8 @@ import {
 const AdminRoutes = () => {
     return (
         <Routes>
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/login" element={<AdminLogin />} />
+            <Route path="/" element={<AdminLayout />}>
                 <Route element={<AdminPrivateRoutes />}>
                     <Route path="" element={<AdminHome />} />
                     <Route path="departments" element={<Departments />} />
@@ -24,6 +25,7 @@ const AdminRoutes = () => {
                     <Route path="patients" element={<Patients />} />
                 </Route>
             </Route>
+                <Route path='*' element={<ErrorPage />} />
         </Routes>
     )
 }

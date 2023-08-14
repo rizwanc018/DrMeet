@@ -14,7 +14,7 @@ import {
 const DoctorRoutes = () => {
     return (
         <Routes>
-            <Route path="/doctor" element={<DoctorLayout />}>
+            <Route path="/" element={<DoctorLayout />}>
                 <Route path="login" element={<DoctorLogin />} />
                 <Route path="register" element={<DoctorRegister />} />
                 <Route element={<DoctorPirvateRoutes />}>
@@ -23,6 +23,7 @@ const DoctorRoutes = () => {
                     <Route path="appointments" element={<Appointments />} />
                     <Route path="consoltation/:patientId" element={<ConsultationPage />} />
                 </Route>
+                <Route path='*' element={<ErrorPage />} />
             </Route>
         </Routes>
     )
