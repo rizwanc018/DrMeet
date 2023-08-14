@@ -8,6 +8,7 @@ import MakeAppointmentForm from "./MakeAppointmentForm"
 import CheckOutModal from "./CheckOutModal"
 import VideoCall from "./VideoCall"
 import Dietitian from "./Dietitian"
+import About from "./About"
 
 
 export {
@@ -20,5 +21,6 @@ export {
     MakeAppointmentForm,
     CheckOutModal,
     VideoCall,
-    Dietitian
+    Dietitian,
+    About
 }

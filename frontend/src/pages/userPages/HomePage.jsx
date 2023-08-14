@@ -1,9 +1,11 @@
-import { Hero } from "../../_components/userComponents"
+import { Hero,About } from "../../_components/userComponents"
 
 function HomePage() {
     return (
         <>
             <Hero />
+            <About />
+            
         </>
     )
 }
