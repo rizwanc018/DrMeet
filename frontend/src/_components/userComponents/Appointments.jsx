@@ -3,22 +3,31 @@ import { useMemo, useState } from 'react'
 import { useTable } from 'react-table'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
-
+import Spinner from '../Spinner'
 
 const Appointments = ({ data, getUpcomingAppointments }) => {
     const [date, setDate] = useState(moment().startOf('day').toISOString())
+    const [showSpinner, setShowSpinner] = useState(false)
 
-    const handleCancel = async (appointmentId, payment_intent) => {
-        try {
-            const response = await axios.post('/api/stripe/refund', { appointmentId, payment_intent })
-            if (response.data.success) {
-                toast.success(response.data.msg)
-                getUpcomingAppointments(date)
+    const handleCancel = async (appointmentId, payment_intent, appointmentDate) => {
+        const today = moment().startOf('day')
+        const oneDayBeforeAppointment = moment(appointmentDate).subtract(1, 'days')
+        if (today.isBefore(oneDayBeforeAppointment)) {
+            try {
+                setShowSpinner(true)
+                const response = await axios.post('/api/stripe/refund', { appointmentId, payment_intent })
+                if (response.data.success) {
+                    setShowSpinner(false)
+                    toast.success(response.data.msg)
+                    getUpcomingAppointments(date)
+                }
+                else
+                    toast.error(response.data.msg)
+            } catch (error) {
+                toast.error('Error cancelling appointment')
             }
-            else
-                toast.error(response.data.msg)
-        } catch (error) {
-            toast.error('Error cancelling appointment')
+        } else {
+            toast.error('Apppointment can only cancelled one day before appointment date')
         }
     }
 
@@ -63,12 +72,11 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
                     <div className='flex flex-col gap-2'>
                         <button
                             className='inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-sm focus:bg-primary-600 focus:shadow-sm focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-sm'
-                            onClick={() => handleCancel(row.original._id, row.original.payment_intent)}
+                            onClick={() => handleCancel(row.original._id, row.original.payment_intent, row.original.date)}
                         >Cancel</button>
                     </div>
                 )
             },
-
         ], []
     )
 
@@ -115,7 +123,6 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
                     </table>
                 </div>
             )}
-
         </>
     )
 }
