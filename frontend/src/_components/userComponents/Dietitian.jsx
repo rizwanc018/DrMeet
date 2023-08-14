@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { SiWorldhealthorganization } from 'react-icons/si'
+import TypingIndicator from '../TypingIndicator';
 
 
 const Dietitian = () => {
@@ -30,7 +31,8 @@ const Dietitian = () => {
     }
 
 
-    const handleSend = async () => {
+    const handleSend = async (e) => {
+        e.preventDefault()
         if (userInput.trim() === '') {
             return;
         }
@@ -45,16 +47,6 @@ const Dietitian = () => {
         setMessages(newMessages)
         setUserInput('')
         setTyping(true)
-
-        // setTimeout(() => {
-        //     const aiResponse = {
-        //         message: "I understand. Let me fetch the information for you.",
-        //         sender: "ChatGPT",
-        //         direction: "incoming",
-        //     };
-        //     setMessages((prevMessages) => [...prevMessages, aiResponse]);
-        //     setTyping(false);
-        // }, 500);
         await processMessageToChatGPT(newMessages);
     }
 
@@ -103,12 +95,11 @@ const Dietitian = () => {
     const handleChange = (e) => {
         setUserInput(e.target.value);
     };
-    // mr-2 py-3 px-4  rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white
     return (
         <div className="chat-card  mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden sm:w-full sm:max-w-lg">
             <div className="chat-header p-4 bg-primary flex items-center">
                 <div className='flex items-center gap-2'>
-                    <SiWorldhealthorganization  className='text-3xl'/>
+                    <SiWorldhealthorganization className='text-3xl' />
                     <span className="text-base text-black">Diet Bot</span>
                 </div>
             </div>
@@ -125,12 +116,10 @@ const Dietitian = () => {
                         </div>
                     ))}
                     {typing && (
-                        <div className="message w-fit mb-2 p-4 rounded-5 bg-blue-200 text-left animate-pulse">
-                            <p className="text-base text-gray-700">Typing...</p>
-                        </div>
+                        < TypingIndicator />
                     )}
                 </div>
-                <div className="chat-footer border p-4 bg-gray-200 flex flex-col sm:flex-row sticky bottom-0 left-0 w-full">
+                <form className="chat-footer border p-4 bg-gray-200 flex flex-col sm:flex-row sticky bottom-0 left-0 w-full">
                     <input
                         className="flex-grow p-2 border-none rounded-3 mb-2 sm:mb-0 sm:mr-2"
                         type="text"
@@ -140,11 +129,11 @@ const Dietitian = () => {
                     />
                     <button
                         className="p-2  rounded border-none bg-blue-500 text-white font-bold cursor-pointer transition duration-300 hover:bg-green-500"
-                        onClick={handleSend}
+                        onClick={(e) => handleSend(e)}
                     >
                         Send
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     );
