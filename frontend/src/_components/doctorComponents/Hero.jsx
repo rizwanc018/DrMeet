@@ -6,7 +6,7 @@ const Hero = ({ userInfo, setShowModal }) => {
     
 
     return (
-        <div className='flex flex-col md:flex-row items-center p-4 bg-primary-100 shadow-md  my-4 mx-14 rounded '>
+        <div className='flex flex-col md:flex-row items-center p-4 bg-primary-100 shadow-md m-4 mx-14 rounded '>
             <div className='flex-1 flex flex-col md:flex-row  gap-6 items-center'>
                 <img src={userInfo.image} alt="" className='rounded-full w-36 ' />
                 <div className='text-center'>

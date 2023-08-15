@@ -4,12 +4,12 @@ import { Outlet } from 'react-router-dom'
 
 const UserLayout = () => {
     return (
-        <>
+        <div className="bg-white">
             <Header />
-            <div className="mt-20"></div>
+            <div className="mt-[4.2rem]"></div>
             <Outlet />
             <Footer />
-        </>
+        </div>
     )
 }
 

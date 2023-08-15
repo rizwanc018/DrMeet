@@ -27,6 +27,7 @@ const AddScheduleForm = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post('/api/doc/schedule', { ...values })
+      console.log(response.data)
       dispatch(setSchedules(response.data.schedules))
       if (response.data.success)
         toast.success(response.data.msg)

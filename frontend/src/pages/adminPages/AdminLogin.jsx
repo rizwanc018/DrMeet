@@ -3,9 +3,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../slices/authSlice";
+import Spinner from '../../_components/Spinner'
 
 function AdminLogin() {
 
+  const [showSpinner, setShowSpinner] = useState(false)
   const [email, setEmail] = useState('')
   const [emailValid, setEmailValid] = useState(true)
 
@@ -21,6 +23,7 @@ function AdminLogin() {
 
   const submitHandler = async (e) => {
     e.preventDefault()
+    setShowSpinner(true)
     try {
       if (email && password) {
         setEmailValid(true)
@@ -28,14 +31,17 @@ function AdminLogin() {
         const body = { email, password }
         let response = await axios.post(`/api/admin/auth`, body)
         dispatch(setCredentials({ ...response.data }))
+        setShowSpinner(false)
         if (response.data.isAdmin) navigate('/admin')
       } else {
+        setShowSpinner(false)
         if (email.trim() === '')
           setEmailValid(false)
         if (password.trim() === '')
           setPasswordValid(false)
       }
     } catch (error) {
+      setShowSpinner(false)
       setLoginErr(error.response.data.err)
     }
   }
@@ -79,13 +85,19 @@ function AdminLogin() {
             />
             {!passwordValid && <p className='text-red-600 text-sm'>Invalid Password</p>}
           </div>
+          {showSpinner ?
 
-          <button
-            type="submit"
-            className="w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded hover:bg-primary-600"
-          >
-            Sign In
-          </button>
+            <div className='w-full text-center'>
+              <Spinner />
+            </div> :
+            <button
+              type="submit"
+              className="w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded hover:bg-primary-600"
+            >
+              Sign In
+            </button>
+
+          }
           {loginErr && <div className='w-full text-center'><p className='text-red-600 text-sm'>{loginErr}</p></div>}
         </form>
       </div>

@@ -31,6 +31,11 @@ const doctorController = {
             throw new Error('Access denied: Approval pending')
         }
 
+        if (doctor && doctor.blocked) {
+            res.status(401)
+            throw new Error('Access denied: Admin has blocked you')
+        }
+
         if (doctor && (await doctor.matchPassword(password))) {
             generateJWT(res, doctor._id, 'doctor', doctor.blocked, 24 * 60)
             res.status(201).json({

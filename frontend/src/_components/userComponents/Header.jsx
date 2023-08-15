@@ -9,6 +9,7 @@ import socket from '../../config/socket.js'
 
 const Header = () => {
     const [callTo, setCallTo] = useState()
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate()
 
     const { userInfo } = useSelector(state => state.auth)
@@ -40,9 +41,8 @@ const Header = () => {
         { name: "Doctors", link: "/doctors" },
         { name: "For Doctor", link: "/doctor" },
     ];
-    let [open, setOpen] = useState(false);
-    const handleShowNavbar = () => {
-        setShowNavbar(!showNavbar);
+    const handleShowNavMenu = () => {
+        setOpen(prev => !prev);
     }
 
     return (
@@ -66,7 +66,7 @@ const Header = () => {
                     {
                         Links.map((link) => (
                             <li key={link.name} className='md:ml-6 text-md md:my-0 my-7'>
-                                <Link to={link.link} className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</Link>
+                                <Link to={link.link} onClick={handleShowNavMenu} className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</Link>
                             </li>
                         ))
                     }

@@ -15,7 +15,6 @@ const AppointmetntsChart = () => {
 
   const getAppointments = async () => {
     const response = await axios.get('/api/doc/appointments/data')
-    console.log(response.data);
     setData(response.data.data)
   }
 

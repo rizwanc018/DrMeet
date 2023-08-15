@@ -22,15 +22,13 @@ const DoctorsPage = () => {
         <h1 className="text-xl">Doctors Available</h1>
         <SearchDoctor setDoctors={setDoctors}/>
       </div>
-      <div className="flex flex-wrap gap-5 justify-center mx-8">
+      <div className="flex flex-wrap gap-5 justify-center mx-8 pt-10 pb-14 bg-white">
         {
           doctors ?
             (doctors.map((doctor, i) => (
               <DoctorCard doctor={doctor} key={i} />
             ))) : (
-              <div className="flex flex-wrap gap-5 justify-center mx-8 mt-16">
-                <Spinner />
-                <Spinner />
+              <div className="flex flex-wrap gap-5 justify-center mx-8 h-60 bg-white">
                 <Spinner />
               </div>
 

@@ -131,7 +131,7 @@ function DoctorRegister() {
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
             <div className="md:grid md:grid-cols-2 md:gap-10 ">
-              <div className="">
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="fname">First Name</label>
                 <input
                   type="text"
@@ -144,7 +144,7 @@ function DoctorRegister() {
                 />
                 {formik.touched.fname && formik.errors.fname && <p className="error">{formik.errors.fname}</p>}
               </div>
-              <div className="">
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="laname">Last Name</label>
                 <input
                   type="text"
@@ -159,7 +159,7 @@ function DoctorRegister() {
               </div>
 
               {/* Email and mobile */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -173,7 +173,7 @@ function DoctorRegister() {
                 />
                 {formik.touched.email && formik.errors.email && <p className="error">{formik.errors.email}</p>}
               </div>
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="mobile">Mobile</label>
                 <input
                   type="tel"
@@ -187,7 +187,7 @@ function DoctorRegister() {
                 {formik.touched.mobile && formik.errors.mobile && <p className="error">{formik.errors.mobile}</p>}
               </div>
               {/* password */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
@@ -201,7 +201,7 @@ function DoctorRegister() {
                 {formik.touched.password && formik.errors.password && <p className="error">{formik.errors.password}</p>}
               </div>
               {/* confirm password */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <input
                   type="password"
@@ -215,7 +215,7 @@ function DoctorRegister() {
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && <p className="error">{formik.errors.confirmPassword}</p>}
               </div>
               {/* Department selection */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="department">Choose Department</label>
                 <select
                   name="department"
@@ -236,7 +236,7 @@ function DoctorRegister() {
 
               </div>
               {/* Degree */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="degree">Degree</label>
                 <input
                   type="text"
@@ -250,7 +250,7 @@ function DoctorRegister() {
                 {formik.touched.degree && formik.errors.degree && <p className="error">{formik.errors.degree}</p>}
               </div>
               {/* Experience */}
-              <div>
+              <div className="mb-4 md:mb-0">
                 <label htmlFor="experience">Experience</label>
                 <input
                   type="number"

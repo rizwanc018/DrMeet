@@ -44,13 +44,13 @@ const verifyDoctor = async (req, res, next) => {
         if (decoded.blocked) {
             return res.status(401).json({ msg: 'Not Authorized, You have been blocked by Admin' });
         }
-
         if (decoded.role != 'doctor') {
             res.status(401).json({ msg: 'Not Authorized, Invalid Token' })
             return
         }
         req.doctor = {}
         req.doctor._id = decoded.id
+        
         next();
     } catch (err) {
         res.status(401).json({ msg: 'Not Authorized, Invalid Token' })

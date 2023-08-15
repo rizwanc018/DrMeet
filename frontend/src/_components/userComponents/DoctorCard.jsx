@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const DoctorCard = ({ doctor, showBookbutton, visibility  }) => {
     const [showButton, setshowButton] = useState(showBookbutton ?? true)
     return (
-        <div className={`${visibility} w-full md:w-1/4 rounded overflow-hidden shadow-lg`}>
+        <div className={`${visibility} w-full md:w-1/4 rounded overflow-hidden shadow-lg bg-white`}>
             <div className='h-48 overflow-hidden'>
                 <img src={doctor.image} className='w-full object-cover ' alt="Sunset in the mountains" />
             </div>

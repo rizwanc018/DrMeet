@@ -37,7 +37,7 @@ function DoctorHome() {
     }
   }
   return (
-    <div className='flex flex-col justify-center'>
+    <div className='flex flex-col justify-center py-10 mb-6'>
       <Toaster />
       <WeekDaysHeader setDay={setDay} day={day}/>
       {schedules?.length > 0 ? (<ScheduleTable schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />
