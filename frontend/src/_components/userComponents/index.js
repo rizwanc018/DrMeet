@@ -24,5 +24,5 @@ export {
     VideoCall,
     Dietitian,
     About,
-    Footer
+    Footer,
 }

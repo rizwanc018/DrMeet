@@ -1,16 +1,14 @@
+import { lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserRoutes from './Routes/UserRoutes'
-import AdminRoutes from './Routes/AdminRoutes'
-import DoctorRoutes from './Routes/DoctorRoutes'
-import ErrorPage from './pages/ErrorPage';
+
+const UserRoutes = lazy(() => import('./Routes/UserRoutes'))
+const AdminRoutes = lazy(() => import('./Routes/AdminRoutes'))
+const DoctorRoutes = lazy(() => import('./Routes/DoctorRoutes'))
+const ErrorPage = lazy(() => import('./pages/ErrorPage'));
+
 
 function App() {
   return (
-    // <Router>
-    //   <AdminRoutes />
-    //   <DoctorRoutes />
-    //   <UserRoutes />
-    // </Router>
     <Router>
       <Routes>
         <Route path='/*' element={<UserRoutes />}/>

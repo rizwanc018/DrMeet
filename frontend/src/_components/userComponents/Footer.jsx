@@ -5,7 +5,7 @@ import { FaTwitterSquare, FaGooglePlusSquare, FaYoutubeSquare } from 'react-icon
 
 const Footer = () => {
     return (
-        <div className="bg-primary-100 border-t-2 border-primary-200">
+        <div className="bg-primary-100 border-t-2 border-primary-200 mt-10">
             <div className="w-4/5 flex justify-center pt-5  mx-auto ">
                 <div className='w-full flex flex-col md:flex-row items-start  md:justify-between py-10 text-gray-500'>
                     <div className="flex-1">

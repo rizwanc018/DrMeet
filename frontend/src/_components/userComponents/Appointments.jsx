@@ -4,12 +4,16 @@ import { useTable } from 'react-table'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 import Spinner from '../Spinner'
+import ConfirmModal from './ConfirmModal'
+
 
 const Appointments = ({ data, getUpcomingAppointments }) => {
     const [date, setDate] = useState(moment().startOf('day').toISOString())
     const [showSpinner, setShowSpinner] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const handleCancel = async (appointmentId, payment_intent, appointmentDate) => {
+        // setShowModal(true)
         const today = moment().startOf('day')
         const oneDayBeforeAppointment = moment(appointmentDate).subtract(1, 'days')
         if (today.isBefore(oneDayBeforeAppointment)) {
@@ -91,38 +95,41 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
 
     return (
         <>
-            <Toaster />
-            {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
-                <div className=' overflow-x-auto'>
-                    <table {...getTableProps()} className='text-center w-auto table-auto shadow bg-white'>
-                        <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
-                                            {column.render('Header')}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {rows.map((row) => {
-                                prepareRow(row);
-                                return (
-                                    <tr {...row.getRowProps()} className='even:bg-primary-100 '>
-                                        {row.cells.map((cell) => (
-                                            <td {...cell.getCellProps()} className='capitalize border-2 px-8 py-2'>
-                                                {cell.render('Cell')}
-                                            </td>
+            {/* {showModal && <ConfirmModal setShowModal={setShowModal} />} */}
+            <div className='mt-10 mb-16'>
+                <Toaster />
+                {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
+                    <div className=' overflow-x-auto'>
+                        <table {...getTableProps()} className='text-center w-auto table-auto shadow bg-white'>
+                            <thead>
+                                {headerGroups.map((headerGroup) => (
+                                    <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
+                                        {headerGroup.headers.map((column) => (
+                                            <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
+                                                {column.render('Header')}
+                                            </th>
                                         ))}
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+                                ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {rows.map((row) => {
+                                    prepareRow(row);
+                                    return (
+                                        <tr {...row.getRowProps()} className='even:bg-primary-100 '>
+                                            {row.cells.map((cell) => (
+                                                <td {...cell.getCellProps()} className='capitalize border-2 px-8 py-2'>
+                                                    {cell.render('Cell')}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
         </>
     )
 }

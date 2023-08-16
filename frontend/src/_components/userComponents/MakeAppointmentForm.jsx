@@ -69,10 +69,9 @@ const MakeAppointmentForm = ({ schedule, id }) => {
                     <h1 className='mt-4 py-1 font-semibold'>Choose Time:</h1>
                     <div className="flex flex-wrap gap-3">
                         {times.map((item, i) => {
-                            const startTime = moment(item.startTime);
-                            const isDisabled = startTime.isBefore(moment());
-                            const isSameDay = moment(date).isSame(moment(), 'date');
-
+                            const startTime = moment(item.startTime)
+                            const isDisabled = startTime.isBefore(moment())
+                            const isSameDay = moment(date).isSame(moment(), 'date')
                             return (
                                 <label key={i} >
                                     <input

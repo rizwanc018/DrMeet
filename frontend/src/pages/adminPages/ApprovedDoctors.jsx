@@ -30,7 +30,9 @@ function ApprovedDoctors() {
             {data ? (
                 <ApprovedDoctorsTable data={data} handleDelete={handleDelete} />
             ) : (
-                <div><Spinner /></div>
+                <div className='w-full h-full grid place-items-center'>
+                    <Spinner />
+                </div>
             )}
         </>
     )

@@ -27,7 +27,6 @@ const AddScheduleForm = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post('/api/doc/schedule', { ...values })
-      console.log(response.data)
       dispatch(setSchedules(response.data.schedules))
       if (response.data.success)
         toast.success(response.data.msg)
@@ -78,16 +77,6 @@ const AddScheduleForm = () => {
           >
             <TimePicker.RangePicker />
           </Form.Item>
-          {/* <Form.Item
-            label='Slots'
-            name='slots'
-            rules={[
-              { required: true, message: 'Please enter the number of slots' },
-              { type: 'number', message: 'Slots must be a number' },
-            ]}
-          >
-            <InputNumber min={1} />
-          </Form.Item> */}
           <Form.Item>
 
             <Button className=" text-[14px] text-center px-3  block  mx-auto border-2 border-primary text-emerald-600

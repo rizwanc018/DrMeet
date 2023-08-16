@@ -37,7 +37,7 @@ const AppointmetntsChart = () => {
             bottom: 0,
           }}
         >
-          <text className='font-bold' x={350} y={30} textAnchor="middle" dominantBaseline="middle">
+          <text className='font-bold' x={120} y={30} textAnchor="middle" dominantBaseline="middle">
             Booking Rate
           </text>
           <CartesianGrid strokeDasharray="3 3" />

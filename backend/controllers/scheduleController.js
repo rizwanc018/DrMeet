@@ -25,12 +25,11 @@ const scheduleController = {
             res.status(200).json({ succes: false, msg: "Schedule already exist", schedules: data })
         } else {
             const response = await Schedule.create({ day, docId, startTime, endTime })
-            const data = await Schedule.find({ docId })
+            const data = await Schedule.find({ docId, day })
             res.status(200).json({ success: true, msg: 'Schedule created succesdfully', schedules: data })
         }
     }),
     getSchedules: asyncHandler(async (req, res) => {
-        // console.log(req)
         const docId = req.doctor._id
         const day = req.params.day        
         const response = await Schedule.find({ docId, day }).sort({ day: 1, startTime: 1 })
