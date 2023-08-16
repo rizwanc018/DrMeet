@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import { useTable } from 'react-table'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
-import Spinner from '../Spinner'
 import Swal from 'sweetalert2'
 
 
@@ -107,7 +106,7 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
 
     return (
         <>
-            <div className='mt-10 mb-16'>
+            <div className='mt-10 mx-4 mb-16 overflow-x-auto'>
                 <Toaster />
                 {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
                     <div className=' overflow-x-auto'>

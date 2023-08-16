@@ -14,7 +14,7 @@ function classNames(...classes) {
 }
 
 
-function DropDown() {
+function DropDown({handleShowNavMenu}) {
     const [isOpen, setIsOpen] = useState(false)
 
     const navigate = useNavigate()
@@ -53,6 +53,7 @@ function DropDown() {
                             {({ active }) => (
                                 <Link
                                     to="/appointments"
+                                    onClick={handleShowNavMenu}
                                     className={classNames(
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                         'block px-4 py-2 '

@@ -75,6 +75,7 @@ const Header = () => {
                         <li className='md:ml-6 text-md md:my-0 my-7'>
                             <Link to='/dietitian' 
                             className='border border-primary-600 px-2 py-1 rounded text-primary-600 hover:text-white hover:bg-primary-600'
+                            onClick={handleShowNavMenu}
                             >AI Dietitian</Link>
                         </li>
                     }
@@ -84,7 +85,7 @@ const Header = () => {
                     <li className='md:ml-6 text-md md:my-0 my-7'>
                         {
                             userInfo && userInfo.isUser ?
-                                (<DropDown />)
+                                (<DropDown handleShowNavMenu={handleShowNavMenu}/>)
                                 : (<Link to='/login' className='flex items-center gap-1 text-primary font-bold'><AiOutlineLogin className='text-primary font-bold' /> <span>Login</span></Link>)
                         }
                     </li>

@@ -96,7 +96,9 @@ const Dietitian = () => {
         setUserInput(e.target.value);
     };
     return (
-        <div className="chat-card  mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden sm:w-full sm:max-w-lg">
+        <div className="chat-card mt-10 mb-10 flex-grow  bg-white rounded-5 shadow-md  w-4/5 sm:max-w-lg">
+
+        {/* <div className="chat-card mx-4 mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden w-full sm:max-w-lg"> */}
             <div className="chat-header p-4 bg-primary flex items-center">
                 <div className='flex items-center gap-2'>
                     <SiWorldhealthorganization className='text-3xl' />
