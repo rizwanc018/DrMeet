@@ -4,16 +4,28 @@ import { useTable } from 'react-table'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 import Spinner from '../Spinner'
-import ConfirmModal from './ConfirmModal'
+import Swal from 'sweetalert2'
 
 
 const Appointments = ({ data, getUpcomingAppointments }) => {
     const [date, setDate] = useState(moment().startOf('day').toISOString())
     const [showSpinner, setShowSpinner] = useState(false)
-    const [showModal, setShowModal] = useState(false)
 
     const handleCancel = async (appointmentId, payment_intent, appointmentDate) => {
-        // setShowModal(true)
+        Swal.fire({
+            title: 'Are tou sure, you want to cancel the appointment?',
+            showCancelButton: true,
+            cancelButtonColor:'green',
+            confirmButtonText: 'Yes',
+            confirmButtonColor: 'red',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                cancelAppointment(appointmentId, payment_intent, appointmentDate)
+            }
+        })
+    }
+
+    const cancelAppointment = async (appointmentId, payment_intent, appointmentDate) => {
         const today = moment().startOf('day')
         const oneDayBeforeAppointment = moment(appointmentDate).subtract(1, 'days')
         if (today.isBefore(oneDayBeforeAppointment)) {
@@ -95,7 +107,6 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
 
     return (
         <>
-            {/* {showModal && <ConfirmModal setShowModal={setShowModal} />} */}
             <div className='mt-10 mb-16'>
                 <Toaster />
                 {data && data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Upcomming Appointments</h1>) : (
