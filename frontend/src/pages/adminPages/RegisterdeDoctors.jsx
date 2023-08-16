@@ -31,17 +31,20 @@ function RegisterdeDoctors() {
 
   return (
     <>
-      <Toaster />
+        <Toaster />
 
-      {data ? (
-        <RegisteredDoctorsTable data={data} handleApprove={handleApprove} handleDelete={handleDelete} />
-      ) : (
-        <div className='w-full h-full grid place-items-center'>
-          <Spinner />
-        </div>
-      )}
+        {data ? (
+            data.length > 0 ? 
+            (<RegisteredDoctorsTable data={data} handleApprove={handleApprove} handleDelete={handleDelete} />) : 
+            (<p  className='w-full font-semibold text-2xl text-center mt-10'>No pending Approval Requests</p>)
+
+        ) : (
+            <div className='w-full h-full grid place-items-center'>
+                <Spinner />
+            </div>
+        )}
     </>
-  )
+)
 }
 
 export default RegisterdeDoctors
