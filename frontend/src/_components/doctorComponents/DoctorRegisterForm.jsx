@@ -15,7 +15,6 @@ function DoctorRegister() {
 
   const { userInfo } = useSelector(state => state.auth)
 
-
   const [avatar, setAvatar] = useState(null)
   const [certificates, setCertificates] = useState([])
   const [departments, setDepartments] = useState([])
@@ -31,8 +30,8 @@ function DoctorRegister() {
   }
 
   useEffect(() => {
-    if(userInfo && userInfo.isDoctor) navigate('/doctor')
-  },[])
+    if (userInfo && userInfo.isDoctor) navigate('/doctor')
+  }, [])
 
   useEffect(() => {
     getAllDepartments()
@@ -71,7 +70,7 @@ function DoctorRegister() {
       fees: Yup.string().required('Fees is required')
     }),
     onSubmit: async (values) => {
-      setSubmitting(false) /////////////////////////
+      setSubmitting(true)
       setErr('')
       setLoginSuccess('')
       await uploadAvatar()
@@ -81,7 +80,7 @@ function DoctorRegister() {
         setLoginSuccess(response.data.msg)
         setTimeout(() => {
           navigate('/')
-        }, 3000);
+        }, 1200);
       } catch (error) {
         setErr(error.response.data.err)
         setSubmitting(false)
@@ -322,11 +321,16 @@ function DoctorRegister() {
                 {formik.touched.fees && formik.errors.fees && <p className="error">{formik.errors.fees}</p>}
               </div>
             </div>
+
             {!submitting ?
-              <button className='border-2 rounded px-5 py-2 mt-8 border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit"
-              >Register</button>
-              : <Spinner className='ps-72' />
+              (<button className='border-2 rounded px-5 py-2 mt-8 border-primary text-primary hover:bg-primary hover:text-white active:bg-primary active:text-white' type="submit"
+              >Register</button>)
+              : (<div className="mt-5 ms-3">
+                <Spinner className='' />
+              </div>
+              )
             }
+
             {loginSuccess && <p className="mx-auto w-full text-center text-primary-600 mt-4 text-xl">{loginSuccess}</p>}
             {err && <p className="mx-auto w-full text-center error mt-4 text-xl">{err}</p>}
           </form>

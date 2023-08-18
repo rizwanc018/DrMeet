@@ -7,7 +7,8 @@ function capitalize(string) {
 
 const departmentController = {
     addDepartment: asyncHandler(async (req, res) => {
-        const { description } = req.body
+    
+        const { description, image } = req.body
         let { name } = req.body
         name = capitalize(name)
         const isExist = await Department.exists({ name: { $regex: new RegExp(`\\b${name}\\b`, "i") } })
@@ -15,7 +16,8 @@ const departmentController = {
             res.status(409)
             throw new Error(`${name} department already exist`)
         }
-        const deptData = await Department.create({ name, description })
+        const deptData = await Department.create({ name, description, image })
+        console.log("🚀 ~ file: departmentController.js:20 ~ addDepartment:asyncHandler ~ deptData:", deptData)
         if (deptData) res.status(200).json({ msg: `${deptData.name} created successfully` })
     }),
     getAllDepartments: asyncHandler(async (req, res) => {

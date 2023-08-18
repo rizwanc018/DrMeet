@@ -5,13 +5,14 @@ const departmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    desciption: {
+    description: {
         type: String,
     },
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    image: String,
 })
 
 const departmentModel = mongoose.model('Department', departmentSchema)

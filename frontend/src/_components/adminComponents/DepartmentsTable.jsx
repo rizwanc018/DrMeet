@@ -6,8 +6,6 @@ import { CgOptions } from "react-icons/cg";
 
 
 function DepartmentsTable( props ) {
-    console.log("🚀 ~ file: DepartmentsTable.jsx:9 ~ DepartmentsTable ~ props:", props)
-
     const [data, setData] = useState([])
     
 

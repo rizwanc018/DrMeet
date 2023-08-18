@@ -36,11 +36,6 @@ const Header = () => {
         navigate(`/meet/${tmp}`)
     }
 
-    let Links = [
-        { name: "Home", link: "/" },
-        { name: "Doctors", link: "/doctors" },
-        { name: "For Doctor", link: "/doctor" },
-    ];
     const handleShowNavMenu = () => {
         setOpen(prev => !prev);
     }
@@ -57,25 +52,24 @@ const Header = () => {
 
                 <div onClick={() => setOpen(!open)} className='text-2xl font-bold absolute right-8 top-6 cursor-pointer md:hidden'>
                     {open ? (<GrClose />) : (<GiHamburgerMenu />)}
-
                 </div>
-
-
                 <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-18 ' : 'top-[-490px]'}`}>
-
-                    {
-                        Links.map((link) => (
-                            <li key={link.name} className='md:ml-6 text-md md:my-0 my-7'>
-                                <Link to={link.link} onClick={handleShowNavMenu} className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</Link>
-                            </li>
-                        ))
+                    <li key='Home' className='md:ml-6 text-md md:my-0 my-7'>
+                        <Link to='/' onClick={handleShowNavMenu} className='text-gray-800 hover:text-gray-400 duration-500'>Home</Link>
+                    </li>
+                    <li key='Doctors' className='md:ml-6 text-md md:my-0 my-7'>
+                        <Link to='/doctors' onClick={handleShowNavMenu} className='text-gray-800 hover:text-gray-400 duration-500'>Doctors</Link>
+                    </li>
+                    { !userInfo?.isUser &&
+                        <li key='For Doctor' className='md:ml-6 text-md md:my-0 my-7'>
+                            <Link to='/doctor' onClick={handleShowNavMenu} className='text-gray-800 hover:text-gray-400 duration-500'>For Doctor</Link>
+                        </li>
                     }
                     {userInfo && userInfo.isUser &&
-
                         <li className='md:ml-6 text-md md:my-0 my-7'>
-                            <Link to='/dietitian' 
-                            className='border border-primary-600 px-2 py-1 rounded text-primary-600 hover:text-white hover:bg-primary-600'
-                            onClick={handleShowNavMenu}
+                            <Link to='/dietitian'
+                                className='border border-primary-600 px-2 py-1 rounded text-primary-600 hover:text-white hover:bg-primary-600'
+                                onClick={handleShowNavMenu}
                             >AI Dietitian</Link>
                         </li>
                     }
@@ -85,7 +79,7 @@ const Header = () => {
                     <li className='md:ml-6 text-md md:my-0 my-7'>
                         {
                             userInfo && userInfo.isUser ?
-                                (<DropDown handleShowNavMenu={handleShowNavMenu}/>)
+                                (<DropDown handleShowNavMenu={handleShowNavMenu} />)
                                 : (<Link to='/login' className='flex items-center gap-1 text-primary font-bold'><AiOutlineLogin className='text-primary font-bold' /> <span>Login</span></Link>)
                         }
                     </li>
