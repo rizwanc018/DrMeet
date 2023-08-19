@@ -10,6 +10,7 @@ import VideoCall from "./VideoCall"
 import Dietitian from "./Dietitian"
 import About from "./About"
 import Footer from "./Footer"
+import Departments from "./Departments"
 
 
 export {
@@ -25,4 +26,5 @@ export {
     Dietitian,
     About,
     Footer,
+    Departments
 }

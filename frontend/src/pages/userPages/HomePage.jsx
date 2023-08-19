@@ -1,11 +1,11 @@
-import { Hero,About } from "../../_components/userComponents"
+import { Hero, About, Departments } from "../../_components/userComponents"
 
 function HomePage() {
     return (
         <>
             <Hero />
             <About />
-            
+            <Departments />
         </>
     )
 }

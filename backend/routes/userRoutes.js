@@ -5,6 +5,7 @@ import appointmentController from "../controllers/appointmetController.js"
 import { verifyUser } from "../middlewares/authMiddleware.js"
 import scheduleController from "../controllers/scheduleController.js"
 import { limiter } from '../middlewares/securityMiddleware.js'
+import departmentController from '../controllers/departmentController.js'
 
 const router = express.Router()
 
@@ -21,5 +22,7 @@ router.post('/schedule/times', scheduleController.getScheduleTimes)
 router.post('/appointment/details', verifyUser, appointmentController.getAppontmentDetails)
 router.get('/doctor/schedule/days/:id', verifyUser, scheduleController.getScheduledDays)
 router.get('/appointments', verifyUser, appointmentController.getUpComingAppointmentsOfPatient)
+router.get('/departments', departmentController.getAllDepartments)
+
 
 export default router
