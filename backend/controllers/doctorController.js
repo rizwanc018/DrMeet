@@ -69,8 +69,14 @@ const doctorController = {
         const doctors = await Doctor.find({ approved: true }, { fname: 1, lname: 1, department: 1, degree: 1, image: 1, fees: 1 }).populate('department', 'name -_id')
         res.status(200).json({ success: true, doctors })
     }),
+    getDoctorsByDepartmentId: asyncHandler(async (req, res) => {
+        const department = req.params.depId
+        const doctors = await Doctor.find({ department, approved: true  }, { fname: 1, lname: 1, department: 1, degree: 1, image: 1, fees: 1 }).populate('department', 'name -_id')
+        res.status(200).json({ success: true, doctors })
+    }),
     getDoctorsByName: asyncHandler(async (req, res) => {
         const regx = req.query.q || '.*'
+        console.log("🚀 ~ file: doctorController.js:79 ~ getDoctorsByName:asyncHandler ~ regx:", regx)
 
         const doctors = await Doctor.find({
             approved: true,

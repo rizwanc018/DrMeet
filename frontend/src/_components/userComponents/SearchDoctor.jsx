@@ -21,7 +21,6 @@ const SearchDoctor = ({ setDoctors }) => {
 
             try {
                 const response = await axios.get(`/api/user/doctors/search?q=${values.search}`)
-                console.log("🚀 ~ file: SearchDoctor.jsx:25 ~ onSubmit: ~ response:", response)
                 setDoctors(response.data.doctors)
             } catch (error) {
                 setErr(error.response.data.err)

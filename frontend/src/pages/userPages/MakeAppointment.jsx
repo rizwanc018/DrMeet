@@ -32,7 +32,7 @@ const MakeAppointment = () => {
         <h1 className="text-xl">Book appointment</h1>
       </div>
       <div className="w-full px-12 mt-8 pt-8 py-14 flex items-start justify-center md:justify-around">
-        {doctor && <DoctorCard visibility={'invisible md:visible'} doctor={doctor} showBookbutton={false} />}
+        {doctor && <DoctorCard width={'w-1/4'} visibility={'invisible md:visible'} doctor={doctor} showBookbutton={false} />}
         {scheduleDays && <MakeAppointmentForm schedule={scheduleDays} id={id} />}
       </div>
     </>

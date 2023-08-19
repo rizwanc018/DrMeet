@@ -57,7 +57,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
 
     return (
         <div className='w-full md:w-[40%] lg:w-1/3'>
-            <h1 className='py-2 font-semibold'>Choose date: </h1>
+            <h1 className='pb-2 text-xl font-semibold'>Choose date: </h1>
             <Calendar
                 onChange={(date) => handleChange(date)}
                 value={date}
@@ -66,7 +66,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             />
             {showTimeSelector &&
                 <>
-                    <h1 className='mt-4 py-1 font-semibold'>Choose Time:</h1>
+                    <h1 className='mt-4 py-1 text-xl font-semibold'>Choose Time:</h1>
                     <div className="flex flex-wrap gap-3">
                         {times.map((item, i) => {
                             const startTime = moment(item.startTime)
