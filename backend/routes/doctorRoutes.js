@@ -9,7 +9,7 @@ const router = express.Router()
 
 // /api/doc
 router.post('/reg', doctorController.registerDoctor)
-router.post('/auth', limiter, doctorController.authDoctor)
+router.post('/auth', doctorController.authDoctor)
 router.get('/logout', doctorController.logout)
 router.get('/profile', verifyDoctor, doctorController.getProfile)
 router.get('/schedule/:day', verifyDoctor, scheduleController.getSchedules)
