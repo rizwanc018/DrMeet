@@ -115,7 +115,7 @@ const Appointments = ({ data, getUpcomingAppointments }) => {
                                 {headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
                                         {headerGroup.headers.map((column) => (
-                                            <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
+                                            <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-center px-8 py-2'>
                                                 {column.render('Header')}
                                             </th>
                                         ))}

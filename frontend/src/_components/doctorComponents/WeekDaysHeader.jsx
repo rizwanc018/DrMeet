@@ -3,7 +3,7 @@ import { useState } from "react"
 
 
 const WeekDaysHeader = ({ setDay }) => {
-    const [selectedDay, setSelectedDay] = useState(moment().isoWeekday());
+    const [selectedDay, setSelectedDay] = useState(moment().weekday());
 
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 

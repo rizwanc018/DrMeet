@@ -8,7 +8,8 @@ import moment from 'moment';
 
 
 function DoctorHome() {
-  const [day , setDay] = useState()
+  const [day, setDay] = useState(moment().weekday())
+  console.log(day)
   const dispatch = useDispatch()
   const { schedules } = useSelector(state => state.schedule)
 
@@ -20,12 +21,14 @@ function DoctorHome() {
   useEffect(() => {
     getDcotorSchedules(day)
   }, [day])
-  
 
-  useEffect(() => {
-    setDay(moment().isoWeekday())
-    getDcotorSchedules(day)
-  }, [])
+
+  // useEffect(() => {
+  //   // setDay(moment().isoWeekday())
+
+  //   console.log(day)
+  //   getDcotorSchedules(day)
+  // }, [])
 
   const handleDeleteSchedule = async (id) => {
     try {
@@ -39,9 +42,9 @@ function DoctorHome() {
   return (
     <div className='flex flex-col justify-center py-10 mb-6'>
       <Toaster />
-      <WeekDaysHeader setDay={setDay} day={day}/>
+      <WeekDaysHeader setDay={setDay} />
       {schedules?.length > 0 ? (<ScheduleTable schedules={schedules} handleDeleteSchedule={handleDeleteSchedule} />
-      ):(
+      ) : (
         <h1 className='text-center mt-10 p-10 font-bold text-3xl'>No slots scheduled for today</h1>
       )}
     </div>
