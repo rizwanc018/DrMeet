@@ -49,6 +49,13 @@ const appointmentController = {
             .sort({ date: 1 })
         res.status(200).json({ appointments })
     }),
+    getAllAppointments: asyncHandler(async (req, res) => {
+        const patientId = req.user._id
+        const appointments = await Appointment.find({ patientId })
+            .populate('docId', 'fname lname').populate('timeId')
+            .sort({ date: 1 })
+        res.status(200).json({ appointments })
+    }),
 }
 
 export default appointmentController

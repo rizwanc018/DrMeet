@@ -23,6 +23,7 @@ router.post('/schedule/times', scheduleController.getScheduleTimes)
 router.post('/appointment/details', verifyUser, appointmentController.getAppontmentDetails)
 router.get('/doctor/schedule/days/:id', verifyUser, scheduleController.getScheduledDays)
 router.get('/appointments', verifyUser, appointmentController.getUpComingAppointmentsOfPatient)
+router.get('/appointments/all', verifyUser, appointmentController.getAllAppointments)
 router.get('/departments', departmentController.getAllDepartments)
 
 
