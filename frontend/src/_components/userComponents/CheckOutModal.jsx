@@ -5,7 +5,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const CheckOutModal = ({ setShowModal, docId, date, timeId }) => {
     const [details, setDetails] = useState('')
-    console.log(details);
 
     const getAppointmentDetails = async (docId, date, timeId) => {
         try {

@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
 import { SiWorldhealthorganization } from 'react-icons/si'
 import TypingIndicator from '../TypingIndicator';
+import { useNavigate } from 'react-router-dom'
 
 
 const Dietitian = () => {
+    const navigate = useNavigate()
+
     const [typing, setTyping] = useState(false);
     const [userInput, setUserInput] = useState('');
     const [messages, setMessages] = useState([
@@ -87,6 +90,7 @@ const Dietitian = () => {
             setTyping(false);
         } catch (error) {
             console.log(error)
+            navigate('/dietitian')
         }
     }
 
@@ -98,7 +102,7 @@ const Dietitian = () => {
     return (
         <div className="chat-card mt-10 mb-10 flex-grow  bg-white rounded-5 shadow-md  w-4/5 sm:max-w-lg">
 
-        {/* <div className="chat-card mx-4 mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden w-full sm:max-w-lg"> */}
+            {/* <div className="chat-card mx-4 mt-10 flex-grow  bg-white rounded-5 shadow-md overflow-hidden w-full sm:max-w-lg"> */}
             <div className="chat-header p-4 bg-primary flex items-center">
                 <div className='flex items-center gap-2'>
                     <SiWorldhealthorganization className='text-3xl' />

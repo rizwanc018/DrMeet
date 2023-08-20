@@ -17,7 +17,6 @@ const departmentController = {
             throw new Error(`${name} department already exist`)
         }
         const deptData = await Department.create({ name, description, image })
-        console.log("🚀 ~ file: departmentController.js:20 ~ addDepartment:asyncHandler ~ deptData:", deptData)
         if (deptData) res.status(200).json({ msg: `${deptData.name} created successfully` })
     }),
     getAllDepartments: asyncHandler(async (req, res) => {

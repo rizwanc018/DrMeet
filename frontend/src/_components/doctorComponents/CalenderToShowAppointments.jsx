@@ -8,7 +8,6 @@ import axios from 'axios';
 
 const CalenderToShowAppointments = ({ date, setDate }) => {
   const [givenDates, setgivenDates] = useState()
-  // console.log(givenDates)
 
   const appointmetDates = async () => {
     const response = await axios.get('/api/doc/appointment/dates')

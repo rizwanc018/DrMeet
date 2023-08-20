@@ -76,8 +76,6 @@ const doctorController = {
     }),
     getDoctorsByName: asyncHandler(async (req, res) => {
         const regx = req.query.q || '.*'
-        console.log("🚀 ~ file: doctorController.js:79 ~ getDoctorsByName:asyncHandler ~ regx:", regx)
-
         const doctors = await Doctor.find({
             approved: true,
             $or: [

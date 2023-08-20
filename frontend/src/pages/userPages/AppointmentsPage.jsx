@@ -13,10 +13,8 @@ const AppointmentsPage = () => {
         let response
         if (openTab === 1) {
             response = await axios.get('/api/user/appointments')
-            console.log(response.data.appointments)
         } else {
             response = await axios.get('/api/user/appointments/all')
-            console.log(response.data.appointments)
         }
         setData(response.data.appointments)
     }

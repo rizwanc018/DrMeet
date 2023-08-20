@@ -19,7 +19,6 @@ function SideBar() {
 
     const logoutHandler = async () => {
         const response = await axios.get('/api/admin/logout')
-        console.log(response);
         if (response.data.success)
             dispatch(clearCredentials())
         navigate('/')

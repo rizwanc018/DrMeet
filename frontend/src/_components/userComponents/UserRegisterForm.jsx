@@ -45,7 +45,6 @@ const UserRegisterForm = () => {
       setErr('')
       try {
         const response = await axios.post(`/api/user/reg`, { ...values })
-        console.log("🚀 ~ file: UserRegisterForm.jsx:50 ~ onSubmit: ~ response:", response)
         dispatch(setCredentials({ ...response.data }))
         navigate('/')
       } catch (error) {

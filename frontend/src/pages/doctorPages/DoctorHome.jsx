@@ -9,7 +9,6 @@ import moment from 'moment';
 
 function DoctorHome() {
   const [day, setDay] = useState(moment().weekday())
-  console.log(day)
   const dispatch = useDispatch()
   const { schedules } = useSelector(state => state.schedule)
 
@@ -21,14 +20,6 @@ function DoctorHome() {
   useEffect(() => {
     getDcotorSchedules(day)
   }, [day])
-
-
-  // useEffect(() => {
-  //   // setDay(moment().isoWeekday())
-
-  //   console.log(day)
-  //   getDcotorSchedules(day)
-  // }, [])
 
   const handleDeleteSchedule = async (id) => {
     try {

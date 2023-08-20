@@ -7,7 +7,6 @@ import Carousel from 'react-grid-carousel'
 
 const Departments = () => {
   const [departments, setDepartments] = useState()
-  console.log(departments)
 
   const getAllDepartments = async () => {
     const response = await axios.get('/api/user/departments')
@@ -27,8 +26,8 @@ const Departments = () => {
           </div>
           <Carousel cols={4} rows={1} gap={10}>
             {departments ? (departments.map((department, i) => (
-              <Carousel.Item >
-                <DepartmentCard department={department} key={i} />
+              <Carousel.Item  key={i}>
+                <DepartmentCard department={department} />
               </Carousel.Item>))) :
               (
                 <div className="flex flex-wrap gap-5 justify-center mx-8">

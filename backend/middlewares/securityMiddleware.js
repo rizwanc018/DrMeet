@@ -2,8 +2,6 @@ import rateLimit from "express-rate-limit"
 import BlockedIp from "../models/blockedIpModel.js"
 
 const blockedIps = BlockedIp.find({})
-// console.log("🚀 ~ file: securityMiddleware.js:5 ~ blockedIps:", blockedIps)
-
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
     max: 10,

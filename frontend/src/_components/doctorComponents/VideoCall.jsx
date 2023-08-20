@@ -47,7 +47,6 @@ const VideoCall = ({ patientId }) => {
 
 
   const answerCall = () => {
-    console.log({ caller });
     setCallAccepted(true)
     const peer = new Peer({
       initiator: false,
@@ -67,7 +66,7 @@ const VideoCall = ({ patientId }) => {
 
   const leaveCall = () => {
     setCallEnded(true)
-    connectionRef.current.destroy()
+    navigate('/doctor/appointments')
   }
 
   const declineCall = () => {

@@ -46,7 +46,7 @@ const Header = () => {
                 <div className='font-bold text-md cursor-pointer flex items-center font-[Poppins] 
           text-gray-800'>
                     <Link to='/' className='text-3xl text-indigo-600 mr-1'>
-                        <img src="/assets/logo.png" alt="LifeLine" />
+                        <img src="/assets/logo.png" alt="DrMeet" />
                     </Link>
                 </div>
 

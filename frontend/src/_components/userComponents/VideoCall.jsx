@@ -34,10 +34,7 @@ const VideoCall = ({ docSokId }) => {
 
 
   useEffect(() => {
-    // navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-    //   setStream(stream)
-    //   if (myVideo.current) myVideo.current.srcObject = stream
-    // })
+
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -107,7 +104,7 @@ const VideoCall = ({ docSokId }) => {
 
   const leaveCall = () => {
     setCallEnded(true)
-    connectionRef.current.destroy()
+    navigate('/')
   }
 
 

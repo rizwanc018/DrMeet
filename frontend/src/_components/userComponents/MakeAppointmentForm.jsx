@@ -51,7 +51,6 @@ const MakeAppointmentForm = ({ schedule, id }) => {
             if (response.data.url) window.location.href = response.data.url
         } catch (error) {
             setShowSpinner(false)
-            console.log(error)
         }
     }
 

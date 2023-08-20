@@ -3,7 +3,6 @@ import { VideoCall } from "../../_components/doctorComponents"
 
 const ConsultationPage = () => {
     const { patientId } = useParams()
-    // console.log(patientId)
     return (
         <div className="">
             <VideoCall patientId={patientId} />

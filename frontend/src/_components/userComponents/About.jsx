@@ -6,7 +6,7 @@ const About = () => {
     return (
         <div id='aboutUs' className='w-full flex flex-col items-center py-10 my-10 bg-white'>
             <div className='px-4 md:w-3/5 md:px-0 flex text-center flex-col items-center mb-16'>
-                <h1 className='text-4xl font-semibold'>About LifeLine</h1>
+                <h1 className='text-4xl font-semibold'>About DrMeet</h1>
                 <div className='w-28 my-4 border-2 border-primary'></div>
                 <p className='text-lg text-gray-500'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis dignissim. Aenean vitae metus in augue pretium ultrices. Duis dictum eget dolor vel blandit.</p>
             </div>

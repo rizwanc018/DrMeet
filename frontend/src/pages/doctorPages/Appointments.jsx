@@ -7,7 +7,6 @@ import Spinner from '../../_components/Spinner'
 const Appointments = () => {
   const [date, setDate] = useState(moment().startOf('day').toISOString())
   const [data, setData] = useState([])
-  // console.log(data);
 
   const getAppointments = async (date) => {
     const response = await axios.post('/api/doc/appointments', { date })

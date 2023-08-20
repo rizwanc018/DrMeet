@@ -1,12 +1,3 @@
-// import React from 'react'
-
-// const NotFound = () => {
-//   return (
-//     <div>NotFound</div>
-//   )
-// }
-
-// export default NotFound
 import React from 'react'
 import { IoWarning } from 'react-icons/io5'
 import { useNavigate, Link } from "react-router-dom";
