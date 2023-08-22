@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import * as Yup from 'yup'
+import { object, string } from 'yup'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
@@ -26,9 +26,9 @@ function DoctorLoginForm() {
             email: "",
             password: "",
         },
-        validationSchema: Yup.object({
-            email: Yup.string().email('Invalid email').required('Required'),
-            password: Yup.string().required('Password is required'),
+        validationSchema: object({
+            email: string().email('Invalid email').required('Required'),
+            password: string().required('Password is required'),
         }),
         onSubmit: async (values) => {
             setSubmitting(true)

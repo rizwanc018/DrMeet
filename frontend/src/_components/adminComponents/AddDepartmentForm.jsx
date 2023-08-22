@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import * as Yup from 'yup'
+import { object, string, mixed } from 'yup'
 import axios from "axios";
 import Spinner from "../Spinner";
 import { useEffect, useState } from "react"
@@ -53,7 +53,7 @@ function AddDepartmentForm() {
         const response = await uploadBytes(avatarRef, avatar)
         const imgUrl = await getDownloadURL(avatarRef);
         formik.values.image = imgUrl
-      }
+    }
 
     return (
         <div className="w-[32rem] rounded-xl p-8 mx-14 my-8 shadow-xl border border-primary">

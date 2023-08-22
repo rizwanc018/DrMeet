@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import * as Yup from 'yup'
+import { object, string } from 'yup'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
@@ -18,8 +18,8 @@ const UserLoginForm = () => {
   const { userInfo } = useSelector(state => state.auth)
 
   useEffect(() => {
-      if (userInfo && userInfo.isUser)
-          navigate('/')
+    if (userInfo && userInfo.isUser)
+      navigate('/')
   }, [userInfo])
 
   const formik = useFormik({
@@ -27,9 +27,9 @@ const UserLoginForm = () => {
       email: "",
       password: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().required('Password is required'),
+    validationSchema: object({
+      email: string().email('Invalid email').required('Required'),
+      password: string().required('Password is required'),
     }),
     onSubmit: async (values) => {
       setSubmitting(true)

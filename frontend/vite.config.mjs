@@ -17,9 +17,9 @@ export default defineConfig({
       protocolImports: true,
     }),
   ],
-  define: {
-    "global": {}
-  },
+  // define: {
+  //   "global": {}
+  // },
   server: {
     port: 3000,
     proxy: {

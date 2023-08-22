@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import * as Yup from 'yup'
+import { object, string, array, mixed, number } from 'yup'
 import { GrAttachment } from "react-icons/gr";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'

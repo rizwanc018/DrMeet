@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import * as Yup from 'yup'
+import {object, string} from 'yup'
 import { useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
