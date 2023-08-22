@@ -5,7 +5,9 @@ function HomePage() {
         <>
             <Hero />
             <About />
-            <Departments />
+            <div className="w-[90%] mx-auto">
+                <Departments />
+            </div>
         </>
     )
 }
