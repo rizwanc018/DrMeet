@@ -21,10 +21,10 @@ function AddDepartmentForm() {
             description: "",
             image: "",
         },
-        validationSchema: Yup.object({
-            name: Yup.string().required("Required"),
-            description: Yup.string().required('Required'),
-            image: Yup.mixed().required('No image selected'),
+        validationSchema: object({
+            name: string().required("Required"),
+            description: string().required('Required'),
+            image: mixed().required('No image selected'),
 
         }),
         onSubmit: async (values) => {

@@ -12,8 +12,8 @@ const SearchDoctor = ({ setDoctors }) => {
         initialValues: {
             search: "",
         },
-        validationSchema: Yup.object({
-            search: Yup.string(),
+        validationSchema: object({
+            search: string(),
         }),
         onSubmit: async (values) => {
             setSubmitting(true)

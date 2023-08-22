@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import { object, string, array, mixed, number } from 'yup'
+import { object, string, array, mixed, number, ref as yepRef } from 'yup'
 import { GrAttachment } from "react-icons/gr";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -54,20 +54,20 @@ function DoctorRegister() {
       bio: "",
       fees: ""
     },
-    validationSchema: Yup.object({
-      fname: Yup.string().required("Required"),
-      lname: Yup.string().required("Required"),
-      email: Yup.string().email('Invalid email').required('Required'),
-      mobile: Yup.string().required('Required'),
-      password: Yup.string().required('Password is required'),
-      confirmPassword: Yup.string().required('Passwords must match').oneOf([Yup.ref('password')], 'Passwords must match'),
-      department: Yup.string().required("Choose department"),
-      degree: Yup.string().required("Required"),
-      proof: Yup.array().min(1, 'No certificates selected'),
-      image: Yup.mixed().required('No image selected'),
-      experience: Yup.number().required('Number is required').min(0, 'Negetive numbers not allowed'),
-      bio: Yup.string().required('Bio is required'),
-      fees: Yup.string().required('Fees is required')
+    validationSchema: object({
+      fname: string().required("Required"),
+      lname: string().required("Required"),
+      email: string().email('Invalid email').required('Required'),
+      mobile: string().required('Required'),
+      password: string().required('Password is required'),
+      confirmPassword: string().required('Passwords must match').oneOf([yepRef('password')], 'Passwords must match'),
+      department: string().required("Choose department"),
+      degree: string().required("Required"),
+      proof: array().min(1, 'No certificates selected'),
+      image: mixed().required('No image selected'),
+      experience: number().required('Number is required').min(0, 'Negetive numbers not allowed'),
+      bio: string().required('Bio is required'),
+      fees: string().required('Fees is required')
     }),
     onSubmit: async (values) => {
       setSubmitting(true)

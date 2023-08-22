@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import { object, string } from 'yup'
+import { object, string, ref } from 'yup'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
@@ -32,13 +32,13 @@ const UserRegisterForm = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: Yup.object({
-      fname: Yup.string().required("Required"),
-      lname: Yup.string().required("Required"),
-      email: Yup.string().email('Invalid email').required('Required'),
-      mobile: Yup.string().required('Required'),
-      password: Yup.string().required('Password is required'),
-      confirmPassword: Yup.string().required('Passwords must match').oneOf([Yup.ref('password')], 'Passwords must match'),
+    validationSchema: object({
+      fname: string().required("Required"),
+      lname: string().required("Required"),
+      email: string().email('Invalid email').required('Required'),
+      mobile: string().required('Required'),
+      password: string().required('Password is required'),
+      confirmPassword: string().required('Passwords must match').oneOf([ref('password')], 'Passwords must match'),
     }),
     onSubmit: async (values) => {
       setSubmitting(true)
