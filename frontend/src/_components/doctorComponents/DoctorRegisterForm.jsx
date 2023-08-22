@@ -123,7 +123,7 @@ function DoctorRegister() {
 
   return (
     <div className="min-h-screen py-10">
-      <div className="container mx-auto flex justify-center ">
+      <div className="container mx-auto flex justify-center">
         <div className="w-fit mx-5 md:w-8/12 rounded md:mx-auto p-10 shadow-xl border-solid border-2 border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
           <h2 className="text-xl text-primary-600 mb-6 font-semibold ">Doctor Register Form</h2>
