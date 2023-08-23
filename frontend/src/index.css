@@ -24,7 +24,7 @@
   select ,
   textarea
    {
-    @apply w-full border-primary rounded-lg shadow-sm focus:border-primary-600 hover:ring-primary-600
+    @apply w-full border-primary rounded-lg shadow-sm focus:ring-primary-600
   }
   input[type='radio'] ,
   input[type='checkbox'] {

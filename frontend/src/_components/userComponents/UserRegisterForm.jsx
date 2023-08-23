@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { object, string, ref } from 'yup'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,13 +15,13 @@ const UserRegisterForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const fnameRef = useRef()
+
   const { userInfo } = useSelector(state => state.auth)
 
-  // useEffect(() => {
-  //     if (userInfo)
-  //         navigate('/')
-  // }, [userInfo])
-
+  useEffect(() => {
+    fnameRef.current.focus()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -68,6 +68,7 @@ const UserRegisterForm = () => {
                   type="text"
                   name="fname"
                   id="fname"
+                  ref={fnameRef}
                   placeholder="FirstName"
                   value={formik.values.fname}
                   onChange={formik.handleChange}

@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik"
 import { object, string } from 'yup'
-import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +15,13 @@ const UserLoginForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const emailRef = useRef()
+
   const { userInfo } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    emailRef.current.focus()
+  }, [])
 
   useEffect(() => {
     if (userInfo && userInfo.isUser)
@@ -57,13 +63,14 @@ const UserLoginForm = () => {
             <div className="grid grid-cols-1 gap-4 mb-5">
 
 
-              {/* Email and mobile */}
+              {/* Email */}
               <div>
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   name="email"
                   id="email"
+                  ref={emailRef}
                   placeholder="Email"
                   value={formik.values.email}
                   onChange={formik.handleChange}

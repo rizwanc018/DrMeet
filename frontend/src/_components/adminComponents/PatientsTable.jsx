@@ -1,12 +1,3 @@
-// import React from 'react'
-
-// const PatientsTable = () => {
-//   return (
-//     <div>PatientsTable</div>
-//   )
-// }
-
-// export default PatientsTable
 import React from 'react';
 import { useTable } from 'react-table';
 import { Link } from 'react-router-dom';

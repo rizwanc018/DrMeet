@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:5001');
+const socket = io.connect(import.meta.env.VITE_SOCKET_IP)
 // const socket = io.connect('http://10.4.4.27:5001', {transports: ['websocket']});
 
 socket.onerror = (error) => {

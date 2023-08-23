@@ -60,40 +60,6 @@ const AppointmentsBooked = ({ data }) => {
   } = useTable({ columns, data });
 
   return (
-    // <>
-    //   {data.length === 0 ? (<h1 className="mt-10 p-10 font-bold text-3xl">No Appointments Today</h1>) : (
-    //     <div className='p-10 overflow-x-auto'>
-    //       <table {...getTableProps()} className='text-center w-auto table-auto shadow-lg bg-white'>
-    //         <thead>
-    //           {headerGroups.map((headerGroup) => (
-    //             <tr {...headerGroup.getHeaderGroupProps()} style={{ borderBottom: '1px solid black' }}>
-    //               {headerGroup.headers.map((column) => (
-    //                 <th {...column.getHeaderProps()} className='bg-primary-500 w-fit border text-left px-8 py-2'>
-    //                   {column.render('Header')}
-    //                 </th>
-    //               ))}
-    //             </tr>
-    //           ))}
-    //         </thead>
-    //         <tbody {...getTableBodyProps()}>
-    //           {rows.map((row) => {
-    //             prepareRow(row);
-    //             return (
-    //               <tr {...row.getRowProps()} className='even:bg-primary-100'>
-    //                 {row.cells.map((cell) => (
-    //                   <td {...cell.getCellProps()} className='capitalize border-2 px-4 py-2'>
-    //                     {cell.render('Cell')}
-    //                   </td>
-    //                 ))}
-    //               </tr>
-    //             );
-    //           })}
-    //         </tbody>
-    //       </table>
-    //     </div>
-    //   )}
-
-    // </>
     <>
   {data.length === 0 ? (
     <h1 className="mt-10 p-10 font-bold text-3xl">No Appointments Today</h1>

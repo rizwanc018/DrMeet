@@ -4,7 +4,7 @@ import { GrAttachment } from "react-icons/gr";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from "uuid"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,6 +23,12 @@ function DoctorRegister() {
   const [loginSuccess, setLoginSuccess] = useState()
 
   const navigate = useNavigate()
+
+  const fnameRef = useRef()
+
+  useEffect(() => {
+    fnameRef.current.focus()
+  }, [])
 
   const getAllDepartments = async () => {
     const response = await axios.get(`/api/admin/department`)
@@ -136,6 +142,7 @@ function DoctorRegister() {
                   type="text"
                   name="fname"
                   id="fname"
+                  ref={fnameRef}
                   placeholder="FirstName"
                   value={formik.values.fname}
                   onChange={formik.handleChange}

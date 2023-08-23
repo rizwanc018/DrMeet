@@ -144,13 +144,11 @@ const VideoCall = ({ docSokId }) => {
                     <Spinner />
                   </button>
                 ) : (
-                  <button className="absolute  bottom-20 bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" onClick={() => callDoctor(idToCall)}>
-                    <span className="text-lg ">Request Permission</span>
+                  <button className="absolute  bottom-20 bg-primary-600 hover:bg-primary-700 text-white font-bold p-2 rounded" onClick={() => callDoctor(idToCall)}>
+                    <p className="text-lg w-28">Ask to join</p>
                   </button>
                 )
-
             )}
-
           </div>
         </div>
       </div >

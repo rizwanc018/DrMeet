@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { object, string } from 'yup'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,10 +15,16 @@ function DoctorLoginForm() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const emailRef = useRef()
+
     const { userInfo } = useSelector(state => state.auth)
+  
+    useEffect(() => {
+      emailRef.current.focus()
+    }, [])
 
     useEffect(() => {
-        if (userInfo && userInfo.isDoctor) navigate('/doctor/schedules')
+        if (userInfo && userInfo.isDoctor) navigate('/doctor/')
     }, [])
 
     const formik = useFormik({
@@ -64,6 +70,7 @@ function DoctorLoginForm() {
                                     type="email"
                                     name="email"
                                     id="email"
+                                    ref={emailRef}
                                     placeholder="Email"
                                     value={formik.values.email}
                                     onChange={formik.handleChange}

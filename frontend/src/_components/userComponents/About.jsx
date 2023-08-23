@@ -4,7 +4,7 @@ import { AiOutlineRobot } from 'react-icons/ai';
 
 const About = () => {
     return (
-        <div id='aboutUs' className='w-full flex flex-col items-center py-10 my-10 bg-white'>
+        <div id='aboutUs' className='w-full flex flex-col items-center py-24 bg-white'>
             <div className='px-4 md:w-3/5 md:px-0 flex text-center flex-col items-center mb-16'>
                 <h1 className='text-4xl font-semibold'>About DrMeet</h1>
                 <div className='w-28 my-4 border-2 border-primary'></div>
