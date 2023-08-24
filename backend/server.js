@@ -75,7 +75,7 @@ app.use(`/api/stripe`, stripeRouter)
 app.use(express.json())
 
 const corsOptions = {
-    origin: '*',
+    origin: process.env.CLIENT_URL,
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
