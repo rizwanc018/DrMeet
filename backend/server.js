@@ -86,16 +86,16 @@ app.use('/api/doc', doctorRouter);
 app.use('/api/user', userRouter)
 
 
-if (process.env.NODE_ENV === 'production') {
-    const __dirname = path.resolve()
-    app.use(express.static(path.join(__dirname, 'frontend/dist')))
+// if (process.env.NODE_ENV === 'production') {
+//     const __dirname = path.resolve()
+//     app.use(express.static(path.join(__dirname, 'frontend/dist')))
 
-    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html')))
-} else {
-    app.get('/', (req, res) => {
-        res.status(200).json({ msg: "hello world" })
-    })
-}
+//     app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html')))
+// } else {
+//     app.get('/', (req, res) => {
+//         res.status(200).json({ msg: "hello world" })
+//     })
+// }
 
 
 app.use(notFound)
