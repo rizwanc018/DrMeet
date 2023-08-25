@@ -55,15 +55,15 @@ app.use('/api/user', userRouter)
 
 
 const server = app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
-
-const io = new Server(server, {
-    pingTimeout:60000,
-    cors: {
-        // origin: process.env.CLIENT_URL,
-        origin: "*",
-        methods: ["GET", "POST"],
-    }
-})
+const io = new Server(server)
+// const io = new Server(server, {
+//     pingTimeout:60000,
+//     cors: {
+//         // origin: process.env.CLIENT_URL,
+//         origin: "*",
+//         methods: ["GET", "POST"],
+//     }
+// })
 
 
 io.on('connection', (socket) => {
