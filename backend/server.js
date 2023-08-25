@@ -38,16 +38,11 @@ const server = http.createServer(app)
 const io = new Server(server, {
     pingTimeout:60000,
     cors: {
-        origin: "*",
+        origin: process.env.CLIENT_URL,
         methods: ["GET", "POST"],
     }
 })
 
-
-
-// app.get('/', (req, res) => {
-//     res.status(200).json({ msg: "hello world" })
-// })
 
 io.on('connection', (socket) => {
     console.log('Connection....', socket.id)
