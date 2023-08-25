@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import { config } from "dotenv";
-import connectDB from "./configs/db.js";
+// import connectDB from "./configs/db.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import adminRouter from './routes/adminRoutes.js'
 import doctorRouter from './routes/doctorRoutes.js'
@@ -12,10 +12,25 @@ import cookieParser from 'cookie-parser'
 import http from 'http'
 import { Server } from "socket.io";
 import path from "path";
+import mongoose from 'mongoose';
+
 
 
 config()
-connectDB()
+
+// //////////////////////////////
+const connectDB = async () => {
+    try {
+      const conn = await mongoose.connect(process.env.MONGO_URI);
+      console.log(`MongoDB Connected At: ${conn.connection.host}`);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      process.exit(1);
+    }
+  }
+  connectDB()
+// ////////////////////////////////////
+// connectDB()
 const app = express()
 const PORT = process.env.PORT || 5000
 //////////////////////////////////////////////////////
@@ -103,5 +118,6 @@ app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
 server.listen(5001, () => console.log('socket running on port 5001'))
+
 // const backend = app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
 // server.listen(5001, () => console.log('socket running on port 5001'))
