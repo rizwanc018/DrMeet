@@ -103,3 +103,5 @@ app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
 server.listen(5001, () => console.log('socket running on port 5001'))
+// const backend = app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
+// server.listen(5001, () => console.log('socket running on port 5001'))
