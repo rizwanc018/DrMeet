@@ -2,6 +2,8 @@ import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcrypt'
 import User from '../models/userModel.js'
 import { generateJWT } from '../utils/generateJWT.js'
+import jwt from 'jsonwebtoken'
+
 
 const userController = {
     registerUser: asyncHandler(async (req, res) => {
@@ -19,12 +21,17 @@ const userController = {
         const user = await User.create({ fname, lname, email, password: hash, mobile })
 
         if (user) {
-            generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
+            // generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
+            const token = jwt.sign({ id: user._id, role: 'user', blocked: user.blocked }, process.env.JWT_SECRET, {
+                expiresIn: 24 * 60 + 'm'
+            })
+            
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,
                 isUser: user.isUser,
-                id: user._id
+                id: user._id,
+                token
             })
         } else {
             res.status(400)
@@ -39,12 +46,23 @@ const userController = {
             return res.status(400).json({ msg: 'You have been blocked by Admin' })
         }
         else if (await user.matchPassword(password)) {
-            generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
+            // generateJWT(res, user._id, 'user', user.blocked, 24 * 60)
+            // res.status(201).json({
+            //     fname: user.fname,
+            //     lname: user.lname,
+            //     isUser: user.isUser,
+            //     id: user._id
+            // })
+            const token = jwt.sign({ id: user._id, role: 'user', blocked: user.blocked }, process.env.JWT_SECRET, {
+                expiresIn: 24 * 60 + 'm'
+            })
+            
             res.status(201).json({
                 fname: user.fname,
                 lname: user.lname,
                 isUser: user.isUser,
-                id: user._id
+                id: user._id,
+                token
             })
         } else {
             res.status(400)

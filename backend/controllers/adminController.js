@@ -7,7 +7,7 @@ import User from '../models/userModel.js'
 import FailedLogin from '../models/failedLogins.js'
 import BlockedIp from '../models/blockedIpModel.js'
 import Appointment from '../models/appointmentModel.js'
-
+import jwt from 'jsonwebtoken'
 
 const adminController = {
     registerAdmin: asyncHandler(async (req, res) => {
@@ -19,11 +19,15 @@ const adminController = {
         const adminData = await Admin.create({ email, password: hash })
 
         if (adminData) {
-            generateJWT(res, adminData._id, 'admin', false, 24 * 60)
+            // generateJWT(res, adminData._id, 'admin', false, 24 * 60)
+            const token = jwt.sign({ id: adminData._id, role: 'admin', blocked: adminData.blocked }, process.env.JWT_SECRET, {
+                expiresIn: 24 * 60 + 'm'
+            })
             res.status(201).json({
                 _id: adminData._id,
                 name: adminData.name,
-                isAdmin: adminData.isAdmin
+                isAdmin: adminData.isAdmin,
+                token
             })
         } else {
             res.status(400)
@@ -38,11 +42,15 @@ const adminController = {
         const admin = await Admin.findOne({ email })
 
         if (admin && (await admin.matchPassword(password))) {
-            generateJWT(res, admin._id, 'admin', false, 24 * 60)
+            // generateJWT(res, admin._id, 'admin', false, 24 * 60)
+            const token = jwt.sign({ id: admin._id, role: 'admin', blocked: admin.blocked }, process.env.JWT_SECRET, {
+                expiresIn: 24 * 60 + 'm'
+            })
             res.status(201).json({
                 _id: admin._id,
                 name: admin.name,
-                isAdmin: admin.isAdmin
+                isAdmin: admin.isAdmin,
+                token
             })
         } else {
             const failedLogins = await FailedLogin.findOneAndUpdate({ ip },

@@ -6,6 +6,8 @@ import moment from 'moment'
 import Appointment from '../models/appointmentModel.js'
 import mongoose from 'mongoose'
 import Schedule from '../models/scheduleModel.js'
+import jwt from 'jsonwebtoken'
+
 
 const doctorController = {
     registerDoctor: asyncHandler(async (req, res) => {
@@ -37,7 +39,10 @@ const doctorController = {
         }
 
         if (doctor && (await doctor.matchPassword(password))) {
-            generateJWT(res, doctor._id, 'doctor', doctor.blocked, 24 * 60)
+            // generateJWT(res, doctor._id, 'doctor', doctor.blocked, 24 * 60)
+            const token = jwt.sign({ id: doctor._id, role: 'doctor', blocked: doctor.blocked }, process.env.JWT_SECRET, {
+                expiresIn: 24 * 60 + 'm'
+            })
             res.status(201).json({
                 _id: doctor._id,
                 fname: doctor.fname,
@@ -47,7 +52,8 @@ const doctorController = {
                 image: doctor.image,
                 isDoctor: doctor.isDoctor,
                 experience: doctor.experience,
-                bio: doctor.bio
+                bio: doctor.bio,
+                token
             })
         } else {
             res.status(400)
@@ -71,7 +77,7 @@ const doctorController = {
     }),
     getDoctorsByDepartmentId: asyncHandler(async (req, res) => {
         const department = req.params.depId
-        const doctors = await Doctor.find({ department, approved: true  }, { fname: 1, lname: 1, department: 1, degree: 1, image: 1, fees: 1 }).populate('department', 'name -_id')
+        const doctors = await Doctor.find({ department, approved: true }, { fname: 1, lname: 1, department: 1, degree: 1, image: 1, fees: 1 }).populate('department', 'name -_id')
         res.status(200).json({ success: true, doctors })
     }),
     getDoctorsByName: asyncHandler(async (req, res) => {

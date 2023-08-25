@@ -6,9 +6,9 @@ const generateJWT = (res, id, role, blocked, min) => {
     })
 
     res.cookie('jwt', token, {
-        // httpOnly: true,
+        httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
-        // sameSite: 'strict',
+        sameSite: 'strict',
         maxAge: min * 60 * 1000
     })
 }

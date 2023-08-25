@@ -4,7 +4,7 @@ import Admin from "../models/adminModel.js"
 import Doctor from "../models/doctorModel.js"
 
 const verifyUser = async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.headers.jwt;
     try {
         if (!token) {
             res.status(401).json({ msg: 'Not Authorized, no token' })
@@ -30,7 +30,7 @@ const verifyUser = async (req, res, next) => {
     }
 };
 const verifyDoctor = async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.headers.jwt;
     if (!token) {
         res.status(401).json({ msg: 'Not Authorized, no token' })
         return
@@ -57,7 +57,7 @@ const verifyDoctor = async (req, res, next) => {
     }
 }
 const verifyAdmin = async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.headers.jwt;
     if (!token) {
         res.status(401).json({ msg: 'Not Authorized, No Token' })
         return
