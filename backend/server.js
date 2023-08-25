@@ -34,18 +34,28 @@ const connectDB = async () => {
 const app = express()
 const PORT = process.env.PORT || 5000
 //////////////////////////////////////////////////////
+
+
+app.use(morgan('dev'))
+app.use(express.urlencoded({ extends: true }))
+app.use(cookieParser())
+app.use(`/api/stripe`, stripeRouter)
+app.use(express.json())
+
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+
+app.use('/api/admin', adminRouter);
+app.use('/api/doc', doctorRouter);
+app.use('/api/user', userRouter)
+
+
 const server = app.listen(PORT, () => console.log(`listening on port : ${PORT}`));
 
-
-
-// const io=require('socket.io')(server , {
-//     pingTimeout:60000,
-//     cors: {
-//         origin: process.env.CLIENT_URL,
-//         methods: ["GET", "POST"],
-//     }
-// })
-// server.listen(5001, () => console.log('socket running on port 5001'))
 const io = new Server(server, {
     pingTimeout:60000,
     cors: {
@@ -90,22 +100,22 @@ io.on('connection', (socket) => {
 
 /////////////////////////////////////////////////////
 
-app.use(morgan('dev'))
-app.use(express.urlencoded({ extends: true }))
-app.use(cookieParser())
-app.use(`/api/stripe`, stripeRouter)
-app.use(express.json())
+// app.use(morgan('dev'))
+// app.use(express.urlencoded({ extends: true }))
+// app.use(cookieParser())
+// app.use(`/api/stripe`, stripeRouter)
+// app.use(express.json())
 
-const corsOptions = {
-    origin: process.env.CLIENT_URL,
-    credentials: true,            //access-control-allow-credentials:true
-    optionSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: process.env.CLIENT_URL,
+//     credentials: true,            //access-control-allow-credentials:true
+//     optionSuccessStatus: 200
+// }
+// app.use(cors(corsOptions));
 
-app.use('/api/admin', adminRouter);
-app.use('/api/doc', doctorRouter);
-app.use('/api/user', userRouter)
+// app.use('/api/admin', adminRouter);
+// app.use('/api/doc', doctorRouter);
+// app.use('/api/user', userRouter)
 
 
 // if (process.env.NODE_ENV === 'production') {
