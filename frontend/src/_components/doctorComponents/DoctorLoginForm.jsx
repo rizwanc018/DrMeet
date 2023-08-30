@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { object, string } from 'yup'
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import AxiosBackend from '../../config/axios'
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +18,9 @@ function DoctorLoginForm() {
     const emailRef = useRef()
 
     const { userInfo } = useSelector(state => state.auth)
-  
+
     useEffect(() => {
-      emailRef.current.focus()
+        emailRef.current.focus()
     }, [])
 
     useEffect(() => {
@@ -41,7 +41,10 @@ function DoctorLoginForm() {
             setErr('')
 
             try {
-                const response = await axios.post(`/api/doc/auth`, { ...values })
+                const response = await AxiosBackend.post(`/api/doc/auth`, { ...values })
+                if (response) {
+                    localStorage.setItem('token', response.data.token)
+                }
                 dispatch(setCredentials({ ...response.data }))
                 navigate('/doctor')
             } catch (error) {

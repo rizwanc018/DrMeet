@@ -1,18 +1,22 @@
 import { useParams } from "react-router-dom"
 import { DoctorCard, MakeAppointmentForm } from "../../_components/userComponents"
 import { useEffect, useState } from "react"
-import axios from "axios"
+import AxiosBackend from '../../config/axios'
 
 const MakeAppointment = () => {
   const [doctor, setDoctor] = useState('')
   const [scheduleDays, setScheduleDays] = useState([])
   const { id } = useParams()
 
+  // const token = localStorage.getItem('token')
+  // const headers={autorization:token}
+  // console.log(token);
+
   const fetchData = async (id) => {
     try {
       const [doctorResponse, scheduleResponse] = await Promise.all([
-        axios.get(`/api/user/doctor/${id}`),
-        axios.get(`/api/user/doctor/schedule/days/${id}`)
+        AxiosBackend.get(`/api/user/doctor/${id}`),
+        AxiosBackend.get(`/api/user/doctor/schedule/days/${id}`)
       ]);
 
       setDoctor(doctorResponse.data.doctor);

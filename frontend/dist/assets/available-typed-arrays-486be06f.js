@@ -1,1 +1,0 @@
-import{i as n}from"./@babel-6ae3dd9c.js";var t=["BigInt64Array","BigUint64Array","Float32Array","Float64Array","Int16Array","Int32Array","Int8Array","Uint16Array","Uint32Array","Uint8Array","Uint8ClampedArray"],o=typeof globalThis>"u"?n:globalThis,e=function(){for(var a=[],r=0;r<t.length;r++)typeof o[t[r]]=="function"&&(a[a.length]=t[r]);return a};export{e as a};

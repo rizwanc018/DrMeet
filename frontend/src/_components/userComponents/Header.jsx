@@ -41,7 +41,8 @@ const Header = () => {
     }
 
     return (
-        <div className='z-10 shadow-md w-full fixed top-0 left-0 bg-white'>
+
+        <div className='z-10 shadow-md fixed top-0 left-0 right-0 bg-white'>
             <div className='md:flex items-center justify-between bg-white py-1 md:px-10 px-7'>
                 <div className='font-bold text-md cursor-pointer flex items-center font-[Poppins] 
           text-gray-800'>

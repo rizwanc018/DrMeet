@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik"
 import { object, string } from 'yup'
-import axios from "axios";
+import AxiosBackend from '../../config/axios'
 import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,11 +42,16 @@ const UserLoginForm = () => {
       setErr('')
 
       try {
-        const response = await axios.post(`/api/user/auth`, { ...values })
+        const response = await AxiosBackend.post(`/api/user/auth`, { ...values })
+        if(response) {
+          localStorage.setItem('token', response.data.token)
+        }
         dispatch(setCredentials({ ...response.data }))
         navigate('/')
       } catch (error) {
+        console.log(error)
         setErr(error.response.data.msg)
+        setSubmitting(false)
       }
       setSubmitting(false)
     }

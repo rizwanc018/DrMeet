@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const DepartmentCard = ({ department }) => {
     return (
-        <div className='w-full flex-shrink-0 shadow-xl py-4 border-1 my-6'>
+        <div className='ms-6 w-[90%] flex-shrink-0 shadow-xl py-4 border-[1px] border-green-100 my-6'>
             <div className='flex justify-center'>
                 <img src={department.image} className='' alt={department.name} />
             </div>

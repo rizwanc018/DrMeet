@@ -5,7 +5,7 @@ function HomePage() {
         <>
             <Hero />
             <About />
-                <Departments />
+            <Departments />
         </>
     )
 }

@@ -31,7 +31,7 @@ const scheduleController = {
     }),
     getSchedules: asyncHandler(async (req, res) => {
         const docId = req.doctor._id
-        const day = req.params.day        
+        const day = req.params.day
         const response = await Schedule.find({ docId, day }).sort({ day: 1, startTime: 1 })
 
         res.status(200).json({ success: true, schedules: response })
@@ -48,28 +48,23 @@ const scheduleController = {
         const response = await Schedule.find({ docId }).distinct('day')
         res.status(200).json({ days: response })
     }),
+    // I fixed issue, problem was in day and date, due to timezone change
     getScheduleTimes: asyncHandler(async (req, res) => {
-        const { docId } = req.body
+        const { docId, day } = req.body
         let { date } = req.body
-        date = moment(date).startOf('day')
-        const day = date.day().toString()
-
-        const [schedules, booked] = await Promise.all([
-            Schedule.find({ docId, day }),
-            Appointment.find({ docId, date: date.toISOString() }),
-        ]);
-
-        const filtered = filterTimeWithoutAppointments(schedules, booked)
-
-        const timesArray = filtered.map(item => ({
-            _id: item._id,
-            startTime: item.startTime,
-            endTime: item.endTime,
-            // startTime: moment(item.startTime).format('h:mm A'),
-            // endTime: moment(item.endTime).format('h:mm A'),
-          }));
-
-        res.status(200).json({ success: true, timesArray })
+        try {
+            const schedules = await Schedule.find({ docId, day })
+            const booked = await Appointment.find({ docId, date: { $eq: new Date(date) } })
+            const filtered = filterTimeWithoutAppointments(schedules, booked)
+            const timesArray = filtered.map(item => ({
+                _id: item._id,
+                startTime: item.startTime,
+                endTime: item.endTime,
+            }));
+            res.status(200).json({ success: true, timesArray })
+        } catch (error) {
+            console.log({ error })
+        }
     }),
 }
 

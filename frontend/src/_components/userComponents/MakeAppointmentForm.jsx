@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './makeAppointmentForm.css'
-import axios from 'axios';
+import AxiosBackend from '../../config/axios'
 import Spinner from '../Spinner'
 import moment from 'moment';
 
@@ -22,16 +22,51 @@ const MakeAppointmentForm = ({ schedule, id }) => {
         setDays([...schedule])
     }, [schedule])
 
+    useEffect(() => {
+        if (times && times.length > 0) {
+            setShowTimeSelector(true)
+            console.log(times)
+        } else {
+            setShowTimeSelector(false)
+        }
+    }, [times])
+
     // Calender
+    // const handleChange = async (date) => {
+    //     setTimeId('')
+    //     setShowBooking(false)
+    //     setLoading(true)
+    //     setDate(date)
+    //     try {
+    //         console.log({ docId, date })
+    //         const response = await AxiosBackend.post('/api/user/schedule/times', { docId, date })
+    //         console.log({response})
+    //         if (response.data.timesArray) setShowTimeSelector(true)
+    //         setTimes(response.data.timesArray);
+    //     } catch (error) {
+    //         setErrMsg('Somthing wrong')
+    //     }
+    //     setLoading(false)
+    // }
+
     const handleChange = async (date) => {
         setTimeId('')
         setShowBooking(false)
         setLoading(true)
-        setDate(date)
+        setDate(moment(date).startOf('day').toISOString())
+        console.log({"Choosen date" : date})
+        // date = moment(date).startOf('day')
+        // const day = date.day().toString()
+        const day = moment(date).startOf('day').day().toString()
+
         try {
-            const response = await axios.post('/api/user/schedule/times', { docId, date })
-            if (response.data.timesArray) setShowTimeSelector(true)
-            setTimes(response.data.timesArray);
+            const response = await AxiosBackend.post('/api/user/schedule/times', { docId, date, day })
+            if (response.data.timesArray) {
+                console.log({ timesArray: response.data.timesArray })
+                setTimes(response.data.timesArray);
+            } else {
+                console.log({ timesArray: 'No response.data.timesArray' })
+            }
         } catch (error) {
             setErrMsg('Somthing wrong')
         }
@@ -47,7 +82,7 @@ const MakeAppointmentForm = ({ schedule, id }) => {
         setShowSpinner(true)
 
         try {
-            const response = await axios.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
+            const response = await AxiosBackend.post(`/api/stripe/create-checkout-session`, { docId, date, timeId })
             if (response.data.url) window.location.href = response.data.url
         } catch (error) {
             setShowSpinner(false)
