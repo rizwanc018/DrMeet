@@ -58,7 +58,7 @@ const UserRegisterForm = () => {
       <div className="container mx-auto flex justify-center">
         <div className="w-fit mx-5 md:w-2/3 rounded md:mx-auto p-10 shadow-xl border-solid border-2 border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
-          <h2 className="text-xl text-primary-600 mb-6 font-semibold ">User Register</h2>
+          <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">User Register</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
             <div className="grid md:grid-cols-2 gap-3 md:gap-10 mb-5">

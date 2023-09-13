@@ -142,7 +142,7 @@ const doctorController = {
                 }
             },
             {
-                $sort: { _id: -1 } // Sort by createdAt date in ascending order
+                $sort: { _id: 1 } // Sort by createdAt date in ascending order
             }
         ])
         res.status(200).json({ success: true, data })
