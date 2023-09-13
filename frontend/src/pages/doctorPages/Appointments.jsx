@@ -9,6 +9,7 @@ const Appointments = () => {
   const [data, setData] = useState([])
 
   const getAppointments = async (date) => {
+    console.log({date : date.startOf('day').toISOString()})
     const response = await AxiosBackend.post('/api/doc/appointments', { date })
     setData(response.data.appointments)
   }

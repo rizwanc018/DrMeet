@@ -11,7 +11,11 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
 
   const appointmetDates = async () => {
     const response = await AxiosBackend.get('/api/doc/appointment/dates')
-    setgivenDates(response.data.dates.map(d => moment(d.date)))
+    setgivenDates(response.data.dates.map(d => {
+      return moment(d.date).add(1, 'days')
+
+      // return moment(d.date)
+    }))
   }
 
   useEffect(() => {

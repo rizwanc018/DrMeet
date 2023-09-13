@@ -54,9 +54,6 @@ const MakeAppointmentForm = ({ schedule, id }) => {
         setShowBooking(false)
         setLoading(true)
         setDate(moment(date).startOf('day').toISOString())
-        console.log({"Choosen date" : date})
-        // date = moment(date).startOf('day')
-        // const day = date.day().toString()
         const day = moment(date).startOf('day').day().toString()
 
         try {
