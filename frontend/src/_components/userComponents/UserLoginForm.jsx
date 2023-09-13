@@ -62,9 +62,9 @@ const UserLoginForm = () => {
   return (
     <div className="min-h-screen w-full py-10">
       <div className="flex justify-center">
-        <div className="w-fit md:w-1/2 rounded-md mx-auto p-10 shadow-xl border-solid border-2 border-primary">
+        <div className="w-fit md:w-1/3 rounded-md mx-auto p-10 shadow-xl border-solid border-2 border-primary">
           <img src="/assets/logo.png" className="mb-4" alt="" />
-          <h2 className="text-xl text-primary-600 mb-6 font-semibold ">User Login</h2>
+          <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">User Login</h2>
           {/* fname and lname */}
           <form onSubmit={formik.handleSubmit}>
             <div className="grid grid-cols-1 gap-4 mb-5">

@@ -62,9 +62,9 @@ function DoctorLoginForm() {
     return (
         <div className="min-h-screen py-10">
             <div className="container mx-auto flex justify-center">
-                <div className="w-fit  md:w-1/2 rounded p-10 shadow-xl border-solid border-2 border-primary">
+                <div className="w-fit  md:w-1/3 rounded p-10 shadow-xl border-solid border-2 border-primary">
                     <img src="/assets/logo.png" className="mb-4" alt="" />
-                    <h2 className="text-xl text-primary-600 mb-6 font-semibold ">Doctor Login</h2>
+                    <h2 className="text-3xl text-primary-600 mb-6 font-semibold ">Doctor Login</h2>
                     {/* fname and lname */}
                     <form onSubmit={formik.handleSubmit}>
                         <div className="grid grid-cols-1 gap-4 mb-5">
