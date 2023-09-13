@@ -25,29 +25,11 @@ const MakeAppointmentForm = ({ schedule, id }) => {
     useEffect(() => {
         if (times && times.length > 0) {
             setShowTimeSelector(true)
-            console.log(times)
         } else {
             setShowTimeSelector(false)
         }
     }, [times])
 
-    // Calender
-    // const handleChange = async (date) => {
-    //     setTimeId('')
-    //     setShowBooking(false)
-    //     setLoading(true)
-    //     setDate(date)
-    //     try {
-    //         console.log({ docId, date })
-    //         const response = await AxiosBackend.post('/api/user/schedule/times', { docId, date })
-    //         console.log({response})
-    //         if (response.data.timesArray) setShowTimeSelector(true)
-    //         setTimes(response.data.timesArray);
-    //     } catch (error) {
-    //         setErrMsg('Somthing wrong')
-    //     }
-    //     setLoading(false)
-    // }
 
     const handleChange = async (date) => {
         setTimeId('')

@@ -8,7 +8,6 @@ const appointmentController = {
         const docId = req.doctor._id
         let { date } = req.body
         date =  moment(date).startOf('day').toISOString()
-        // date = moment(date).add(1, 'day').startOf('day').toISOString()
         const appointments = await Appointment.find({ docId, date, finished: false })
             .populate('patientId', 'fname lname mobile')
             .populate('timeId', 'startTime endTime')
