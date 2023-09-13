@@ -96,6 +96,8 @@ const MakeAppointmentForm = ({ schedule, id }) => {
                 onChange={(date) => handleChange(date)}
                 value={date}
                 tileDisabled={({ date }) => !days.includes(date.getDay())}
+                // tileDisabled={({ date }) => days.includes(date.getDay())}
+
                 minDate={new Date()}
             />
             {showTimeSelector &&
