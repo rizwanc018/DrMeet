@@ -46,34 +46,59 @@ const Departments = () => {
     ]
   };
 
-  return (
-    <div className="flex justify-center" >
-      <div className=" md:flex justify-center py-20 w-[98%]">
-        <div className="w-full md:w-[90%] overflow-hidden">
-          <div className="flex flex-col item-center">
-            <h1 className="text-4xl font-semibold text-center">Our Specialities</h1>
-            <div className='w-28 my-4 border-2 border-primary mx-auto'></div>
-          </div>
-          
-            <div className="">
-              <Slider {...settings}>
-                {
-                  departments ? (departments.map((department, i) => (
-                    <div key={i}>
-                      <DepartmentCard department={department} />
-                    </div>))) :
-                    (
-                      <div className="flex flex-wrap gap-5 justify-center my-8">
-                        <Spinner />
-                      </div>
-                    )
-                }
-              </Slider>
-          </div>
-        </div>
+  // return (
+  //   <div className="flex justify-center" >
+  //     <div className=" md:flex justify-center py-20 w-[98%]">
+  //       <div className="w-full md:w-[90%] overflow-hidden">
+  //         <div className="flex flex-col item-center">
+  //           <h1 className="text-4xl font-semibold text-center">Our Specialities</h1>
+  //           <div className='w-28 my-4 border-2 border-primary mx-auto'></div>
+  //         </div>
 
+  //           <div className="">
+  //             <Slider {...settings}>
+  //               {
+  //                 departments ? (departments.map((department, i) => (
+  //                   <div key={i}>
+  //                     <DepartmentCard department={department} />
+  //                   </div>))) :
+  //                   (
+  //                     <div className="flex flex-wrap gap-5 justify-center my-8">
+  //                       <Spinner />
+  //                     </div>
+  //                   )
+  //               }
+  //             </Slider>
+  //         </div>
+  //       </div>
+
+  //     </div>
+  //   </div>
+  // )
+
+  return (
+    <>
+      <div className="flex flex-col item-center pt-16">
+        <h1 className="text-4xl font-semibold text-center">Our Specialities</h1>
+        <div className='w-28 my-4 border-2 border-primary mx-auto'></div>
       </div>
-    </div>
+      <div className="w-[90%] mx-auto pb-20">
+        <Slider {...settings}>
+          {
+            departments ? (departments.map((department, i) => (
+              <div key={i}>
+                <DepartmentCard department={department} />
+              </div>))) :
+              (
+                <div className="flex flex-wrap gap-5 justify-center my-8">
+                  <Spinner />
+                </div>
+              )
+          }
+        </Slider>
+      </div>
+
+    </>
   )
 }
 
