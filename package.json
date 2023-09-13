@@ -27,6 +27,7 @@
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
+    "raw-body": "^2.5.2",
     "socket.io": "^4.7.1",
     "stripe": "^12.14.0"
   },
