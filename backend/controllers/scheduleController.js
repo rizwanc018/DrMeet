@@ -52,6 +52,8 @@ const scheduleController = {
     getScheduleTimes: asyncHandler(async (req, res) => {
         const { docId, day } = req.body
         let { date } = req.body
+        console.log({date});
+        console.log({dateAfter: moment(date).startOf('day').toISOString()});
         try {
             const schedules = await Schedule.find({ docId, day })
             const booked = await Appointment.find({ docId, date: { $eq: new Date(date) } })
