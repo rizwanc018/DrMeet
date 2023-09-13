@@ -90,7 +90,6 @@ const UserLoginForm = () => {
               <div>
                 <label htmlFor="password">Password</label>
                 <div className="relative">
-
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"

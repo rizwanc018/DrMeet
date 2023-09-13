@@ -6,10 +6,14 @@ import Spinner from "../Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../slices/authSlice";
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+
 
 function DoctorLoginForm() {
 
     const [submitting, setSubmitting] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
     const [err, setErr] = useState()
 
     const navigate = useNavigate()
@@ -85,15 +89,23 @@ function DoctorLoginForm() {
                             {/* password */}
                             <div>
                                 <label htmlFor="password">Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Passowrd"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
+                                <div className="relative">
+
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        name="password"
+                                        id="password"
+                                        placeholder="Passowrd"
+                                        value={formik.values.password}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <span className="text-primary-700 text-xl absolute right-4 top-3 "
+                                        onClick={() => setShowPassword(prev => !prev)}
+                                    >
+                                        {showPassword ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
+                                    </span>
+                                </div>
                                 {formik.touched.password && formik.errors.password && <p className="error">{formik.errors.password}</p>}
                             </div>
 
@@ -107,8 +119,8 @@ function DoctorLoginForm() {
                     </form>
                     <p className="mt-6">Not Registered? <Link to='/doctor/register' className="text-primary-600">Register</Link> </p>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
