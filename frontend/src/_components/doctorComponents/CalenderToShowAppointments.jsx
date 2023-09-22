@@ -12,9 +12,7 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
   const appointmetDates = async () => {
     const response = await AxiosBackend.get('/api/doc/appointment/dates')
     setgivenDates(response.data.dates.map(d => {
-      return moment(d.date).add(1, 'days')
-
-      // return moment(d.date)
+      return moment(d.date).startOf('day').toISOString()
     }))
   }
 
@@ -24,12 +22,14 @@ const CalenderToShowAppointments = ({ date, setDate }) => {
 
 
   const dateIsDisabled = (d) => {
-    const momentDate = moment(d);
-    return !givenDates.some((givenDate) => givenDate.isSame(momentDate, 'day'));
+    let date = moment(d).startOf('day').toISOString()
+    return !givenDates.some(givenDate => {
+      return date == givenDate
+    })
   }
 
   const handleChange = (d) => {
-    setDate(moment(d).startOf('day'))
+    setDate(moment(d).startOf('day').toISOString())
   }
 
   return (
