@@ -36,9 +36,9 @@ router.post('/webhook', express.json({ type: 'application/json' }), async (req, 
 })
 
 router.post('/create-checkout-session', express.json(), verifyUser, asyncHandler(async (req, res) => {
-    const { docId, timeId } = req.body
-    let { date } = req.body
-    date = moment(date).startOf('day').toISOString()
+    const { docId, timeId, date } = req.body
+    // let { date } = req.body
+    // date = moment(date).startOf('day').toISOString()
     const userId = JSON.stringify(req.user._id)
     const customer = await stripe.customers.create({
         metadata: {

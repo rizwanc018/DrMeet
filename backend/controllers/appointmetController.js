@@ -6,8 +6,9 @@ import moment from 'moment'
 const appointmentController = {
     getAppointmentsByDate: asyncHandler(async (req, res) => {
         const docId = req.doctor._id
-        let { date } = req.body
-        date =  moment(date).startOf('day').toISOString()
+        const { date } = req.body
+        // let { date } = req.body
+        // date =  moment(date).startOf('day').toISOString()
         const appointments = await Appointment.find({ docId, date, finished: false })
             .populate('patientId', 'fname lname mobile')
             .populate('timeId', 'startTime endTime')

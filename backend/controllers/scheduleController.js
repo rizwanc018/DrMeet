@@ -54,7 +54,10 @@ const scheduleController = {
         let { date } = req.body
         try {
             const schedules = await Schedule.find({ docId, day })
-            const booked = await Appointment.find({ docId, date: { $eq: new Date(date) } })
+            console.log("🚀 ~ file: scheduleController.js:57 ~ getScheduleTimes:asyncHandler ~ schedules:", schedules)
+            const booked = await Appointment.find({ docId, date })
+            console.log("🚀 ~ file: scheduleController.js:59 ~ getScheduleTimes:asyncHandler ~ date:", date)
+            console.log("🚀 ~ file: scheduleController.js:59 ~ getScheduleTimes:asyncHandler ~ booked:", booked)
             const filtered = filterTimeWithoutAppointments(schedules, booked)
             const timesArray = filtered.map(item => ({
                 _id: item._id,
